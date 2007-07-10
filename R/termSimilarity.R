@@ -18,26 +18,28 @@ getGOGraph<-function(term){
 	return(G)
 }
 
-calcICs<-function(ontology){
+calcICs<-function(){
 	if(!exists("GOSimEnv")) initialize()
 	evidences<-get("evidences", envir=GOSimEnv)
-	print(paste("calculating information contents for ontology", ontology, "using evidence codes", paste(evidences,collapse=", "), "..."))
-	goids<-as.list(GOTERM)
-	goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]  	  		
-	ids<-sapply(goids, function(x) GOID(x))     
-	offspring<-getOffsprings()
+	ontology<-get("ontology",envir=GOSimEnv)
+	print(paste("calculating information contents for ontology", ontology, "using evidence codes", paste(evidences,collapse=", "), "..."))	
+	ids<-as.list(GOTERM)
+	ids<-names(ids[sapply(ids, function(x) Ontology(x) == ontology)])
+	offspring<-getOffsprings()	
 	gomap<-get("gomap",env=GOSimEnv)	
-	goterms<-sapply(gomap, function(x){ names(x)[names(x) %in% ids]})		
-	goterms<-goterms[sapply(goterms,length) > 0] 	
-	goterms<-unlist(goterms)
+	goterms<-unlist(sapply(gomap, function(x) names(x))) # all GO terms appearing in an annotation
+	goterms<-goterms[goterms %in% ids] # this is to ensure that we only get GO terms mapping to the given ontology
 	tab<-table(goterms)
 	na<-names(tab)			
-	s<-setdiff(ids, na)
-	m<-matrix(0,nrow=length(s),ncol=1)
-	rownames(m)<-s
-	tab<-rbind(as.matrix(tab),m)
-	ta<-sapply(ids,function(x){ t=tab[unlist(offspring[x]),]; tab[x,]+sum(t[!is.na(t)])})		
-	IC<--log(ta/sum(ta)) 
+	s<-setdiff(ids, na)  #ensure that GO terms NOT appearing in the annotation have 0 frequency
+	m<-double(length(s))
+	names(m)<-s
+	tab<-as.vector(tab)
+	names(tab)<-na
+	tab<-c(tab,m)	
+	ta<-sapply(ids,function(x){ t=tab[unlist(offspring[x])]; tab[x]+sum(t[!is.na(t)])})		
+	names(ta)<-ids
+	IC<- -log(ta/sum(ta))	
 	save(IC,file=paste("ICs",ontology,paste(evidences,collapse="_"),".rda",sep=""))
 	print("done")			
 }
@@ -111,7 +113,7 @@ getEnrichedSim<-function(term1, term2){
     }
     else
     	sim<-1 
-    sim<-sim * IC[term1] * IC[term2] 
+    sim<-sim * IC[term1] * IC[term2]  # correction given in equation (11) of the FuSSiMeg paper
     names(sim)<-c()   
     return(sim)
 }

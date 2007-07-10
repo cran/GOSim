@@ -6,11 +6,11 @@
    Recalculates the information content of all GO terms.
 }
 \usage{
-calcICs(ontology)
+calcICs()
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{ontology}{ The ontology ("BP","MF","CC") for which calculations should be done. }
+  none
 }
 \details{
    This functions should only be invoked, if one wants to calculate the
@@ -21,12 +21,15 @@ calcICs(ontology)
    evidence codes and evidence codes "IMP, IGI, IDA, IEP, IPI" together.   
 }
 \value{
-  Puts a file named "ICs<ontology><evidence level>.rda" in the current
+  Puts a file named "ICs<ontology><evidence levels>.rda" in the current
   directoy. This file has then to be moved into the data directory of
   gosim. 
 }
 \seealso{\code{\link{setEvidenceLevel}}}
 \examples{		
-\dontrun{calcICs("CC")} # --> this may take some time ...
+\dontrun{
+  setOntology("CC")
+  calcICs()
+} # --> this may take some time ...
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

@@ -22,8 +22,10 @@ getGOGraph(term)
 \note{ directly calls the function \code{GOGraph} in the "GOstats" library 
 }
 \examples{
+\dontrun{
  G=getGOGraph(c("GO:0006955","GO:0007584"))
  library(Rgraphviz)
  plot(G)
+}
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

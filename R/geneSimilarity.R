@@ -89,8 +89,8 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
 	if(length(a1) == 1)
 		ker<-t(as.matrix(ker))		
 	if(is.null(ker) || is.null(nrow(ker))){
-		print(paste("No similarity information for",a1,a2))		
-		return(0)
+		warning(paste("No GO information for",a1,a2,". Similarity set to NaN."))		
+		return(NaN)
 	}	
 	if(nrow(ker) > ncol(ker))
 		ker<-t(ker)
@@ -103,45 +103,62 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
 			ker[i,j]<-calcTermSim(a1[i],a2[j], similarityTerm, verbose)		
 	}
   }  
-  if(similarity == "OA"){				
-	res<-.C("OAWrapper", ker, nrow(ker), ncol(ker), as.integer(1), ret=double(1),PACKAGE="GOSim")$ret
-	return(res)
+  if(length(a1)*length(a2) > 0){
+	if(similarity == "OA"){				
+		res<-.C("OAWrapper", ker, nrow(ker), ncol(ker), as.integer(1), ret=double(1),PACKAGE="GOSim")$ret
+		return(res)
+	}
+	else if(similarity == "max"){				
+		return(max(ker))
+	}
+	else if(similarity == "mean"){				
+		return(mean(ker))
+	}  
+	else
+		stop(paste("getGSim: Unknown gene similarity",similarity,"!"))
   }
-  else if(similarity == "max"){				
-    	return(max(ker))
+  else{	
+	warning(paste("No GO information for",a1,a2,". Similarity set to NaN."))		
+	return(NaN)
   }
-  else if(similarity == "mean"){				
-    	return(mean(ker))
-  }  
-  else
-    	stop(paste("getGSim: Unknown gene similarity",similarity,"!"))
 }
 
 # compute GO gene similarity for a list of genes
 getGeneSim<-function(genelist, similarity="OA", similarityTerm="JiangConrath", normalization=TRUE, verbose=TRUE){
-	allgenes<-filterGO(genelist)		
-	STerm<-precomputeTermSims(x=allgenes, similarityTerm=similarityTerm, verbose=verbose) # precompute term similarities => speed up!		
-	if(verbose)
-		print(paste("Calculating similarity matrix with similarity measure",similarity))
-	Ker<-matrix(0,nrow=length(allgenes),ncol=length(allgenes))
-	colnames(Ker)<-sapply(allgenes,function(x) x$genename)
-	rownames(Ker)<-colnames(Ker)
-	for(i in 1:length(allgenes)){
-		annoi<-(allgenes[[i]]$annotation)		
-		Ker[i,i]<-getGSim(annoi,annoi, similarity, similarityTerm, STerm=STerm, verbose)
-		if(i > 1){
-			for(j in 1:(i-1)){
-				annoj<-(allgenes[[j]]$annotation)
-# 			        print(paste(allgenes[[i]]$genename,allgenes[[j]]$genename))
-				Ker[i,j]<-getGSim(annoi,annoj, similarity, similarityTerm, STerm=STerm, verbose)
-				Ker[j,i]<-Ker[i,j]
+	genelist <- unique(genelist)
+	if(length(genelist) < 2)
+		stop("Gene list should contain more than 2 elements!")
+	allgenes<-filterGO(genelist)	
+	if(length(allgenes) > 1){	
+		STerm<-precomputeTermSims(x=allgenes, similarityTerm=similarityTerm, verbose=verbose) # precompute term similarities => speed up!		
+		if(verbose)
+			print(paste("Calculating similarity matrix with similarity measure",similarity))
+		Ker<-matrix(0,nrow=length(allgenes),ncol=length(allgenes))
+		colnames(Ker)<-sapply(allgenes,function(x) x$genename)
+		rownames(Ker)<-colnames(Ker)
+		for(i in 1:length(allgenes)){
+			annoi<-(allgenes[[i]]$annotation)		
+			Ker[i,i]<-getGSim(annoi,annoi, similarity, similarityTerm, STerm=STerm, verbose)
+			if(i > 1){
+				for(j in 1:(i-1)){
+					annoj<-(allgenes[[j]]$annotation)
+	# 			        print(paste(allgenes[[i]]$genename,allgenes[[j]]$genename))
+					Ker[i,j]<-getGSim(annoi,annoj, similarity, similarityTerm, STerm=STerm, verbose)
+					Ker[j,i]<-Ker[i,j]
+				}
 			}
-		}
-	}	
-	if(normalization){
-		Kd<-sqrt(diag(Ker))
-		Ker<-Ker/(Kd%*%t(Kd))
-	}	
+		}			
+		if(normalization){
+			Kd<-sqrt(diag(Ker))
+			Ker<-Ker/(Kd%*%t(Kd))
+		}			
+	}
+	else{
+		if(length(allgenes) == 0)
+			stop("No gene has GO information!")					
+		else if(length(allgenes) == 1)
+			stop(paste("Only gene",allgenes," has GO information!"))					
+	}
 	return(Ker)
 }
 
@@ -180,6 +197,8 @@ getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max",
 # compute GO gene similarity using the feature representation
 getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", similarityTerm="JiangConrath", pca=TRUE, normalization=TRUE, verbose=TRUE){
 	genelist<-unique(genelist)	
+	if(length(genelist) < 2)
+		stop("Gene list should contain more than 2 elements!")
 	res<-getGeneFeaturesPrototypes(genelist, prototypes, similarity, similarityTerm, pca, normalization, verbose)
 	PHI<-res$features		
 	Ker<-PHI%*%t(PHI)

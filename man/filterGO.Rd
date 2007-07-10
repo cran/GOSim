@@ -21,9 +21,9 @@ filterGO(genelist)
    \item{"annotation"}{character vector of GO terms mapping to the gene within the actual ontology}
 }
 \author{ Holger Froehlich }
-\note{  The result depends on the currently set ontology.
+\note{  The result depends on the currently set ontology. IMPORTANT: The result refers to the GO library that was used to precompute the information contence of GO terms.
 }
-\seealso{ \code{\link{setOntology}}, \code{\link{setEvidenceLevel}}}
+\seealso{ \code{\link{setOntology}}, \code{\link{setEvidenceLevel}}, \code{getGOInfo}, \code{calcICs}}
 \examples{
 	filterGO(c("12345","4559"))
 	# --> 4559 is removed

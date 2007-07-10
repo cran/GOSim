@@ -31,8 +31,10 @@ setOntology(ont = "BP")
 \author{ Holger Froehlich }
 \examples{
  # set ontology to "molecular function"
+\dontrun{
  setOntology("MF")
  # calculate Resnik similarity of two GO terms within this ontology
  getTermSim(c("GO:0004060","GO:0003867"),method="Resnik")
+}
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

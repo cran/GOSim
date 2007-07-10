@@ -46,7 +46,7 @@ n x n matrix (n = number of GO terms) with similarities between GO terms scaled 
   \code{\link{getDisjCommAnc}}, \code{\link{setEnrichmentFactors}},
   \code{\link{setOntology}} } 
 \examples{
- setOntology("BP")
+ # setOntology("BP")
 
  # Lin's method
  getTermSim(c("GO:0006955","GO:0007584"),method="Lin")

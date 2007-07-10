@@ -1,0 +1,8 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}
+\BOOKMARK [1][-]{section.2}{Usage of GOSim}{}
+\BOOKMARK [2][-]{subsection.2.1}{Term Similarities}{section.2}
+\BOOKMARK [2][-]{subsection.2.2}{Functional Gene Similarities}{section.2}
+\BOOKMARK [2][-]{subsection.2.3}{Maximum and Average Pairwise GO Term Similarity}{section.2}
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Optimal Assignment Gene Similarities}{subsection.2.3}
+\BOOKMARK [3][-]{subsubsection.2.3.2}{Feature Space Embedding of Gene Products}{subsection.2.3}
+\BOOKMARK [2][-]{subsection.2.4}{Cluster Evaluations}{section.2}

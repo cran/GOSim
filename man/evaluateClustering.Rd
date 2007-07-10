@@ -25,11 +25,13 @@ evaluateClustering(clust, Sim)
 \author{Holger Froehlich}
 \seealso{ \code{\link{getGeneSimPrototypes}}, \code{\link{getGeneSim}}, \code{\link{getTermSim}} }
 \examples{
+	\dontrun{
 	setOntology("BP")
 	genes = c("207","208","596","901","780","3169","9518","2852","26353","8614","7494")
 	sim = getGeneSim(genes,verbose=FALSE)
 	ev = evaluateClustering(c(2,3,2,3,1,2,1,1,3,1,2), sim)
 	print(ev$clusterstats)
 	plot(ev$clustersil,main="")
+	}
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

@@ -8,19 +8,16 @@
 void OAWrapper(double* Rpre, int* m, int* n, int *mod, double *res);
 	
 
-// static  R_CMethodDef cMethods[] = {{"OAWrapper", &OAWrapper, 5,
-// {REALSXP,INTSXP, INTSXP, INTSXP, REALSXP}}, {NULL, NULL, 0}};
-
-void R_init_GOSim(DllInfo *info){
-	/* Register routines, allocate resources. */
-	R_CMethodDef cMethods[] = {{"OAWrapper", &OAWrapper, -1,NULL},
-// 5, {REALSXP, INTSXP, INTSXP, INTSXP, REALSXP}}, 
-				  {NULL, NULL, 0}};
-	R_registerRoutines(info, cMethods, NULL, NULL, NULL);
-}
-          
-void R_unload_GOSim(DllInfo *info){      	
-}
+// void R_init_GOSim(DllInfo *info){
+// 	/* Register routines, allocate resources. */
+// 	R_CMethodDef cMethods[] = {{"OAWrapper", &OAWrapper, -1,NULL},
+// // 5, {REALSXP, INTSXP, INTSXP, INTSXP, REALSXP}}, 
+// 				  {NULL, NULL, 0}};
+// 	R_registerRoutines(info, cMethods, NULL, NULL, NULL);
+// }
+//           
+// void R_unload_GOSim(DllInfo *info){      	
+// }
 
 void OAWrapper(double* Rpre, int* m, int* n, int* mod, double* res){	
 	hungarian_problem_t prob;		

@@ -22,6 +22,7 @@ getGeneSim(genelist, similarity = "OA", similarityTerm = "JiangConrath", normali
    gene products can either be: 
 \begin{ldescription}
 \item{"max"}{the maximum similarity between any two GO terms}
+\item{"mean"}{the average similarity between any two GO terms}
 \item{"OA"}{the optimal assignment (maximally weighted bipartite
   matching) of GO terms associated to the gene having fewer annotation
   to the GO terms of the other gene.}

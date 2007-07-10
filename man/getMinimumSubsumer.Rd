@@ -24,7 +24,7 @@ getMinimumSubsumer(term1, term2)
 \author{ Holger Froehlich}
 \seealso{ \code{\link{getTermSim}}, \code{\link{getGOGraph}}, \code{link{setOntology}} }
 \examples{
- setOntology("BP")
+ # setOntology("BP")
  getMinimumSubsumer("GO:0006955","GO:0007584")
  # returns GO:0050896
 }

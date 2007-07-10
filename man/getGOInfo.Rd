@@ -22,12 +22,14 @@ getGOInfo(geneIDs)
 \note{ The corresponding information is directly extracted from the "GO"
   library. The result depends on the currently set ontology
   ("BP","MF","CC"), i.e. only GO terms within the actual ontology are
-  considered. 
+  considered. The shown GO information refers to the actually installed GO library.
 }
 \seealso{ \code{\link{setOntology}} }
 \examples{
+\dontrun{
  setOntology("BP")
  getGOInfo(c("207","7494"))
+}
 }
 \keyword{ file }% at least one, from doc/KEYWORDS
 

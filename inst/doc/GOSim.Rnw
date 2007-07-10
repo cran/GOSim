@@ -92,7 +92,7 @@ sim(t,t') = \frac{2IC_{ms}(t,t')}{IC(t) + IC(t')}\label{eq:Lin}
 \end{equation}
 
 Resnik's, Jiang-Conraths's and Lin's term similarities all refer to $IC_{ms}(t,t')$, the information content of the minimum subsumer of $t$ and $t'$, i.e. of the lowest common ancestor in the hierarchy. For illustration let us plot the GO graph with leaves GO:0007166 and GO:0007267 and let us compute their minimum subsumer (see Fig. \ref{Fig:GOPlot}):
-<<GOExample,results=hide,fig=TRUE,eps=FALSE,include=FALSE>>=
+<<GOExample,eval=FALSE,results=hide,fig=TRUE,eps=FALSE,include=FALSE>>=
 library(Rgraphviz)
 G = getGOGraph(c("GO:0007166","GO:0007267"))
 plot(G)
@@ -158,7 +158,7 @@ Instead of computing the maximum pairwise GO term similarity one may also take t
 
 To elucidate the idea of the optimal assignment, consider the GO terms associated with gene "8614" on one hand and gene "2852" on the other hand:
 <<results=verbatim>>=
-getGOInfo(genes)[c("8614","2852")]
+getGOInfo(c("8614","2852"))
 @
 Given a similarity concept $sim$ to compare individual GO terms, the idea is now to assign each term of the gene having fewer annotation to exactly one term of the other gene such that the overall similarity is maximized. More formally this can be stated as follows: Let $\pi$ be some permutation of either an $n$-subset of natural numbers
 $\{1,...,m\}$ or an $m$-subset of natural numbers $\{1,...,n\}$ (this will

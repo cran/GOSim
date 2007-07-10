@@ -1,8 +1,5 @@
 initialize<-function(){
 	print("initializing GOSim package ...")
-# 	require(GOstats)  
-#   	require(mclust) 
-#   	require(cluster) 
 	assign("GOSimEnv",new.env(parent=globalenv()),envir=.GlobalEnv)  
   	setEvidenceLevel("all")
   	setOntology("BP")
@@ -83,7 +80,7 @@ setOntology<-function(ont="BP"){
 	assign("ontology", ont, envir=GOSimEnv)		
 	ontology<-get("ontology",envir=GOSimEnv)
 	evidences<-get("evidences",envir=GOSimEnv)	
-	data(list=paste("ICs",ontology,evidences,sep=""),envir=GOSimEnv)	
+	data(list=paste("ICs",ontology,paste(evidences,collapse="_"),sep=""),envir=GOSimEnv)	
 	IC<-get("IC",envir=GOSimEnv)
 	IC<-IC/max(IC[IC!=Inf])
 	IC["all"]=0
