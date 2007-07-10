@@ -1,12 +1,13 @@
 initialize<-function(){
-	print("initializing GOSim package ...")
-	assign("GOSimEnv",new.env(parent=globalenv()),envir=.GlobalEnv)  
+	print("initializing GOSim package ...")	
+	assign("GOSimEnv",new.env(parent=globalenv()),envir=.GlobalEnv)  	
   	setEvidenceLevel("all")
   	setOntology("BP")
   	print("finished.")
 }
 
 getOffsprings<-function(){
+  require(GO)
   if(!exists("GOSimEnv")) initialize()
   ontology<-get("ontology",envir=GOSimEnv)
   if(ontology == "BP")
@@ -21,6 +22,7 @@ getOffsprings<-function(){
 }
 
 getAncestors<-function(){
+  require(GO)
   if(!exists("GOSimEnv")) initialize()
   ontology<-get("ontology",envir=GOSimEnv)
   if(ontology == "BP")
@@ -35,6 +37,7 @@ getAncestors<-function(){
 }
 
 getParents<-function(){
+  require(GO)
   if(!exists("GOSimEnv")) initialize()
   ontology<-get("ontology",envir=GOSimEnv)
   if(ontology == "BP")
@@ -49,6 +52,7 @@ getParents<-function(){
 }
 
 getChildren<-function(){
+  require(GO)
   if(!exists("GOSimEnv")) initialize()
   ontology<-get("ontology",envir=GOSimEnv)
   if(ontology == "BP")
@@ -64,6 +68,7 @@ getChildren<-function(){
 
 # filter GO mapping for given evidence levels
 setEvidenceLevel<-function(evidences="all"){	
+	require(GO)
         if(!exists("GOSimEnv")) initialize()	
 	assign("evidences", evidences, envir=GOSimEnv)	
 	gomap<-as.list(GOENTREZID2GO)	
@@ -79,8 +84,9 @@ setOntology<-function(ont="BP"){
 	if(!exists("GOSimEnv")) initialize()
 	assign("ontology", ont, envir=GOSimEnv)		
 	ontology<-get("ontology",envir=GOSimEnv)
-	evidences<-get("evidences",envir=GOSimEnv)	
-	data(list=paste("ICs",ontology,paste(evidences,collapse="_"),sep=""),envir=GOSimEnv)	
+	evidences<-get("evidences",envir=GOSimEnv)		
+	fname = paste("ICs",ontology,paste(evidences,collapse="_"),sep="")
+	data(list=fname,package="GOSim",envir=GOSimEnv)	
 	IC<-get("IC",envir=GOSimEnv)
 	IC<-IC/max(IC[IC!=Inf])
 	IC["all"]=0

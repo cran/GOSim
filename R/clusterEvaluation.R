@@ -1,5 +1,6 @@
 # evaluate a given clustering of genes or terms (e.g. terms significantly overrepresented in certain clusters of genes)  by means of the GO gene or term similarities
 evaluateClustering<-function(clust, Sim){
+	require(cluster)
 	clus<-unique(clust)
 	ncl<-length(clus)
 	cluststats<-matrix(0,nrow=ncl,ncol=2)
@@ -12,5 +13,5 @@ evaluateClustering<-function(clust, Sim){
 		cluststats[c,2]<-mad(as.vector(S))
 	}
 	sil<-silhouette(clust, as.dist(1-Sim))	
-	return(list(clusterstats=cluststats,clustersil=sil))
+	list(clusterstats=cluststats,clustersil=sil)
 }

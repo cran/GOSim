@@ -18,7 +18,7 @@ getMinimumSubsumer(term1, term2)
   The result is computed within the currently set ontology ("BP","MF","CC"). 
 }
 \value{
-  GO term representing the minimum subsumer
+  GO term representing the minimum subsumer. If there is no minimum subsumer within the currently set GO category (e.g. because one of the GO terms does not exist), the result is the string "NA".
 }
 \references{P. Resnik, Using Information Content to evaluate semantic similarity in a taxonomy, Proc. 14th Int. Conf. Artificial Intel., 1995 }
 \author{ Holger Froehlich}

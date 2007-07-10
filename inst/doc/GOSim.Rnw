@@ -20,7 +20,7 @@
 \newcommand{\Rpackage}[1]{{\textit{#1}}}
 
 \begin{document}
-\author{Holger Fröhlich}
+\author{Holger Fr\"ohlich}
 
 \title{The \emph{GOSim} package}
 \date{\today}

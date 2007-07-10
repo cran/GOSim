@@ -1,10 +1,12 @@
 # get GO information for a list of genes
-getGOInfo<-function(geneIDs){
+getGOInfo<-function(geneIDs){	
+	require(GO)
 	if(!exists("GOSimEnv")) initialize()	
 	ontology<-get("ontology",env=GOSimEnv)
 	gomap<-get("gomap",env=GOSimEnv)
 	goids<-as.list(GOTERM)
-	goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]
+	require(annotate)
+	goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]	
 	anno<-gomap[as.character(geneIDs)]
 	goterms<-sapply(anno,function(x) names(x))		
 	if(class(goterms)=="list"){		
@@ -15,7 +17,7 @@ getGOInfo<-function(geneIDs){
 		goterms<-intersect(goterms, names(goids))
 		info<-goids[goterms]
 	}	
-	return(info)
+	info
 }
 
 # filter out genes not mapping to the category in question	
@@ -34,7 +36,7 @@ filterGO<-function(genelist){
 			k<-k + 1
 		}
 	}	
-	return(allgenes)		
+	allgenes
 }
 
 # precompute term similarities for all pairs of GO terms belonging to the annotated genelists x (and y)
@@ -66,7 +68,7 @@ precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=T
 			}
 		}
 	}	
-	return(STerm)
+	STerm
 }
 
 # compute gene similarity for a pair of genes having GO terms anno1 and anno2
@@ -105,7 +107,7 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
   }  
   if(length(a1)*length(a2) > 0){
 	if(similarity == "OA"){				
-		res<-.C("OAWrapper", ker, nrow(ker), ncol(ker), as.integer(1), ret=double(1),PACKAGE="GOSim")$ret
+		res<-.C("OAWrapper", ker, nrow(ker), ncol(ker), as.integer(1), ret=double(1))$ret
 		return(res)
 	}
 	else if(similarity == "max"){				
@@ -159,7 +161,7 @@ getGeneSim<-function(genelist, similarity="OA", similarityTerm="JiangConrath", n
 		else if(length(allgenes) == 1)
 			stop(paste("Only gene",allgenes," has GO information!"))					
 	}
-	return(Ker)
+	Ker
 }
 
 # compute GO gene feature representation
@@ -191,7 +193,7 @@ getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max",
 	}
 	if(normalization)
 		PHI<-t(apply(PHI,1,function(x) return(x/(norm(x)+1e-10))))		  
-	return(list(features=PHI,prototypes=proto))
+	list(features=PHI,prototypes=proto)
 }
 
 # compute GO gene similarity using the feature representation
@@ -204,7 +206,7 @@ getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", simi
 	Ker<-PHI%*%t(PHI)
 	if(normalization)
 		Ker<-(Ker + 1)/2 # scale to [0,1]
-	return(list(similarity=Ker,prototypes=res$prototypes,features=res$features))
+	list(similarity=Ker,prototypes=res$prototypes,features=res$features)
 }
 
 # method to a) select prototype genes b) to perform subselection of prototypes via i) PCA ii) clustering
@@ -247,6 +249,7 @@ selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=TRUE){
 		return(pcares)
 	}
 	else if(method == "clustering"){    
+		require(mclust)
 		if(is.null(data))
 			stop("You need to specify a data matrix with feature vectors")
 		if(verbose)

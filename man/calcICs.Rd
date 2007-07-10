@@ -23,12 +23,15 @@ calcICs()
 \value{
   Puts a file named "ICs<ontology><evidence levels>.rda" in the current
   directoy. This file has then to be moved into the data directory of
-  gosim. 
+  GOSim. It can be used afterwards by calling \code{\link{setOntology}}. 
+  Sometimes it is necessary to switch to the GOSim directory for this purpose.
 }
 \seealso{\code{\link{setEvidenceLevel}}}
 \examples{		
 \dontrun{
-  setOntology("CC")
+  setEvidenceLevel("all")
+  setOntology("CC") # important: setOntology assumes that the IC file already exists. To prevent an error message we need this workaround
+  setEvidenceLevel("IMP")
   calcICs()
 } # --> this may take some time ...
 }

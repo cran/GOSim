@@ -7,6 +7,9 @@ setEnrichmentFactors<-function(alpha=0.5, beta=0.5){
 getGOGraph<-function(term){
 	if(!exists("GOSimEnv")) initialize()
 	ontology<-get("ontology",env=GOSimEnv)
+	require(GOstats)
+	if("package:GO.db"%in%search())
+		detach(package:GO.db)
 	if(ontology == "BP")
 		G<-GOGraph(term,GOBPPARENTS)
 	else if(ontology == "MF")
@@ -14,17 +17,19 @@ getGOGraph<-function(term){
 	else if(ontology == "CC")
 		G<-GOGraph(term,GOCCPARENTS)
 	else
-		stop(paste("ontology", ontology, "not known!"))
-	return(G)
+		stop(paste("ontology", ontology, "not known!"))		
+	G
 }
 
-calcICs<-function(){
+calcICs<-function(){	
+	require(GO)
 	if(!exists("GOSimEnv")) initialize()
 	evidences<-get("evidences", envir=GOSimEnv)
 	ontology<-get("ontology",envir=GOSimEnv)
 	print(paste("calculating information contents for ontology", ontology, "using evidence codes", paste(evidences,collapse=", "), "..."))	
 	ids<-as.list(GOTERM)
-	ids<-names(ids[sapply(ids, function(x) Ontology(x) == ontology)])
+	require(annotate)
+	ids<-names(ids[sapply(ids, function(x) Ontology(x) == ontology)])	
 	offspring<-getOffsprings()	
 	gomap<-get("gomap",env=GOSimEnv)	
 	goterms<-unlist(sapply(gomap, function(x) names(x))) # all GO terms appearing in an annotation
@@ -64,8 +69,10 @@ getMinimumSubsumer<-function(term1, term2){
 		anall<-intersect(an1, an2) 
 		IC<-get("IC", envir=GOSimEnv)			
 		ms<-anall[which.max(IC[anall])]
-	}		
-	return(ms)
+	}	
+	if(is.null(ms))
+		ms <- "NA"
+	ms
 }
 
 # get FuSSiMeg density factor
@@ -76,7 +83,7 @@ getDensityFactor<-function(term){
 	e<-nchildren[term] + nparents[term]	  
 	betaParam<-get("betaParam",envir=GOSimEnv)
 	E<-(1-betaParam)*get("Eavg",env=GOSimEnv)/e + betaParam
-	return(E)
+	E
 }
 
 # get FuSsiMeg depth factor
@@ -84,7 +91,7 @@ getDepthFactor<-function(term,G){
 	if(!exists("GOSimEnv")) initialize()	
 	d<-sp.between(G,term,"all")[[1]]$length  	
     	D<-((d+1)/d)^get("alphaParam",envir=GOSimEnv)
-    	return(D)
+    	D
 }
 
 # compute FuSSiMeg enriched term similarity
@@ -115,7 +122,7 @@ getEnrichedSim<-function(term1, term2){
     	sim<-1 
     sim<-sim * IC[term1] * IC[term2]  # correction given in equation (11) of the FuSSiMeg paper
     names(sim)<-c()   
-    return(sim)
+    sim
 }
 
 # get GraSM disjunctive ancestors of a set of terms with ancestors an
@@ -130,7 +137,7 @@ getDisjAnc<-function(term, an){
 			}
 		}
 	}
-	return(disan)
+	disan
 }
 
 # get GraSM common disjunctive ancestors of two terms
@@ -196,7 +203,7 @@ getDisjCommAncSim<-function(term1, term2, method="JiangConrath"){
 
 # basic term similarity for index i and j in GOIDs ids
 calcTermSim<-function(ids, i, j, method="JiangConrath"){	
-  	return(calcTermSim(ids[i],ids[j], method))
+  	calcTermSim(ids[i],ids[j], method)
 }
 
 # basic term similarity between term1 and term2
@@ -231,11 +238,11 @@ getTermSim<-function(termlist, method="JiangConrath", verbose=TRUE){
 	for(i in 1:length(termlist)){
 		S[i,i]<-1
 		if(i > 1){
-			for(j in 1:(i-1)){
-				S[i,j]<-calcTermSim(termlist[i],termlist[j], method, verbose)
+			for(j in 1:(i-1)){				
+				S[i,j]<- calcTermSim(termlist[i],termlist[j], method, verbose)				
 				S[j,i]<-S[i,j]
 			}
 		}
 	}
-	return(S)
+	S
 }

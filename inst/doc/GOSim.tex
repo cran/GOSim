@@ -21,7 +21,7 @@
 
 \usepackage{/usr/share/R/share/texmf/Sweave}
 \begin{document}
-\author{Holger Fröhlich}
+\author{Holger Fr\"ohlich}
 
 \title{The \emph{GOSim} package}
 \date{\today}
@@ -208,11 +208,11 @@ Finally, it should be mentioned that also the depth and density enriched term si
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.1432437  0.1773106  0.1094850  0.1372757
-GO:0007267  0.1432437  1.0000000  0.2056005  0.1282382  0.1507960
-GO:0007584  0.1773106  0.2056005  1.0000000  0.1597738  0.1860186
-GO:0007165  0.1094850  0.1282382  0.1597738  1.0000000  0.1154587
-GO:0007186  0.1372757  0.1507960  0.1860186  0.1154587  1.0000000
+GO:0007166  1.0000000  0.1438407  0.1791987  0.1094908  0.1372791
+GO:0007267  0.1438407  1.0000000  0.2089535  0.1287481  0.1514393
+GO:0007584  0.1791987  0.2089535  1.0000000  0.1613989  0.1880462
+GO:0007165  0.1094908  0.1287481  0.1613989  1.0000000  0.1154679
+GO:0007186  0.1372791  0.1514393  0.1880462  0.1154679  1.0000000
 \end{Soutput}
 \end{Schunk}
 
@@ -251,91 +251,58 @@ To elucidate the idea of the optimal assignment, consider the GO terms associate
 \begin{Soutput}
 $`8614`
 $`8614`$`GO:0007166`
-GOID = GO:0007166
-
-Term = cell surface receptor linked signal transduction
-
-Definition = Any series of molecular signals initiated by the binding
-     of an extracellular ligand to a receptor on the surface of the
-     target cell.
-
-Ontology = BP
-
+GOID: GO:0007166
+Term: cell surface receptor linked signal transduction
+Ontology: BP
+Definition: Any series of molecular signals initiated by the binding of
+    an extracellular ligand to a receptor on the surface of the target
+    cell.
 
 $`8614`$`GO:0007267`
-GOID = GO:0007267
-
-Term = cell-cell signaling
-
-Synonym = cell-cell signalling
-
-Definition = Any process that mediates the transfer of information from
-     one cell to another.
-
-Ontology = BP
-
+GOID: GO:0007267
+Term: cell-cell signaling
+Ontology: BP
+Definition: Any process that mediates the transfer of information from
+    one cell to another.
+Synonym: cell-cell signalling
 
 $`8614`$`GO:0007584`
-GOID = GO:0007584
-
-Term = response to nutrient
-
-Synonym = response to nutrients
-Synonym = nutritional response pathway
-
-Definition = A change in state or activity of a cell or an organism (in
-     terms of movement, secretion, enzyme production, gene expression,
-     etc.) as a result of a nutrient stimulus.
-
-Ontology = BP
-
+GOID: GO:0007584
+Term: response to nutrient
+Ontology: BP
+Definition: A change in state or activity of a cell or an organism (in
+    terms of movement, secretion, enzyme production, gene expression,
+    etc.) as a result of a nutrient stimulus.
+Synonym: response to nutrients
+Synonym: nutritional response pathway
 
 
 $`2852`
 $`2852`$`GO:0007165`
-GOID = GO:0007165
-
-Term = signal transduction
-
-Synonym = signaling
-Synonym = signalling
-Synonym = activation of MAPK during sporulation (sensu Fungi)
-Synonym = activation of MAPK during sporulation (sensu Saccharomyces)
-Synonym = activation of MAPKK during sporulation (sensu Fungi)
-Synonym = activation of MAPKK during sporulation (sensu Saccharomyces)
-Synonym = activation of MAPKKK during sporulation (sensu Fungi)
-Synonym = activation of MAPKKK during sporulation (sensu Saccharomyces)
-Synonym = inactivation of MAPK during sporulation (sensu Fungi)
-Synonym = inactivation of MAPK during sporulation (sensu Saccharomyces)
-Synonym = MAPKKK cascade during sporulation (sensu Fungi)
-Synonym = MAPKKK cascade during sporulation (sensu Saccharomyces)
-
-Definition = The cascade of processes by which a signal interacts with
-     a receptor, causing a change in the level or activity of a second
-     messenger or other downstream target, and ultimately effecting a
-     change in the functioning of the cell.
-
-Ontology = BP
-
+GOID: GO:0007165
+Term: signal transduction
+Ontology: BP
+Definition: The cascade of processes by which a signal interacts with a
+    receptor, causing a change in the level or activity of a second
+    messenger or other downstream target, and ultimately effecting a
+    change in the functioning of the cell.
+Synonym: signaling
+Synonym: signalling
 
 $`2852`$`GO:0007186`
-GOID = GO:0007186
-
-Term = G-protein coupled receptor protein signaling pathway
-
-Synonym = G protein coupled receptor protein signaling pathway
-Synonym = G protein coupled receptor protein signalling pathway
-Synonym = G-protein coupled receptor protein signalling pathway
-Synonym = G-protein-coupled receptor protein signaling pathway
-Synonym = G-protein-coupled receptor protein signalling pathway
-Synonym = GPCR protein signaling pathway
-Synonym = GPCR protein signalling pathway
-
-Definition = The series of molecular signals generated as a consequence
-     of a G-protein coupled receptor binding to its physiological
-     ligand.
-
-Ontology = BP
+GOID: GO:0007186
+Term: G-protein coupled receptor protein signaling pathway
+Ontology: BP
+Definition: The series of molecular signals generated as a consequence
+    of a G-protein coupled receptor binding to its physiological
+    ligand.
+Synonym: G protein coupled receptor protein signaling pathway
+Synonym: G protein coupled receptor protein signalling pathway
+Synonym: G-protein coupled receptor protein signalling pathway
+Synonym: G-protein-coupled receptor protein signaling pathway
+Synonym: G-protein-coupled receptor protein signalling pathway
+Synonym: GPCR protein signaling pathway
+Synonym: GPCR protein signalling pathway
 \end{Soutput}
 \end{Schunk}
 Given a similarity concept $sim$ to compare individual GO terms, the idea is now to assign each term of the gene having fewer annotation to exactly one term of the other gene such that the overall similarity is maximized. More formally this can be stated as follows: Let $\pi$ be some permutation of either an $n$-subset of natural numbers

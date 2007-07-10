@@ -28,7 +28,7 @@ getTermSim(termlist, method = "JiangConrath", verbose = TRUE)
 \end{ldescription}
 }
 \value{
-n x n matrix (n = number of GO terms) with similarities between GO terms scaled to [0,1]
+n x n matrix (n = number of GO terms) with similarities between GO terms scaled to [0,1]. If a GO term does not exist for the currently set ontology, the similarity is set to "NA".
 }
 \references{
 [1] P. Resnik, Using Information Content to evaluate semantic similarity in a taxonomy, Proc. 14th Int. Conf. Artificial Intel., 1995 \newline
