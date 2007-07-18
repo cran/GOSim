@@ -21,7 +21,7 @@ setEnrichmentFactors(alpha = 0.5, beta = 0.5)
 \references{ F.Couto,M. Silva, P. Coutinho, Implementation of a
   Functional Semantic Similarity Measure between Gene-Products, DI/FCUL
   TR 03-29, Department of Informatics, University of Lisbon, 2003 } 
-\author{ Holger Fröhlich }
+\author{ Holger Froehlich }
 \note{ The enrichment factors are stored internally and are used by the
   function \code{\link{getTermSim}}, if one uses the method
   "CoutoEnriched" to calculate GO term similarities  

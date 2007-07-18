@@ -20,7 +20,7 @@
 \newcommand{\Rpackage}[1]{{\textit{#1}}}
 
 \begin{document}
-\author{Holger Fröhlich}
+\author{Holger FrÃ¶hlich}
 
 \title{The \emph{GOSim} package}
 \date{\today}
@@ -103,7 +103,7 @@ getMinimumSubsumer("GO:0007166","GO:0007267")
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.6\textwidth]{gosim-GOExample.pdf}
+\includegraphics[width=0.6\textwidth]{GOExample.pdf}
 \caption{\label{Fig:GOPlot}Example of a GO graph starting with leaves GO:0007166 and GO:0007267.}
 \end{center}
 \end{figure}
