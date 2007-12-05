@@ -1,0 +1,75 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.4)
+The top-level auxiliary file: GOSim.aux
+The style file: plain.bst
+Database file #1: /mountpoints/stoneage/home/froehlih/Papers/references.bib
+Database file #2: /mountpoints/stoneage/home/froehlih/Papers/GOCluster.bib
+Repeated entry---line 346 of file /mountpoints/stoneage/home/froehlih/Papers/GOCluster.bib
+ : @inproceedings{Jiang98
+ :                       ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 415 of file /mountpoints/stoneage/home/froehlih/Papers/GOCluster.bib
+ : @inproceedings{Lin98
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 428 of file /mountpoints/stoneage/home/froehlih/Papers/GOCluster.bib
+ : @inproceedings{Lord03
+ :                      ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 570 of file /mountpoints/stoneage/home/froehlih/Papers/GOCluster.bib
+ : @article{Resnik99
+ :                  ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 583 of file /mountpoints/stoneage/home/froehlih/Papers/GOCluster.bib
+ : @inproceedings{Resnik95
+ :                        ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 608 of file /mountpoints/stoneage/home/froehlih/Papers/GOCluster.bib
+ : @article{rousseeuw87
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 767 of file /mountpoints/stoneage/home/froehlih/Papers/GOCluster.bib
+ : @article{GOConsortium04
+ :                        ,
+I'm skipping whatever remains of this entry
+You've used 16 entries,
+            2118 wiz_defined-function locations,
+            606 strings with 6833 characters,
+and the built_in function-call counts, 5737 in all, are:
+= -- 558
+> -- 232
+< -- 8
++ -- 93
+- -- 75
+* -- 362
+:= -- 915
+add.period$ -- 48
+call.type$ -- 16
+change.case$ -- 83
+chr.to.int$ -- 0
+cite$ -- 16
+duplicate$ -- 248
+empty$ -- 483
+format.name$ -- 75
+if$ -- 1261
+int.to.chr$ -- 0
+int.to.str$ -- 16
+missing$ -- 17
+newline$ -- 83
+num.names$ -- 34
+pop$ -- 100
+preamble$ -- 1
+purify$ -- 69
+quote$ -- 0
+skip$ -- 181
+stack$ -- 0
+substring$ -- 375
+swap$ -- 73
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 60
+warning$ -- 0
+while$ -- 49
+width$ -- 18
+write$ -- 180
+(There were 7 error messages)

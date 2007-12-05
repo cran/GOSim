@@ -1,0 +1,101 @@
+\begin{thebibliography}{10}
+
+\bibitem{Alexa2006topGO}
+Adrian Alexa, J\"org Rahnenführer, and Thomas Lengauer.
+\newblock {Improved scoring of functional groups from gene expression data by
+  decorrelating GO graph structure}.
+\newblock {\em Bioinformatics}, 22(13):1600 -- 1607, 2006.
+
+\bibitem{CorVap95}
+C.~Cortes and V.~Vapnik.
+\newblock Support vector networks.
+\newblock {\em Machine Learning}, 20:273 -- 297, 1995.
+
+\bibitem{Couto2003FuSSiMeg}
+F.~Couto, M.~Silva, and P.~Coutinho.
+\newblock {Implementation of a Functional Semantic Similarity Measure between
+  Gene-Products}.
+\newblock Technical Report DI/FCUL TR 03--29, Department of Informatics,
+  University of Lisbon, 2003.
+
+\bibitem{Couto2005GraSM}
+F.~Couto, M.~Silva, and P.~Coutinho.
+\newblock {Semantic Similarity over the Gene Ontology: Family Correlation and
+  Selecting Disjunctive Ancestors}.
+\newblock In {\em Conference in Information and Knowledge Management}, 2005.
+
+\bibitem{FroeSpeerGOKer06}
+H.~Fr\"ohlich, N.~Speer, and A.~Zell.
+\newblock Kernel based functional gene grouping.
+\newblock In {\em Proc. Int. Joint Conf. Neural Networks}, pages 6886 -- 6891,
+  2006.
+
+\bibitem{Jiang98}
+J.~Jiang and D.~Conrath.
+\newblock Semantic similarity based on corpus statistics and lexical taxonomy.
+\newblock In {\em Proceedings of the International Conference on Research in
+  Computational Linguistics}, Taiwan, 1998.
+
+\bibitem{Lin98}
+D.~Lin.
+\newblock An information-theoretic definition of similarity.
+\newblock In Morgan Kaufmann, editor, {\em Proceedings of the 15th
+  International Conference on Machine Learning}, volume~1, pages 296--304, San
+  Francisco, CA, 1998.
+
+\bibitem{Lord03}
+P.W. Lord, R.D. Stevens, A.~Brass, and C.A. Goble.
+\newblock Semantic similarity measures as tools for exploring the gene
+  ontology.
+\newblock In {\em Proceedings of the Pacific Symposium on Biocomputing}, pages
+  601--612, 2003.
+
+\bibitem{LEDABook99}
+K.~Mehlhorn and S.~N\"aher.
+\newblock {\em {The LEDA Platform of Combinatorial and Geometric Computing}}.
+\newblock Cambridge University Press, 1999.
+
+\bibitem{Resnik95}
+P.~Resnik.
+\newblock Using information content to evaluate semantic similarity in a
+  taxonomy.
+\newblock In {\em Proceedings of the 14th International Joint Conference on
+  Artificial Intelligence}, volume~1, pages 448--453, Montreal, 1995.
+
+\bibitem{Resnik99}
+P.~Resnik.
+\newblock Semantic similarity in a taxonomy: An information-based measure and
+  its application to problems of ambigiguity in natural language.
+\newblock {\em Journal of Artificial Intelligence Research}, 11:95--130, 1999.
+
+\bibitem{rousseeuw87}
+P.J. Rousseeuw.
+\newblock Silhouettes: a graphical aid to the interpretation and validation of
+  cluster analysis.
+\newblock {\em J. Comp. and Applied Mathematics}, 20:53--65, 1987.
+
+\bibitem{Schlicker2006GOFuncSim}
+Andreas Schlicker, Francisco~S Domingues, Jörg Rahnenführer, and Thomas
+  Lengauer.
+\newblock {A new measure for functional similarity of gene products based on
+  Gene Ontology}.
+\newblock {\em BMC Bioinformatics}, 7:302, 2006.
+
+\bibitem{SchSmo02}
+B.~Sch\"olkopf and A.~J. Smola.
+\newblock {\em {Learning with Kernels}}.
+\newblock MIT Press, Cambridge, MA, 2002.
+
+\bibitem{FroeGO05}
+N.~Speer, H.~Fr\"ohlich, C.~Spieth, and A.~Zell.
+\newblock Functional grouping of genes using spectral clustering and gene
+  ontology.
+\newblock In {\em Proc. Int. Joint Conf. Neural Networks}, pages 298 -- 303,
+  2005.
+
+\bibitem{GOConsortium04}
+{The Gene Ontology Consortium}.
+\newblock The gene ontology ({GO}) database and informatics resource.
+\newblock {\em Nucleic Acids Research}, 32:D258--D261, 2004.
+
+\end{thebibliography}

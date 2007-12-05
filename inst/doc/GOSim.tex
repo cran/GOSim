@@ -19,7 +19,7 @@
 \newcommand{\Rfunction}[1]{{\texttt{#1}}}
 \newcommand{\Rpackage}[1]{{\textit{#1}}}
 
-\usepackage{/usr/share/R/share/texmf/Sweave}
+\usepackage{/usr/local/R/R-2-6-0/share/texmf/Sweave}
 \begin{document}
 \author{Holger Fr\"ohlich}
 
@@ -61,11 +61,11 @@ Let us examine the similarity of the GO terms for genes "8614" and "2852" in gre
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.3032191  0.3032191  0.3125535  0.3607165
-GO:0007267  0.3032191  1.0000000  0.3032191  0.3032191  0.3032191
-GO:0007584  0.3032191  0.3032191  1.0000000  0.3032191  0.3032191
-GO:0007165  0.3125535  0.3032191  0.3032191  1.0000000  0.3125535
-GO:0007186  0.3607165  0.3032191  0.3032191  0.3125535  1.0000000
+GO:0007166  1.0000000  0.3007260  0.3007260  0.3097532  0.3596323
+GO:0007267  0.3007260  1.0000000  0.3007260  0.3007260  0.3007260
+GO:0007584  0.3007260  0.3007260  1.0000000  0.3007260  0.3007260
+GO:0007165  0.3097532  0.3007260  0.3007260  1.0000000  0.3097532
+GO:0007186  0.3596323  0.3007260  0.3007260  0.3097532  1.0000000
 \end{Soutput}
 \end{Schunk}
 This calculates Resnik's pairwise similarity between GO terms \cite{Resnik95,Resnik99}:
@@ -76,7 +76,7 @@ Here $Pa(t,t')$ denotes the set of all common ancestors of GO terms $t$ and $t'$
 \begin{equation}
 IC(\hat{t}) = -\log P(\hat{t})
 \end{equation}
-i.e. as the negative logarithm of the probability of observing $t$. The information content of each GO term is already precomputed for each ontology based on the empirical observation, how many times a specific GO term or any of its direct or indirect offsprings appear in the annotation of the GO with gene products. The association between gene products and GO identifiers is reported regularily by the NCBI.
+i.e. as the negative logarithm of the probability of observing $\hat{t}$. The information content of each GO term is already precomputed for each ontology based on the empirical observation, how many times a specific GO term or any of its direct or indirect offsprings appear in the annotation of the GO with gene products. The association between gene products and GO identifiers is reported regularily by the NCBI and is incorporated into \emph{GOSim} via the GO package.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -86,7 +86,7 @@ i.e. as the negative logarithm of the probability of observing $t$. The informat
 \end{Sinput}
 \begin{Soutput}
 GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186 
-  5.238172   6.624280   9.867617   4.538770   5.607354 
+  5.262643   6.689617   9.698926   4.532743   5.614946 
 \end{Soutput}
 \end{Schunk}
 This loads the information contents of all GO terms within "biological process". Likewise, the data files {\tt ICsMFall} and {\tt ICsCCall} contain the information contents of all GO terms within "molecular function" and "cellular component". If only GO terms having evidence codes "IMP" (inferred from mutant phenotype), "IGI", (inferred from genetic interaction), "IDA" (inferred from direct assay), "IEP" (inferred from expression pattern) or "IPI" (inferred from physical interaction) are wanted, one can use the data files {\tt ICsBPIMP\_IGI\_IDA\_IEP\_IPI}, {\tt ICsMFIMP\_IGI\_IDA\_IEP\_IPI} and {\tt ICsCCIMP\_IGI\_IDA\_IEP\_IPI}, respectively. The information contents for GO terms filtered with respect to different evidence codes must be calculated explicitely using the function {\tt calcICs}. Please refer to the manual pages for details.
@@ -99,7 +99,7 @@ For the similarity computation in (Eq.: \ref{eq:Resnik}) normalized information 
 \end{Sinput}
 \begin{Soutput}
 GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186 
- 0.3607165  0.4561681  0.6795141  0.3125535  0.3861395 
+ 0.3596323  0.4571471  0.6627937  0.3097532  0.3837076 
 \end{Soutput}
 \end{Schunk}
 
@@ -111,11 +111,11 @@ To continue our example from above, let us also calculate Jiang and Conrath's pa
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.7895537  0.5662077  0.9518371  0.9745770
-GO:0007267  0.7895537  1.0000000  0.4707560  0.8377166  0.7641307
-GO:0007584  0.5662077  0.4707560  1.0000000  0.6143706  0.5407847
-GO:0007165  0.9518371  0.8377166  0.6143706  1.0000000  0.9264140
-GO:0007186  0.9745770  0.7641307  0.5407847  0.9264140  1.0000000
+GO:0007166  1.0000000  0.7846727  0.5790261  0.9501210  0.9759247
+GO:0007267  0.7846727  1.0000000  0.4815112  0.8345517  0.7605973
+GO:0007584  0.5790261  0.4815112  1.0000000  0.6289051  0.5549508
+GO:0007165  0.9501210  0.8345517  0.6289051  1.0000000  0.9260457
+GO:0007186  0.9759247  0.7605973  0.5549508  0.9260457  1.0000000
 \end{Soutput}
 \end{Schunk}
 Jiang and Conrath's similarity measure is defined as
@@ -132,11 +132,11 @@ Likewise, we can also compute Lin's pairwise similarity between GO terms \cite{L
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.7423794  0.5829845  0.9284641  0.9659600
-GO:0007267  0.7423794  1.0000000  0.5339859  0.7888919  0.7199725
-GO:0007584  0.5829845  0.5339859  1.0000000  0.6112872  0.5690764
-GO:0007165  0.9284641  0.7888919  0.6112872  1.0000000  0.8946806
-GO:0007186  0.9659600  0.7199725  0.5690764  0.8946806  1.0000000
+GO:0007166  1.0000000  0.7363703  0.5882598  0.9254854  0.9676120
+GO:0007267  0.7363703  1.0000000  0.5370391  0.7842636  0.7152865
+GO:0007584  0.5882598  0.5370391  1.0000000  0.6184298  0.5747265
+GO:0007165  0.9254854  0.7842636  0.6184298  1.0000000  0.8933547
+GO:0007186  0.9676120  0.7152865  0.5747265  0.8933547  1.0000000
 \end{Soutput}
 \end{Schunk}
 It is defined as:
@@ -191,11 +191,11 @@ Likewise, Jiang-Conraths's and Lin's measures can be extended as well by replaci
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.3032191   0.232439  0.3032191  0.3125535
-GO:0007267  0.3032191  1.0000000   0.232439  0.3032191  0.3032191
-GO:0007584  0.2324390  0.2324390   1.000000  0.2324390  0.2324390
-GO:0007165  0.3032191  0.3032191   0.232439  1.0000000  0.3032191
-GO:0007186  0.3125535  0.3032191   0.232439  0.3032191  1.0000000
+GO:0007166  1.0000000  0.3007260  0.2307924  0.3007260  0.3097532
+GO:0007267  0.3007260  1.0000000  0.2307924  0.3007260  0.3007260
+GO:0007584  0.2307924  0.2307924  1.0000000  0.2307924  0.2307924
+GO:0007165  0.3007260  0.3007260  0.2307924  1.0000000  0.3007260
+GO:0007186  0.3097532  0.3007260  0.2307924  0.3007260  1.0000000
 \end{Soutput}
 \end{Schunk}
 
@@ -208,19 +208,20 @@ Finally, it should be mentioned that also the depth and density enriched term si
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.1438407  0.1791987  0.1094908  0.1372791
-GO:0007267  0.1438407  1.0000000  0.2089535  0.1287481  0.1514393
-GO:0007584  0.1791987  0.2089535  1.0000000  0.1613989  0.1880462
-GO:0007165  0.1094908  0.1287481  0.1613989  1.0000000  0.1154679
-GO:0007186  0.1372791  0.1514393  0.1880462  0.1154679  1.0000000
+GO:0007166  1.0000000  0.1432361  0.1760624  0.1080692  0.1361099
+GO:0007267  0.1432361  1.0000000  0.2061625  0.1276006  0.1504305
+GO:0007584  0.1760624  0.2061625  1.0000000  0.1577771  0.1843771
+GO:0007165  0.1080692  0.1276006  0.1577771  1.0000000  0.1136813
+GO:0007186  0.1361099  0.1504305  0.1843771  0.1136813  1.0000000
 \end{Soutput}
 \end{Schunk}
 
 \subsection{Functional Gene Similarities}
 
-The special strength of \emph{GOSim} lies in the possibility not only to calculate similarities for individual GO terms, but also for genes based on their complete GO anntation. For this purpose three basic ideas have been implemented: 
+The special strength of \emph{GOSim} lies in the possibility not only to calculate similarities for individual GO terms, but also for genes based on their complete GO anntation. Since \emph{GOSim} version 1.1 for this purpose four basic ideas have been implemented: 
 \begin{enumerate}
 \item Maximum and average pairwise GO term similarity
+\item Average of best matching GO term similarities \cite{Schlicker2006GOFuncSim}.
 \item Computation of a so-called \emph{optimal assignment} of terms from one gene to those of another one \cite{FroeSpeerGOKer06}.
 \item Embedding of each gene into a feature space defined by the gene's similarity to certain prototype genes  \cite{FroeGO05,FroeSpeerGOKer06}. Within this feature space similarities naturally arise as dot products between the feature vectors. These dot products can be understood as so-called \emph{kernel functions} \cite{SchSmo02}, as used in e.g. Support Vector Machines \cite{CorVap95}.
 \end{enumerate}
@@ -234,12 +235,21 @@ i=1,,...,n\\
 j=1,...,m\end{array}}sim(t_{i},t'_{j})
 \end{eqnarray}
 where $sim$ is some similarity measure to compare GO terms $t_i$ and $t'_j$.
-The resulting value is then further normalized to account for an unequal number of GO terms for both genes:
+Instead of computing the maximum pairwise GO term similarity one may also take the average here.
+
+To normalize the similarities later on, we can peform the transformation
 \begin{equation}
 sim_{gene}(g,g')\leftarrow\frac{sim_{gene}(g,g')}{\sqrt{sim_{gene}(g,g)sim_{gene}(g',g')}}\label{eq:normalize}
 \end{equation}
-Instead of computing the maximum pairwise GO term similarity one may also take the average here.
+The consequence will be a similarity of 1 for $g$ with itself and between 0 and 1 for $g$ with any other gene. 
+Another possibility is to use the Lin's normalization (see Eq. \ref{eq:Lin})
+\begin{equation}
+sim_{gene}(g,g')\leftarrow\frac{2sim_{gene}(g,g')}{sim_{gene}(g,g)+sim_{gene}(g',g')}\label{eq:normalize2}
+\end{equation}
 
+\subsection{Average of Best Matching GO Term Similarities }
+
+The idea of this approach \cite{Schlicker2006GOFuncSim} is to assign each GO term $t_i$ occuring in gene $g$ to its best matching partner $t'_{\pi{i}}$ in gene $g'$. Hence multiple GO terms from gene $g$ can be assigned to one GO term from gene $g'$. A similarity score is computed by taking the average similarity of assigned GO terms. Since, however, genes can have an unequal number of GO terms the result depends on whether GO terms of gene $g$ are assigned to those of gene $g'$ or vice versa. Hence, in \cite{Schlicker2006GOFuncSim} it was proposed to either take the maximum or the average of both similarity scores. Both strategies are implemented in \emph{GOSim}. 
 
 \subsubsection{Optimal Assignment Gene Similarities}
 
@@ -305,7 +315,8 @@ Synonym: GPCR protein signaling pathway
 Synonym: GPCR protein signalling pathway
 \end{Soutput}
 \end{Schunk}
-Given a similarity concept $sim$ to compare individual GO terms, the idea is now to assign each term of the gene having fewer annotation to exactly one term of the other gene such that the overall similarity is maximized. More formally this can be stated as follows: Let $\pi$ be some permutation of either an $n$-subset of natural numbers
+Given a similarity concept $sim$ to compare individual GO terms, the idea is now to assign each term of the gene having fewer annotation to exactly one term of the other gene such that the overall similarity is maximized. Hence, in the optimal assignment 
+More formally optimal assignment problem can be stated as follows: Let $\pi$ be some permutation of either an $n$-subset of natural numbers
 $\{1,...,m\}$ or an $m$-subset of natural numbers $\{1,...,n\}$ (this will
 be clear from context). Then we are looking for the quantity
 \begin{equation}
@@ -317,8 +328,9 @@ sim_{gene}(g,g')=\left\{ \begin{array}{cc}
 The computation of (\ref{eq:OAKernel}) corresponds to the solution
 of the classical maximum weighted bipartite matching (optimal assignment)
 problem in graph theory and can be carried out in $O(\max(n,m)^{3})$
-time \cite{LEDABook99}. To prevent that larger lists of terms automatically
-achieve a higher similarity we should further normalize $sim_{gene}$ according to (Eq. \ref{eq:normalize})
+time \cite{LEDABook99}. 
+To prevent that larger lists of terms automatically
+achieve a higher similarity we may further $sim_{gene}$ divide \ref{eq:OAKernel} by $\max(m,n)$.
 
 In our example, using Lin's GO term similarity measure the following assignments are found:
 \begin{eqnarray}
@@ -333,21 +345,30 @@ The resulting similarity matrix is:
 \end{Sinput}
 \begin{Soutput}
           8614      2852
-8614 1.0000000 0.7164153
-2852 0.7164153 1.0000000
+8614 1.0000000 0.5839585
+2852 0.5839585 1.0000000
 \end{Soutput}
 \end{Schunk}
 
-Note the difference to a gene similarity that is just based on the maximum GO term similarity:
+Note the difference to a gene similarity that is just based on the maximum GO term similarity and to a gene similarity that is based on the average of best matching GO terms:
 \begin{Schunk}
 \begin{Sinput}
 > getGeneSim(c("8614", "2852"), similarity = "max", similarityTerm = "Lin", 
 +     verbose = FALSE)
 \end{Sinput}
 \begin{Soutput}
-        8614    2852
-8614 1.00000 0.96596
-2852 0.96596 1.00000
+         8614     2852
+8614 1.000000 0.967612
+2852 0.967612 1.000000
+\end{Soutput}
+\begin{Sinput}
+> getGeneSim(c("8614", "2852"), similarity = "funSimMax", similarityTerm = "Lin", 
++     verbose = FALSE)
+\end{Sinput}
+\begin{Soutput}
+          8614      2852
+8614 1.0000000 0.9465487
+2852 0.9465487 1.0000000
 \end{Soutput}
 \end{Schunk}
 
@@ -437,7 +458,85 @@ Of course, one could also use a weighted averaging scheme here, if desired.
 
 A good indiciation of the clustering qualitiy can be obtained by looking at the cluster silhouettes \cite{rousseeuw87} (see Fig. \ref{Fig:GOClustersil}). This shows that clusters 1 and 2 are relatively homogenous with respect to the functional similarity of the genes contained in it, while the genes in cluster 3 are more dissimilar.
 
+We may now want to get a clearer picture of the genes involved in cluster 1. For this purpose we use a GO enrichment analysis by means of the topGO tool \cite{Alexa2006topGO}, which is integrated into \emph{GOSim} since version 1.1.
+\begin{Schunk}
+\begin{Sinput}
+> gomap <- get("gomap", env = GOSimEnv)
+> allgenes = unique(c(sample(names(gomap), 1000), genes))
+> analyzeCluster(c("8614", "9518", "780", "2852"), allgenes)
+\end{Sinput}
+\begin{Soutput}
+Package SparseM (0.73) loaded.  To cite, see citation("SparseM")
+
+groupGOTerms: 	GOBPTerm, GOMFTerm, GOCCTerm environments built.
+
+Building most specific GOs .....	( 844 GO terms found. )
+
+Build GO DAG topology ..........	( 1929 GO terms and 3221 relations. )
+
+Annotating nodes ...............	( 870 genes annotated to the GO terms. )
+
+			 -- Elim Algorithm -- 
+
+		 the algorithm is scoring 34 nontrivial nodes
+		 parameters: 
+			 test statistic:  Fisher test 
+			 cutOff:  0.01 
+
+	 Level 8:	2 nodes to be scored	(0 eliminated genes)
+
+	 Level 7:	3 nodes to be scored	(2 eliminated genes)
+
+	 Level 6:	5 nodes to be scored	(2 eliminated genes)
+
+	 Level 5:	5 nodes to be scored	(2 eliminated genes)
+
+	 Level 4:	7 nodes to be scored	(99 eliminated genes)
+
+	 Level 3:	7 nodes to be scored	(119 eliminated genes)
+
+	 Level 2:	4 nodes to be scored	(119 eliminated genes)
+
+	 Level 1:	1 nodes to be scored	(119 eliminated genes)
+$GOTerms
+$GOTerms$`GO:0007179`
+GOID: GO:0007179
+Term: transforming growth factor beta receptor signaling pathway
+Ontology: BP
+Definition: The series of molecular signals generated as a consequence
+    of a transforming growth factor beta receptor binding to one of its
+    physiological ligands.
+Synonym: TGF-beta receptor signaling pathway
+Synonym: TGF-beta receptor signalling pathway
+Synonym: TGFbeta receptor signaling pathway
+Synonym: TGFbeta receptor signalling pathway
+Synonym: transforming growth factor beta receptor signalling pathway
+
+$GOTerms$`GO:0007267`
+GOID: GO:0007267
+Term: cell-cell signaling
+Ontology: BP
+Definition: Any process that mediates the transfer of information from
+    one cell to another.
+Synonym: cell-cell signalling
+
+$GOTerms$`GO:0007166`
+GOID: GO:0007166
+Term: cell surface receptor linked signal transduction
+Ontology: BP
+Definition: Any series of molecular signals initiated by the binding of
+    an extracellular ligand to a receptor on the surface of the target
+    cell.
+
+
+$p.values
+ GO:0007179  GO:0007267  GO:0007166 
+0.009179530 0.005762731 0.001357406 
+\end{Soutput}
+\end{Schunk}
+The result shows that the four genes are mainly involved in cell-cell signaling, in an enzyme linked receptor protein signaling pathway and in the response to nutrient.
+
 \bibliographystyle{plain}
-\bibliography{references,GOCluster}
+\bibliography{/mountpoints/stoneage/home/froehlih/Papers/references,/mountpoints/stoneage/home/froehlih/Papers/GOCluster}
 
 \end{document}

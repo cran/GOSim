@@ -1,4 +1,4 @@
 useDynLib(GOSim,OAWrapper)
 import(GO)
 import(utils)
-export(getOffsprings,getAncestors,getParents,getChildren,setEvidenceLevel,setOntology,getGOInfo,filterGO,getGeneSim,getGeneFeaturesPrototypes,getGeneSimPrototypes,selectPrototypes,setEnrichmentFactors,getGOGraph,calcICs,getMinimumSubsumer,getDisjCommAnc,getTermSim,evaluateClustering)
+export(getOffsprings,getAncestors,getParents,getChildren,setEvidenceLevel,setOntology,getGOInfo,filterGO,getGeneSim,getGeneFeaturesPrototypes,getGeneSimPrototypes,selectPrototypes,setEnrichmentFactors,getGOGraph,calcICs,getMinimumSubsumer,getDisjCommAnc,getTermSim,evaluateClustering,analyzeCluster,GOenrichment)

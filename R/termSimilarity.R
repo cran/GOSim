@@ -4,8 +4,8 @@ setEnrichmentFactors<-function(alpha=0.5, beta=0.5){
 	assign("betaParam",beta, envir=GOSimEnv)
 }
 
-getGOGraph<-function(term){
-	if(!exists("GOSimEnv")) initialize()
+getGOGraph<-function(term, prune=Inf){
+	if(!exists("GOSimEnv")) initialize()	
 	ontology<-get("ontology",env=GOSimEnv)
 	require(GOstats)
 	if("package:GO.db"%in%search())
@@ -17,7 +17,12 @@ getGOGraph<-function(term){
 	else if(ontology == "CC")
 		G<-GOGraph(term,GOCCPARENTS)
 	else
-		stop(paste("ontology", ontology, "not known!"))		
+		stop(paste("ontology", ontology, "not known!"))			
+	if(prune != Inf){
+		dis = johnson.all.pairs.sp(G)		
+		inc = unique(sapply(terms, function(t) names(dis[t,])[dis[t,] < prune]))
+		G = subGraph(nodes(G)[inc], G)
+	}	
 	G
 }
 
@@ -163,8 +168,7 @@ getDisjCommAnc<-function(term1, term2){
 		}
 		else{
 			ancommon<-intersect(an1,an2)
-			andisj<-getDisjAnc(c(term1,term2), ancommon) # we only need to calculate the disjunctives among the common ancestors!
-# 			andisj<-unique(rbind(getDisjAnc(term1,an1), getDisjAnc(term2,an2)))			
+			andisj<-getDisjAnc(c(term1,term2), ancommon) # we only need to calculate the disjunctives among the common ancestors!			
 		}		
 		djca<-c()
 		cond1<-sapply(ancommon, function(x) setdiff(ancommon[which(IC[ancommon] >= IC[x])],x)) # which common ancestors are more informative than a_i?

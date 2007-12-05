@@ -59,7 +59,7 @@ Here $Pa(t,t')$ denotes the set of all common ancestors of GO terms $t$ and $t'$
 \begin{equation}
 IC(\hat{t}) = -\log P(\hat{t})
 \end{equation}
-i.e. as the negative logarithm of the probability of observing $t$. The information content of each GO term is already precomputed for each ontology based on the empirical observation, how many times a specific GO term or any of its direct or indirect offsprings appear in the annotation of the GO with gene products. The association between gene products and GO identifiers is reported regularily by the NCBI.
+i.e. as the negative logarithm of the probability of observing $\hat{t}$. The information content of each GO term is already precomputed for each ontology based on the empirical observation, how many times a specific GO term or any of its direct or indirect offsprings appear in the annotation of the GO with gene products. The association between gene products and GO identifiers is reported regularily by the NCBI and is incorporated into \emph{GOSim} via the GO package.
 
 <<results=verbatim>>=
 data("ICsBPall")
@@ -131,9 +131,10 @@ getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),m
 
 \subsection{Functional Gene Similarities}
 
-The special strength of \emph{GOSim} lies in the possibility not only to calculate similarities for individual GO terms, but also for genes based on their complete GO anntation. For this purpose three basic ideas have been implemented: 
+The special strength of \emph{GOSim} lies in the possibility not only to calculate similarities for individual GO terms, but also for genes based on their complete GO anntation. Since \emph{GOSim} version 1.1 for this purpose four basic ideas have been implemented: 
 \begin{enumerate}
 \item Maximum and average pairwise GO term similarity
+\item Average of best matching GO term similarities \cite{Schlicker2006GOFuncSim}.
 \item Computation of a so-called \emph{optimal assignment} of terms from one gene to those of another one \cite{FroeSpeerGOKer06}.
 \item Embedding of each gene into a feature space defined by the gene's similarity to certain prototype genes  \cite{FroeGO05,FroeSpeerGOKer06}. Within this feature space similarities naturally arise as dot products between the feature vectors. These dot products can be understood as so-called \emph{kernel functions} \cite{SchSmo02}, as used in e.g. Support Vector Machines \cite{CorVap95}.
 \end{enumerate}
@@ -147,12 +148,21 @@ i=1,,...,n\\
 j=1,...,m\end{array}}sim(t_{i},t'_{j})
 \end{eqnarray}
 where $sim$ is some similarity measure to compare GO terms $t_i$ and $t'_j$.
-The resulting value is then further normalized to account for an unequal number of GO terms for both genes:
+Instead of computing the maximum pairwise GO term similarity one may also take the average here.
+
+To normalize the similarities later on, we can peform the transformation
 \begin{equation}
 sim_{gene}(g,g')\leftarrow\frac{sim_{gene}(g,g')}{\sqrt{sim_{gene}(g,g)sim_{gene}(g',g')}}\label{eq:normalize}
 \end{equation}
-Instead of computing the maximum pairwise GO term similarity one may also take the average here.
+The consequence will be a similarity of 1 for $g$ with itself and between 0 and 1 for $g$ with any other gene. 
+Another possibility is to use the Lin's normalization (see Eq. \ref{eq:Lin})
+\begin{equation}
+sim_{gene}(g,g')\leftarrow\frac{2sim_{gene}(g,g')}{sim_{gene}(g,g)+sim_{gene}(g',g')}\label{eq:normalize2}
+\end{equation}
 
+\subsection{Average of Best Matching GO Term Similarities }
+
+The idea of this approach \cite{Schlicker2006GOFuncSim} is to assign each GO term $t_i$ occuring in gene $g$ to its best matching partner $t'_{\pi{i}}$ in gene $g'$. Hence multiple GO terms from gene $g$ can be assigned to one GO term from gene $g'$. A similarity score is computed by taking the average similarity of assigned GO terms. Since, however, genes can have an unequal number of GO terms the result depends on whether GO terms of gene $g$ are assigned to those of gene $g'$ or vice versa. Hence, in \cite{Schlicker2006GOFuncSim} it was proposed to either take the maximum or the average of both similarity scores. Both strategies are implemented in \emph{GOSim}. 
 
 \subsubsection{Optimal Assignment Gene Similarities}
 
@@ -160,7 +170,8 @@ To elucidate the idea of the optimal assignment, consider the GO terms associate
 <<results=verbatim>>=
 getGOInfo(c("8614","2852"))
 @
-Given a similarity concept $sim$ to compare individual GO terms, the idea is now to assign each term of the gene having fewer annotation to exactly one term of the other gene such that the overall similarity is maximized. More formally this can be stated as follows: Let $\pi$ be some permutation of either an $n$-subset of natural numbers
+Given a similarity concept $sim$ to compare individual GO terms, the idea is now to assign each term of the gene having fewer annotation to exactly one term of the other gene such that the overall similarity is maximized. Hence, in the optimal assignment 
+More formally optimal assignment problem can be stated as follows: Let $\pi$ be some permutation of either an $n$-subset of natural numbers
 $\{1,...,m\}$ or an $m$-subset of natural numbers $\{1,...,n\}$ (this will
 be clear from context). Then we are looking for the quantity
 \begin{equation}
@@ -172,8 +183,9 @@ sim_{gene}(g,g')=\left\{ \begin{array}{cc}
 The computation of (\ref{eq:OAKernel}) corresponds to the solution
 of the classical maximum weighted bipartite matching (optimal assignment)
 problem in graph theory and can be carried out in $O(\max(n,m)^{3})$
-time \cite{LEDABook99}. To prevent that larger lists of terms automatically
-achieve a higher similarity we should further normalize $sim_{gene}$ according to (Eq. \ref{eq:normalize})
+time \cite{LEDABook99}. 
+To prevent that larger lists of terms automatically
+achieve a higher similarity we may further $sim_{gene}$ divide \ref{eq:OAKernel} by $\max(m,n)$.
 
 In our example, using Lin's GO term similarity measure the following assignments are found:
 \begin{eqnarray}
@@ -185,9 +197,10 @@ The resulting similarity matrix is:
 getGeneSim(c("8614","2852"),similarity="OA",similarityTerm="Lin",verbose=FALSE)
 @
 
-Note the difference to a gene similarity that is just based on the maximum GO term similarity:
+Note the difference to a gene similarity that is just based on the maximum GO term similarity and to a gene similarity that is based on the average of best matching GO terms:
 <<results=verbatim>>=
 getGeneSim(c("8614","2852"),similarity="max",similarityTerm="Lin",verbose=FALSE)
+getGeneSim(c("8614","2852"),similarity="funSimMax",similarityTerm="Lin",verbose=FALSE)
 @
 
 \subsubsection{Feature Space Embedding of Gene Products}
@@ -264,7 +277,15 @@ plot(ev$clustersil,main="")
 
 A good indiciation of the clustering qualitiy can be obtained by looking at the cluster silhouettes \cite{rousseeuw87} (see Fig. \ref{Fig:GOClustersil}). This shows that clusters 1 and 2 are relatively homogenous with respect to the functional similarity of the genes contained in it, while the genes in cluster 3 are more dissimilar.
 
+We may now want to get a clearer picture of the genes involved in cluster 1. For this purpose we use a GO enrichment analysis by means of the topGO tool \cite{Alexa2006topGO}, which is integrated into \emph{GOSim} since version 1.1.
+<<results=verbatim>>=
+gomap <- get("gomap",env=GOSimEnv)
+allgenes = unique(c(sample(names(gomap), 1000), genes)) # suppose these are all genes
+analyzeCluster(c("8614", "9518", "780", "2852"), allgenes) # print out what cluster 1 is about
+@
+The result shows that the four genes are mainly involved in cell-cell signaling, in an enzyme linked receptor protein signaling pathway and in the response to nutrient.
+
 \bibliographystyle{plain}
-\bibliography{references,GOCluster}
+\bibliography{/mountpoints/stoneage/home/froehlih/Papers/references,/mountpoints/stoneage/home/froehlih/Papers/GOCluster}
 
 \end{document}

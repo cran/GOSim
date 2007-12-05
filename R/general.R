@@ -1,5 +1,7 @@
 initialize<-function(){
 	print("initializing GOSim package ...")	
+	if("package:GO.db"%in%search())
+		detach(package:GO.db)
 	assign("GOSimEnv",new.env(parent=globalenv()),envir=.GlobalEnv)  	
   	setEvidenceLevel("all")
   	setOntology("BP")
@@ -67,11 +69,13 @@ getChildren<-function(){
 }
 
 # filter GO mapping for given evidence levels
-setEvidenceLevel<-function(evidences="all"){	
+setEvidenceLevel<-function(evidences="all"){		
 	require(GO)
         if(!exists("GOSimEnv")) initialize()	
+	print("-> retrieving GO information for all available genes in GO database")
 	assign("evidences", evidences, envir=GOSimEnv)	
 	gomap<-as.list(GOENTREZID2GO)	
+	print("-> filtering GO terms according to evidence level")
 	if((length(evidences) > 1) || (evidences!="all")){
 		gomap<-sapply(gomap,function(x) sapply(x,function(y) y$Evidence %in% evidences))
 		gomap<-sapply(gomap, function(x) x[which(x)])
@@ -82,6 +86,7 @@ setEvidenceLevel<-function(evidences="all"){
 
 setOntology<-function(ont="BP"){
 	if(!exists("GOSimEnv")) initialize()
+	print("-> loading files with information content for corresponding GO category")
 	assign("ontology", ont, envir=GOSimEnv)		
 	ontology<-get("ontology",envir=GOSimEnv)
 	evidences<-get("evidences",envir=GOSimEnv)		

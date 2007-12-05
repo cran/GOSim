@@ -39,6 +39,20 @@ filterGO<-function(genelist){
 	allgenes
 }
 
+# get GO graphs for GO terms associated to each gene
+getGOGraphsGenes <- function(genelist, prune=Inf){
+	allgenes = filterGO(genelist)
+	if(length(allgenes) > 0){
+		G = list()
+		for(i in 1:length(allgenes)){
+			G[[i]] = getGOGraph(allgenes[[i]]$annotation, prune)
+		}
+	}
+	else
+		stop("No gene has GO information!")
+	G
+}
+
 # precompute term similarities for all pairs of GO terms belonging to the annotated genelists x (and y)
 precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=TRUE){ 	
 	if(verbose)
@@ -51,7 +65,7 @@ precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=T
 		colnames(STerm)=gotermsy
 		for(i in 1:length(gotermsx)){						
 			for(j in 1:length(gotermsy)){          
-			STerm[i,j]<-calcTermSim(gotermsx[i],gotermsy[j], similarityTerm, verbose)
+				STerm[i,j]<-calcTermSim(gotermsx[i],gotermsy[j], similarityTerm, verbose)
 			}			
 		}		
 	} else{
@@ -72,7 +86,7 @@ precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=T
 }
 
 # compute gene similarity for a pair of genes having GO terms anno1 and anno2
-getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath", STerm=NULL, verbose=TRUE){	  
+getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath", STerm=NULL, avg=FALSE, verbose=TRUE){	  
   if(length(anno1) < length(anno2)){
 	a1<-anno1
 	a2<-anno2
@@ -108,6 +122,8 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
   if(length(a1)*length(a2) > 0){
 	if(similarity == "OA"){				
 		res<-.C("OAWrapper", ker, nrow(ker), ncol(ker), as.integer(1), ret=double(1))$ret
+		if(avg)
+			res = res/length(a2)	
 		return(res)
 	}
 	else if(similarity == "max"){				
@@ -116,6 +132,16 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
 	else if(similarity == "mean"){				
 		return(mean(ker))
 	}  
+	else if(similarity == "funSimAvg"){
+		rowMax = mean(apply(ker,1,max))
+		colMax = mean(apply(ker,2,max))
+		return(0.5*(rowMax + colMax))
+	}
+	else if(similarity == "funSimMax"){
+		rowMax = mean(apply(ker,1,max))
+		colMax = mean(apply(ker,2,max))
+		return(max(rowMax, colMax))
+	}
 	else
 		stop(paste("getGSim: Unknown gene similarity",similarity,"!"))
   }
@@ -126,7 +152,7 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
 }
 
 # compute GO gene similarity for a list of genes
-getGeneSim<-function(genelist, similarity="OA", similarityTerm="JiangConrath", normalization=TRUE, verbose=TRUE){
+getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="Lin", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=TRUE){
 	genelist <- unique(genelist)
 	if(length(genelist) < 2)
 		stop("Gene list should contain more than 2 elements!")
@@ -140,19 +166,34 @@ getGeneSim<-function(genelist, similarity="OA", similarityTerm="JiangConrath", n
 		rownames(Ker)<-colnames(Ker)
 		for(i in 1:length(allgenes)){
 			annoi<-(allgenes[[i]]$annotation)		
-			Ker[i,i]<-getGSim(annoi,annoi, similarity, similarityTerm, STerm=STerm, verbose)
+			Ker[i,i]<-getGSim(annoi,annoi, similarity, similarityTerm, STerm=STerm, avg=avg, verbose)
 			if(i > 1){
 				for(j in 1:(i-1)){
 					annoj<-(allgenes[[j]]$annotation)
 	# 			        print(paste(allgenes[[i]]$genename,allgenes[[j]]$genename))
-					Ker[i,j]<-getGSim(annoi,annoj, similarity, similarityTerm, STerm=STerm, verbose)
+					Ker[i,j]<-getGSim(annoi,annoj, similarity, similarityTerm, STerm=STerm, avg=avg, verbose)
 					Ker[j,i]<-Ker[i,j]
 				}
 			}
 		}			
-		if(normalization){
-			Kd<-sqrt(diag(Ker))
-			Ker<-Ker/(Kd%*%t(Kd))
+		if(normalization){			
+			if(method == "sqrt"){
+				Kd<-sqrt(diag(Ker))
+				Ker<-Ker/(Kd%*%t(Kd))			
+			}
+			else if(method == "Lin"){				
+				for(i in 1:ncol(Ker)){					
+					if(i > 1){
+						for(j in 1:(i-1)){
+							Ker[i,j] = 2*Ker[i,j] / (Ker[i,i] + Ker[j,j])
+							Ker[j,i] = Ker[i,j]
+						}
+					}
+				}			
+				diag(Ker) = 1	
+			}
+			else
+				stop(paste("Unknown normalization method", method))
 		}			
 	}
 	else{
