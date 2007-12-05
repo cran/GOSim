@@ -31,7 +31,9 @@
 The Gene Ontology (GO) has become one of the most widespread systems for systematically annotating gene products within the bioinformatics community and is developed by the Gene Ontology Consortium \cite{GOConsortium04}. It is specifically intended for describing gene products with a controlled and structured vocabulary. GO terms are part of a Directed Acyclic Graph (DAG), covering three orthogonal taxonomies or "aspects": \emph{molecular function, biological process} and \emph{cellular component}. Two different kinds of relationship between GO terms exist: the "is-a" relationship and the "part-of" relationship.
 Providing a standard vocabulary across any biological resources, the GO enables researchers to use this information for automated data analysis.
 
-The \emph{GOSim} package provides the researcher with various information theoretic similarity concepts for GO terms \cite{Resnik95, Resnik99, Lin98, Jiang98, Lord03, Couto2003FuSSiMeg, Couto2005GraSM}. It additionally implements different methods for computing functional similarities between gene products based on the similarties between the associated GO terms. This can, for instances, be used for clustering genes according to their biological function \cite{FroeGO05, FroeSpeerGOKer06} and thus may help to get a better understanding of the biological aspects covered by a set of genes.
+The \emph{GOSim} package \cite{Froehlich2007GOSim} provides the researcher with various information theoretic similarity concepts for GO terms \cite{Resnik95, Resnik99, Lin98, Jiang98, Lord03, Couto2003FuSSiMeg, Couto2005GraSM}. It additionally implements different methods for computing functional similarities between gene products based on the similarties between the associated GO terms. This can, for instances, be used for clustering genes according to their biological function \cite{FroeGO05, FroeSpeerGOKer06} and thus may help to get a better understanding of the biological aspects covered by a set of genes. 
+
+Since version 1.1 \emph{GOSim} additionally offers the possibility of a GO enrichment analysis using the topGO package \cite{Alexa2006topGO}. Hence, \emph{GOSim} acts now as an umbrella for different analysis methods employing the GO structure.
 
 \section{Usage of \emph{GOSim}}
 
@@ -277,7 +279,9 @@ plot(ev$clustersil,main="")
 
 A good indiciation of the clustering qualitiy can be obtained by looking at the cluster silhouettes \cite{rousseeuw87} (see Fig. \ref{Fig:GOClustersil}). This shows that clusters 1 and 2 are relatively homogenous with respect to the functional similarity of the genes contained in it, while the genes in cluster 3 are more dissimilar.
 
-We may now want to get a clearer picture of the genes involved in cluster 1. For this purpose we use a GO enrichment analysis by means of the topGO tool \cite{Alexa2006topGO}, which is integrated into \emph{GOSim} since version 1.1.
+\subsection{GO Enrichment Analysis}
+
+Since version 1.1 \emph{GOSim} also offers the possibility of a GO enrichemnt analysis. Suppose, we may now want to get a clearer picture of the genes involved in cluster 1. For this purpose we use the topGO tool \cite{Alexa2006topGO}.
 <<results=verbatim>>=
 gomap <- get("gomap",env=GOSimEnv)
 allgenes = unique(c(sample(names(gomap), 1000), genes)) # suppose these are all genes

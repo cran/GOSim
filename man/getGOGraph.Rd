@@ -2,7 +2,7 @@
 \alias{getGOGraph}
 \alias{getGOGraphsGenes}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Get graphNEL object with leaves specified in the arguments.}
+\title{ (1) Get GO graph with specified GO terms at its leave; (2) Get GO Graph with GO terms at leaves associated to one or several genes of interest.}
 \description{
 The function getGOGraph returns a graphNEL object representing the GO graph with leaves specified in the argument. The function getGOGraphsGenes returns a set of graphNEL objects. The ith graph object is created by call to getGOGraph with the GO terms associated to gene i. It hence shows for each gene, where its GO terms are located within the GO structure.
 }

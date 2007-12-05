@@ -24,6 +24,12 @@ F.~Couto, M.~Silva, and P.~Coutinho.
   Selecting Disjunctive Ancestors}.
 \newblock In {\em Conference in Information and Knowledge Management}, 2005.
 
+\bibitem{Froehlich2007GOSim}
+H.~Fr\"ohlich, N.~Speer, A.~Poustka, and T.~Beissbarth.
+\newblock {GOSim - An R-Package for Computation of Information Theoretic GO
+  Similarities Between Terms and Gene Products}.
+\newblock {\em BMC Bioinformatics}, 8:166, 2007.
+
 \bibitem{FroeSpeerGOKer06}
 H.~Fr\"ohlich, N.~Speer, and A.~Zell.
 \newblock Kernel based functional gene grouping.
