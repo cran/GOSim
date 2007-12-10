@@ -26,11 +26,13 @@ analyzeCluster = function(genesInCluster, allgenes, cutoff=0.01){
 	geneList <- factor(as.integer(allgenes %in% genesInCluster))
 	names(geneList) <- allgenes
 	GOdata = new("topGOdata", ontology = ontology, allGenes = geneList, annot = annFUN.gene2GO, gene2GO = goterms)  
-	test.stat <- new("elimCount", testStatistic = GOFisherTest, name = "Fisher test", cutOff = 0.01) 
+	test.stat <- new("elimCount", testStatistic = GOFisherTest, name = "Fisher test", cutOff = cutoff) 
 	res = getSigGroups(GOdata, test.stat) 
 	sigterms = score(res)[score(res) < cutoff]
+	sigGOs = names(sigterms)
+	genes = sapply(1:length(sigGOs), function(s) genesInTerm(GOdata, whichGO=sigGOs[s]))
 	goids<-as.list(GOTERM)
 	require(annotate)
 	goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]
-	list(GOTerms=goids[names(sigterms)], p.values = sigterms)
+	list(GOTerms=goids[names(sigterms)], p.values = sigterms, genes = genes)
 }

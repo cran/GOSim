@@ -1,4 +1,4 @@
-This is pdfeTeXk, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2007.7.30)  7 DEC 2007 09:54
+This is pdfeTeXk, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2007.7.30)  10 DEC 2007 17:17
 entering extended mode
  file:line:error style messages enabled.
 **\nonstopmode \input /mountpoints/stoneage/home/froehlih/workingAt/GOSim/GOSim
@@ -475,22 +475,26 @@ Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
-[14])
+[14]
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
-[15] (./GOSim.aux) ) 
+[15])
+Overfull \vbox (21.68121pt too high) has occurred while \output is active []
+
+
+[16] (./GOSim.aux) ) 
 Here is how much of TeX's memory you used:
- 4826 strings out of 94500
- 64704 string characters out of 1175771
+ 4827 strings out of 94500
+ 64711 string characters out of 1175771
  113772 words of memory out of 1000000
  7792 multiletter control sequences out of 10000+50000
  43753 words of font info for 98 fonts, out of 500000 for 2000
  580 hyphenation exceptions out of 8191
  35i,12n,36p,965b,313s stack positions out of 1500i,500n,5000p,200000b,5000s
 PDF statistics:
- 255 PDF objects out of 300000
- 64 named destinations out of 131072
+ 259 PDF objects out of 300000
+ 65 named destinations out of 131072
  117 words of extra memory for PDF output out of 65536
  </home/froehlih/.texmf-var/fonts/pk/ljfour/jknappen/tc/tct
 t1200.600pk></usr/share/texmf-tetex/fonts/type1/bluesky/cm/cmex10.pfb></usr/sha
@@ -504,4 +508,4 @@ x/fonts/type1/bluesky/cm/cmbxti10.pfb></usr/share/texmf-tetex/fonts/type1/blues
 ky/cm/cmbx12.pfb></usr/share/texmf-tetex/fonts/type1/bluesky/cm/cmr12.pfb></usr
 /share/texmf-tetex/fonts/type1/bluesky/cm/cmti12.pfb></usr/share/texmf-tetex/fo
 nts/type1/bluesky/cm/cmr17.pfb>
-Output written on GOSim.pdf (15 pages, 168293 bytes).
+Output written on GOSim.pdf (16 pages, 169082 bytes).

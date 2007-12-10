@@ -32,6 +32,7 @@ analyzeCluster(genesInCluster, allgenes, cutoff=0.01)
   analyzeCluster returns a list with two items:  
   \item{GOTerms}{list of significant GO terms and their description}
   \item{p.values}{vector of p-values for significant GO terms}
+  \item{genes}{list of genes associated to each GO term}
 }
 \references{Rousseeuw, P., Silhouettes: a graphical aid to the interpretation and validation of cluster analysis, J. Comp. and Applied Mathematics, 1987, 20, 53-6
 

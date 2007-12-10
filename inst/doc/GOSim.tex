@@ -474,11 +474,11 @@ Package SparseM (0.73) loaded.  To cite, see citation("SparseM")
 
 groupGOTerms: 	GOBPTerm, GOMFTerm, GOCCTerm environments built.
 
-Building most specific GOs .....	( 822 GO terms found. )
+Building most specific GOs .....	( 792 GO terms found. )
 
-Build GO DAG topology ..........	( 1853 GO terms and 3063 relations. )
+Build GO DAG topology ..........	( 1796 GO terms and 2979 relations. )
 
-Annotating nodes ...............	( 851 genes annotated to the GO terms. )
+Annotating nodes ...............	( 855 genes annotated to the GO terms. )
 
 			 -- Elim Algorithm -- 
 
@@ -489,33 +489,20 @@ Annotating nodes ...............	( 851 genes annotated to the GO terms. )
 
 	 Level 8:	2 nodes to be scored	(0 eliminated genes)
 
-	 Level 7:	3 nodes to be scored	(2 eliminated genes)
+	 Level 7:	3 nodes to be scored	(0 eliminated genes)
 
-	 Level 6:	5 nodes to be scored	(2 eliminated genes)
+	 Level 6:	5 nodes to be scored	(0 eliminated genes)
 
-	 Level 5:	5 nodes to be scored	(3 eliminated genes)
+	 Level 5:	5 nodes to be scored	(17 eliminated genes)
 
-	 Level 4:	7 nodes to be scored	(89 eliminated genes)
+	 Level 4:	7 nodes to be scored	(17 eliminated genes)
 
-	 Level 3:	7 nodes to be scored	(103 eliminated genes)
+	 Level 3:	7 nodes to be scored	(32 eliminated genes)
 
-	 Level 2:	4 nodes to be scored	(103 eliminated genes)
+	 Level 2:	4 nodes to be scored	(32 eliminated genes)
 
-	 Level 1:	1 nodes to be scored	(103 eliminated genes)
+	 Level 1:	1 nodes to be scored	(32 eliminated genes)
 $GOTerms
-$GOTerms$`GO:0007179`
-GOID: GO:0007179
-Term: transforming growth factor beta receptor signaling pathway
-Ontology: BP
-Definition: The series of molecular signals generated as a consequence
-    of a transforming growth factor beta receptor binding to one of its
-    physiological ligands.
-Synonym: TGF-beta receptor signaling pathway
-Synonym: TGF-beta receptor signalling pathway
-Synonym: TGFbeta receptor signaling pathway
-Synonym: TGFbeta receptor signalling pathway
-Synonym: transforming growth factor beta receptor signalling pathway
-
 $GOTerms$`GO:0007267`
 GOID: GO:0007267
 Term: cell-cell signaling
@@ -534,18 +521,33 @@ Definition: A change in state or activity of a cell or an organism (in
 Synonym: response to nutrients
 Synonym: nutritional response pathway
 
-$GOTerms$`GO:0007166`
-GOID: GO:0007166
-Term: cell surface receptor linked signal transduction
+$GOTerms$`GO:0007167`
+GOID: GO:0007167
+Term: enzyme linked receptor protein signaling pathway
 Ontology: BP
 Definition: Any series of molecular signals initiated by the binding of
     an extracellular ligand to a receptor on the surface of the target
-    cell.
+    cell, where the receptor possesses catalytic activity or is closely
+    associated with an enzyme such as a protein kinase.
+Synonym: enzyme linked receptor protein signalling pathway
 
 
 $p.values
- GO:0007179  GO:0007267  GO:0007584  GO:0007166 
-0.009384116 0.003712815 0.004700353 0.001042917 
+ GO:0007267  GO:0007584  GO:0007167 
+0.002452011 0.004678363 0.001929233 
+
+$genes
+$genes$`GO:0007267`
+ [1] "14406"  "171105" "1815"   "24311"  "292661" "29710"  "42258"  "43811" 
+ [9] "5023"   "50846"  "50913"  "54097"  "5467"   "57027"  "6364"   "84012" 
+[17] "8614"   "9518"  
+
+$genes$`GO:0007584`
+[1] "8614"
+
+$genes$`GO:0007167`
+ [1] "116667" "14587"  "17127"  "18709"  "207"    "24482"  "25661"  "301059"
+ [9] "30682"  "31221"  "361845" "43811"  "780"    "85256"  "9068"   "9518"  
 \end{Soutput}
 \end{Schunk}
 The result shows that the four genes are mainly involved in cell-cell signaling, in an enzyme linked receptor protein signaling pathway and in the response to nutrient.

@@ -20,7 +20,7 @@ getGOGraph<-function(term, prune=Inf){
 		stop(paste("ontology", ontology, "not known!"))			
 	if(prune != Inf){
 		dis = johnson.all.pairs.sp(G)		
-		inc = unique(sapply(terms, function(t) names(dis[t,])[dis[t,] < prune]))
+		inc = unique(unlist(sapply(term, function(t) names(dis[t,])[dis[t,] < prune])))
 		G = subGraph(nodes(G)[inc], G)
 	}	
 	G

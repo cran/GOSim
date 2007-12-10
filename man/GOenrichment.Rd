@@ -17,6 +17,7 @@ GOenrichment (allpvalues, fdr=0.05, cutoff=0.01)
 \value{  
   \item{GOTerms}{list of significant GO terms and their description}
   \item{p.values}{vector of p-values for significant GO terms}
+  \item{genes}{list of genes associated to each GO term}
 }
 \references{
 Adrian Alexa, J\"org Rahnenf\"uhrer, Thomas Lengauer: Improved scoring of functional groups from gene expression data by decorrelating GO graph structure, Bioinformatics, 2006, 22(13):1600-1607}

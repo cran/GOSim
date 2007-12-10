@@ -1,6 +1,6 @@
 Package: GOSim
-Version: 1.1.1
-Date: 2007-12-05
+Version: 1.1.2
+Date: 2007-12-10
 Title: Computation of functional similarities between GO terms and gene products; GO enrichement analysis
 Author: Holger Froehlich <h.froehlich@dkfz.de> contributions by Tim Beissbarth <t.beissbarth@dkfz.de>
 Maintainer: Holger Froehlich <h.froehlich@dkfz.de>
@@ -11,4 +11,4 @@ Description: This package implements several functions useful for
 License: GPL (>= 2)
 AAURL: http://www.dkfz.de/mga2/gosim
 biocViews: Statistics, Annotation, GO
-Packaged: Fri Dec  7 09:54:58 2007; froehlih
+Packaged: Mon Dec 10 17:17:28 2007; froehlih
