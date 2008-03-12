@@ -1,6 +1,7 @@
 %\VignetteIndexEntry{GOsim}
 %\VignetteKeyword{GOsim}
 %\VignettePackage{GOsim}
+%\VignetteDepends{Rgraphviz, topGO, annotate, cluster}
 \documentclass[12pt,a4paper]{article}
 \usepackage[round]{natbib}
 \usepackage{amsmath}

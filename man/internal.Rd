@@ -11,6 +11,7 @@
 \alias{initialize}
 \alias{pca}
 \alias{norm}
+\alias{GOGraph}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{  internal functions  }
 \description{

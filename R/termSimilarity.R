@@ -4,10 +4,40 @@ setEnrichmentFactors<-function(alpha=0.5, beta=0.5){
 	assign("betaParam",beta, envir=GOSimEnv)
 }
 
+GOGraph = function(term, env){
+    oldEdges <- vector("list", length = 0)
+    oldNodes <- vector("character", length = 0)
+    newN <- term
+    done <- FALSE
+    while (!done) {
+        newN <- newN[!(newN %in% oldNodes)]
+        if (length(newN) == 0)
+            done <- TRUE
+        else {
+            oldNodes <- c(oldNodes, newN)
+            numE <- length(newN)
+            nedges <- mget(newN, env = env, ifnotfound = NA)
+            nedges <- nedges[!is.na(nedges)]
+            oldEdges <- c(oldEdges, nedges)
+            if (length(nedges) > 0)
+                newN <- sort(unique(unlist(nedges)))
+            else newN <- NULL
+        }
+    }
+    rE <- vector("list", length = length(oldNodes))
+    names(rE) <- oldNodes
+    rE[names(oldEdges)] <- oldEdges
+    rE <- lapply(rE, function(x) match(x, oldNodes))
+    names(oldNodes) = oldNodes
+    return(new("graphNEL", nodes = oldNodes, edgeL = lapply(rE,
+        function(x) list(edges = x)), edgemode = "directed"))
+}
+
 getGOGraph<-function(term, prune=Inf){
+	if(!require(graph))
+		stop("Package graph is required for function getGOGraph")
 	if(!exists("GOSimEnv")) initialize()	
-	ontology<-get("ontology",env=GOSimEnv)
-	require(GOstats)
+	ontology<-get("ontology",env=GOSimEnv)	
 	if("package:GO.db"%in%search())
 		detach(package:GO.db)
 	if(ontology == "BP")
@@ -22,18 +52,19 @@ getGOGraph<-function(term, prune=Inf){
 		dis = johnson.all.pairs.sp(G)		
 		inc = unique(unlist(sapply(term, function(t) names(dis[t,])[dis[t,] < prune])))
 		G = subGraph(nodes(G)[inc], G)
-	}	
+	}		
 	G
 }
 
 calcICs<-function(){	
 	require(GO)
+	if(!require(annotate))
+		stop("Package annotate is required for function calcICs")
 	if(!exists("GOSimEnv")) initialize()
 	evidences<-get("evidences", envir=GOSimEnv)
 	ontology<-get("ontology",envir=GOSimEnv)
 	print(paste("calculating information contents for ontology", ontology, "using evidence codes", paste(evidences,collapse=", "), "..."))	
-	ids<-as.list(GOTERM)
-	require(annotate)
+	ids<-as.list(GOTERM)	
 	ids<-names(ids[sapply(ids, function(x) Ontology(x) == ontology)])	
 	offspring<-getOffsprings()	
 	gomap<-get("gomap",env=GOSimEnv)	
@@ -93,6 +124,8 @@ getDensityFactor<-function(term){
 
 # get FuSsiMeg depth factor
 getDepthFactor<-function(term,G){	
+	if(!require(RBGL))
+		stop("Package RBGL is required for function getDepthFactor")
 	if(!exists("GOSimEnv")) initialize()	
 	d<-sp.between(G,term,"all")[[1]]$length  	
     	D<-((d+1)/d)^get("alphaParam",envir=GOSimEnv)
@@ -101,37 +134,41 @@ getDepthFactor<-function(term,G){
 
 # compute FuSSiMeg enriched term similarity
 getEnrichedSim<-function(term1, term2){   
-    if(!exists("GOSimEnv")) initialize() 
-    ms<-getMinimumSubsumer(term1,term2)
-    IC<-get("IC", envir=GOSimEnv)
-    if(term1 != term2){    	    	
-    	G<-getGOGraph(c(term1,term2))
-        if(term1 != ms){
-		path1=sp.between(G,term1,ms)[[1]]$path # path to ms                
-		len<-length(path1)
-		delta1<-sum(sapply(path1[2:len],getDepthFactor,G)*sapply(path1[2:len],getDensityFactor)*(-diff(IC[path1])))
+	if(!require(RBGL))
+		stop("Package RBGL is required for function getDepthFactor")
+	if(!exists("GOSimEnv")) initialize() 
+	ms<-getMinimumSubsumer(term1,term2)
+	IC<-get("IC", envir=GOSimEnv)
+	if(term1 != term2){    	    	
+		G<-getGOGraph(c(term1,term2))
+		if(term1 != ms){
+			path1=sp.between(G,term1,ms)[[1]]$path # path to ms                
+			len<-length(path1)
+			delta1<-sum(sapply(path1[2:len],getDepthFactor,G)*sapply(path1[2:len],getDensityFactor)*(-diff(IC[path1])))
+		}
+		else
+			delta1<-0
+		if(term2 != ms){
+			path2<-sp.between(G,term2,ms)[[1]]$path # path to ms    	
+			len<-length(path2)
+			delta2<-sum(sapply(path2[2:len],getDepthFactor,G)*sapply(path2[2:len],getDensityFactor)*(-diff(IC[path2])))
+		}
+		else
+			delta2<-0
+		delta<-delta1 + delta2		
+		sim<-1 - min(1, delta)
 	}
 	else
-		delta1<-0
-	if(term2 != ms){
-		path2<-sp.between(G,term2,ms)[[1]]$path # path to ms    	
-		len<-length(path2)
-		delta2<-sum(sapply(path2[2:len],getDepthFactor,G)*sapply(path2[2:len],getDensityFactor)*(-diff(IC[path2])))
-	}
-	else
-		delta2<-0
-	delta<-delta1 + delta2		
-	sim<-1 - min(1, delta)
-    }
-    else
-    	sim<-1 
-    sim<-sim * IC[term1] * IC[term2]  # correction given in equation (11) of the FuSSiMeg paper
-    names(sim)<-c()   
-    sim
+		sim<-1 
+	sim<-sim * IC[term1] * IC[term2]  # correction given in equation (11) of the FuSSiMeg paper
+	names(sim)<-c()   
+	sim
 }
 
 # get GraSM disjunctive ancestors of a set of terms with ancestors an
 getDisjAnc<-function(term, an){		
+	if(!require(RBGL))
+		stop("Package RBGL is required for function getDisjAnc")
 	G<-getGOGraph(term)	
 	disan<-matrix(0,ncol=2,nrow=0)
 	for(n1 in 1:length(an)){

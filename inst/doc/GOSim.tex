@@ -1,6 +1,7 @@
 %\VignetteIndexEntry{GOsim}
 %\VignetteKeyword{GOsim}
 %\VignettePackage{GOsim}
+%\VignetteDepends{Rgraphviz, topGO, annotate, cluster}
 \documentclass[12pt,a4paper]{article}
 \usepackage[round]{natbib}
 \usepackage{amsmath}
@@ -470,15 +471,11 @@ Since version 1.1 \emph{GOSim} also offers the possibility of a GO enrichemnt an
 > analyzeCluster(c("8614", "9518", "780", "2852"), allgenes)
 \end{Sinput}
 \begin{Soutput}
-Package SparseM (0.73) loaded.  To cite, see citation("SparseM")
+Building most specific GOs .....	( 793 GO terms found. )
 
-groupGOTerms: 	GOBPTerm, GOMFTerm, GOCCTerm environments built.
+Build GO DAG topology ..........	( 1766 GO terms and 2938 relations. )
 
-Building most specific GOs .....	( 792 GO terms found. )
-
-Build GO DAG topology ..........	( 1796 GO terms and 2979 relations. )
-
-Annotating nodes ...............	( 855 genes annotated to the GO terms. )
+Annotating nodes ...............	( 861 genes annotated to the GO terms. )
 
 			 -- Elim Algorithm -- 
 
@@ -493,15 +490,15 @@ Annotating nodes ...............	( 855 genes annotated to the GO terms. )
 
 	 Level 6:	5 nodes to be scored	(0 eliminated genes)
 
-	 Level 5:	5 nodes to be scored	(17 eliminated genes)
+	 Level 5:	5 nodes to be scored	(18 eliminated genes)
 
-	 Level 4:	7 nodes to be scored	(17 eliminated genes)
+	 Level 4:	7 nodes to be scored	(18 eliminated genes)
 
-	 Level 3:	7 nodes to be scored	(32 eliminated genes)
+	 Level 3:	7 nodes to be scored	(35 eliminated genes)
 
-	 Level 2:	4 nodes to be scored	(32 eliminated genes)
+	 Level 2:	4 nodes to be scored	(35 eliminated genes)
 
-	 Level 1:	1 nodes to be scored	(32 eliminated genes)
+	 Level 1:	1 nodes to be scored	(35 eliminated genes)
 $GOTerms
 $GOTerms$`GO:0007267`
 GOID: GO:0007267
@@ -534,20 +531,20 @@ Synonym: enzyme linked receptor protein signalling pathway
 
 $p.values
  GO:0007267  GO:0007584  GO:0007167 
-0.002452011 0.004678363 0.001929233 
+0.002698636 0.009275315 0.001902717 
 
 $genes
 $genes$`GO:0007267`
- [1] "14406"  "171105" "1815"   "24311"  "292661" "29710"  "42258"  "43811" 
- [9] "5023"   "50846"  "50913"  "54097"  "5467"   "57027"  "6364"   "84012" 
-[17] "8614"   "9518"  
+ [1] "116837" "14806"  "1812"   "21405"  "24949"  "31523"  "316527" "3251"  
+ [9] "33788"  "35066"  "36905"  "40754"  "42476"  "43484"  "5467"   "6348"  
+[17] "6860"   "8614"   "9518"  
 
 $genes$`GO:0007584`
-[1] "8614"
+[1] "856021" "8614"  
 
 $genes$`GO:0007167`
- [1] "116667" "14587"  "17127"  "18709"  "207"    "24482"  "25661"  "301059"
- [9] "30682"  "31221"  "361845" "43811"  "780"    "85256"  "9068"   "9518"  
+ [1] "14268"  "175753" "1956"   "207"    "29530"  "29633"  "298545" "31221" 
+ [9] "3481"   "4233"   "544667" "65960"  "780"    "79216"  "9518"   "9702"  
 \end{Soutput}
 \end{Schunk}
 The result shows that the four genes are mainly involved in cell-cell signaling, in an enzyme linked receptor protein signaling pathway and in the response to nutrient.

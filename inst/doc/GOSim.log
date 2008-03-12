@@ -1,4 +1,4 @@
-This is pdfeTeXk, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2007.7.30)  10 DEC 2007 17:17
+This is pdfeTeXk, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2007.7.30)  12 MAR 2008 18:01
 entering extended mode
  file:line:error style messages enabled.
 **\nonstopmode \input /mountpoints/stoneage/home/froehlih/workingAt/GOSim/GOSim
@@ -306,35 +306,35 @@ File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))) (./GOSim.aux)
 \openout1 = `GOSim.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 23.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 23.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 24.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 24.
 
 (/usr/share/texmf-tetex/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 23.
-Package hyperref Info: Link coloring OFF on input line 23.
+LaTeX Font Info:    ... okay on input line 24.
+Package hyperref Info: Link coloring OFF on input line 24.
 
 (/usr/share/texmf-tetex/tex/latex/hyperref/nameref.sty
 Package: nameref 2003/12/03 v2.21 Cross-referencing by name of section
 \c@section@level=\count110
 )
-LaTeX Info: Redefining \ref on input line 23.
-LaTeX Info: Redefining \pageref on input line 23.
+LaTeX Info: Redefining \ref on input line 24.
+LaTeX Info: Redefining \pageref on input line 24.
  (./GOSim.out)
 (./GOSim.out)
 \openout3 = `GOSim.out'.
@@ -373,16 +373,16 @@ loading : Context Support Macros / PDF (2004.03.26)
 \MPnumerator=\count120
 \everyMPtoPDFconversion=\toks25
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 29.
+LaTeX Font Info:    Try loading font information for U+msa on input line 30.
  (/usr/share/texmf-tetex/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2002/01/19 v2.2g AMS font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 29.
+LaTeX Font Info:    Try loading font information for U+msb on input line 30.
 
 (/usr/share/texmf-tetex/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2002/01/19 v2.2g AMS font definitions
 )
-LaTeX Font Info:    Try loading font information for T1+aett on input line 43.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 44.
 
 (/usr/share/texmf-tetex/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
@@ -393,7 +393,7 @@ Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (10.7658pt too wide) in paragraph at lines 94--95
+Overfull \hbox (10.7658pt too wide) in paragraph at lines 95--96
 \T1/aett/m/n/12 BPIMP_IGI_IDA_IEP_IPI\T1/aer/m/n/12 , \T1/aett/m/n/12 IC-sM-FIM
 P_IGI_IDA_IEP_IPI \T1/aer/m/n/12 and \T1/aett/m/n/12 IC-sC-CIMP_IGI_IDA_IEP_IPI
 \T1/aer/m/n/12 ,
@@ -422,19 +422,19 @@ Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
 [6]
-LaTeX Font Info:    Try loading font information for TS1+aett on input line 264
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 265
 .
  (/usr/local/R/R-2-6-0/share/texmf/ts1aett.fd
 File: ts1aett.fd 
 )
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 264
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 265
 .
 
 (/usr/share/texmf-tetex/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <12> not available
-(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 264.
+(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 265.
 
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
@@ -475,26 +475,22 @@ Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
-[14]
+[14])
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
-[15])
-Overfull \vbox (21.68121pt too high) has occurred while \output is active []
-
-
-[16] (./GOSim.aux) ) 
+[15] (./GOSim.aux) ) 
 Here is how much of TeX's memory you used:
- 4827 strings out of 94500
- 64711 string characters out of 1175771
+ 4826 strings out of 94500
+ 64704 string characters out of 1175771
  113772 words of memory out of 1000000
  7792 multiletter control sequences out of 10000+50000
  43753 words of font info for 98 fonts, out of 500000 for 2000
  580 hyphenation exceptions out of 8191
  35i,12n,36p,965b,313s stack positions out of 1500i,500n,5000p,200000b,5000s
 PDF statistics:
- 259 PDF objects out of 300000
- 65 named destinations out of 131072
+ 255 PDF objects out of 300000
+ 64 named destinations out of 131072
  117 words of extra memory for PDF output out of 65536
  </home/froehlih/.texmf-var/fonts/pk/ljfour/jknappen/tc/tct
 t1200.600pk></usr/share/texmf-tetex/fonts/type1/bluesky/cm/cmex10.pfb></usr/sha
@@ -508,4 +504,4 @@ x/fonts/type1/bluesky/cm/cmbxti10.pfb></usr/share/texmf-tetex/fonts/type1/blues
 ky/cm/cmbx12.pfb></usr/share/texmf-tetex/fonts/type1/bluesky/cm/cmr12.pfb></usr
 /share/texmf-tetex/fonts/type1/bluesky/cm/cmti12.pfb></usr/share/texmf-tetex/fo
 nts/type1/bluesky/cm/cmr17.pfb>
-Output written on GOSim.pdf (16 pages, 169082 bytes).
+Output written on GOSim.pdf (15 pages, 168313 bytes).

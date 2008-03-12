@@ -27,12 +27,13 @@ getGOGraphsGenes(genelist, prune=Inf)
 \note{ directly calls the function \code{GOGraph} in the "GOstats" library 
 }
 \examples{
-\dontrun{
- G=getGOGraph(c("GO:0006955","GO:0007584"))
- library(Rgraphviz)
- plot(G)
- Gs = getGOGraphsGenes(c("207","7494"))
- plot(Gs[[1]]) # plot the first of both GO graphs
-}
+ if(require(graph)){	
+ 	G=getGOGraph(c("GO:0006955","GO:0007584"))
+ 	if(require(Rgraphviz)){ 
+ 		plot(G)
+ 		Gs = getGOGraphsGenes(c("207","7494"))
+ 		plot(Gs[[1]]) # plot the first of both GO graphs
+ 	}
+ }
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

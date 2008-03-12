@@ -10,8 +10,8 @@ GOenrichment (allpvalues, fdr=0.05, cutoff=0.01)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{  
-  \item{allpvalues}{vector of (multiple testing corrected) p-values with names as Entrez gene IDs. Instead of p-values also other scores (e.g. t-statistics) could used.}
-  \item{fdr}{FDR significane cutoff}
+  \item{allpvalues}{vector of (multiple testing corrected) p-values with names as Entrez gene IDs.}
+  \item{fdr}{FDR significance cutoff}
   \item{cutoff}{significance cutoff for GO enrichment analysis}
 }
 \value{  
@@ -30,8 +30,8 @@ Adrian Alexa, J\"org Rahnenf\"uhrer, Thomas Lengauer: Improved scoring of functi
 	allgenes = sample(names(gomap), 1000) # suppose these are all genes
 	allpvalues = runif(1000) # an these are their pvalues
 	names(allpvalues) = allgenes
-
-	GOenrichment(allpvalues) # GO enrichment analysis
+	if(require(topGO) & require(annotate))
+		GOenrichment(allpvalues) # GO enrichment analysis
 	}
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

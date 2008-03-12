@@ -29,10 +29,12 @@ calcICs()
 \seealso{\code{\link{setEvidenceLevel}}}
 \examples{		
 \dontrun{
-  setEvidenceLevel("all")
-  setOntology("CC") # important: setOntology assumes that the IC file already exists. To prevent an error message we need this workaround
-  setEvidenceLevel("IMP")
-  calcICs()
+  if(require("annotate")){	
+	setEvidenceLevel("all")
+	setOntology("CC") # important: setOntology assumes that the IC file already exists. To prevent an error message we need this workaround
+	setEvidenceLevel("IMP")
+	calcICs()
+  }
 } # --> this may take some time ...
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

@@ -50,12 +50,14 @@ n x n matrix (n = number of GO terms) with similarities between GO terms scaled 
 
  # Lin's method
  getTermSim(c("GO:0006955","GO:0007584"),method="Lin")
- # Couto's method combined with Jiang-Conrath distance
- getTermSim(c("GO:0006955","GO:0007584"),method="CoutoJiangConrath") 
+ if(require(graph)){
+ 	# Couto's method combined with Jiang-Conrath distance
+ 	getTermSim(c("GO:0006955","GO:0007584"),method="CoutoJiangConrath") 
 
- # set enrichment factors
- setEnrichmentFactors(alpha=0.1,beta=0.5) 
- getTermSim(c("GO:0006955","GO:0007584"),method="CoutoEnriched")
+ 	# set enrichment factors
+ 	setEnrichmentFactors(alpha=0.1,beta=0.5) 
+ 	getTermSim(c("GO:0006955","GO:0007584"),method="CoutoEnriched")
+ }
 }
 \keyword{ file }% at least one, from doc/KEYWORDS
 

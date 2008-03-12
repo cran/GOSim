@@ -1,7 +1,7 @@
 # perform a GO gene set enrichment analysis using topGO
 GOenrichment = function(allpvalues, fdr=0.05, cutoff=0.01){	
-	require(topGO)
-	require(annotate)
+	if(!require(topGO) | !require(annotate))
+		stop("Packages topGO and annotate required for function GOenrichment")
 	ontology = get("ontology", envir=GOSimEnv)
 	gomap <- get("gomap",env=GOSimEnv)	
 	anno <- gomap[names(allpvalues)]

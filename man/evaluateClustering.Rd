@@ -51,12 +51,15 @@ Adrian Alexa, J\"org Rahnenf\"uhrer, Thomas Lengauer: Improved scoring of functi
 	plot(hc) # plot the cluster tree
 	cl = cutree(hc, k=3) # take 3 clusters	
 
-	ev = evaluateClustering(cl, sim) # evaluate the clustering
-	print(ev$clusterstats) # print out some statistics
-	plot(ev$clustersil,main="") # plot the cluster silhouettes
+	if(require(cluster)){
+		ev = evaluateClustering(cl, sim) # evaluate the clustering
+		print(ev$clusterstats) # print out some statistics
+		plot(ev$clustersil,main="") # plot the cluster silhouettes
+	}
 	
 	# investigate cluster 1 further	
-	analyzeCluster(genesOfInterest[cl == 1], allgenes, cutoff=0.05) # print out what cluster 1 is about
+	if(require(topGO))
+		analyzeCluster(genesOfInterest[cl == 1], allgenes, cutoff=0.05) # print out what cluster 1 is about
 	}
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

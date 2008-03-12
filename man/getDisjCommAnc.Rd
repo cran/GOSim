@@ -24,6 +24,7 @@ Character vector of GO terms
 
 \seealso{ \code{\link{getTermSim}},\code{\link{getGOGraph}}, \code{link{setOntology}}  }
 \examples{
-	getDisjCommAnc("GO:0006955","GO:0007584")
+	if(require(graph))	
+		getDisjCommAnc("GO:0006955","GO:0007584")
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

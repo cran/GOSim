@@ -1,11 +1,12 @@
 # get GO information for a list of genes
 getGOInfo<-function(geneIDs){	
 	require(GO)
+	if(!require(annotate))
+		stop("Package annotate is required for function getGOInfo")
 	if(!exists("GOSimEnv")) initialize()	
 	ontology<-get("ontology",env=GOSimEnv)
 	gomap<-get("gomap",env=GOSimEnv)
-	goids<-as.list(GOTERM)
-	require(annotate)
+	goids<-as.list(GOTERM)	
 	goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]	
 	anno<-gomap[as.character(geneIDs)]
 	goterms<-sapply(anno,function(x) names(x))		
@@ -290,7 +291,8 @@ selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=TRUE){
 		return(pcares)
 	}
 	else if(method == "clustering"){    
-		require(mclust)
+		if(!require(mclust))
+			stop("Package mclust required with method 'clustering' for function selectPrototypes")
 		if(is.null(data))
 			stop("You need to specify a data matrix with feature vectors")
 		if(verbose)
