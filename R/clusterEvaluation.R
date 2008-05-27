@@ -20,7 +20,7 @@ evaluateClustering<-function(clust, Sim){
 # perform a GO gene set enrichment analysis for a specific cluster using topGO
 analyzeCluster = function(genesInCluster, allgenes, cutoff=0.01){
 	if(!require(topGO) | !require(annotate))		
-		stop("Packages topGO and annotate required for function analyzeCluster")
+		stop("Packages topGO and annotate required for function analyzeCluster")	
 	ontology = get("ontology", envir=GOSimEnv)	
 	gomap <- get("gomap",env=GOSimEnv)
 	anno <- gomap[as.character(allgenes)]
@@ -33,6 +33,8 @@ analyzeCluster = function(genesInCluster, allgenes, cutoff=0.01){
 	sigterms = score(res)[score(res) < cutoff]
 	sigGOs = names(sigterms)
 	genes = sapply(1:length(sigGOs), function(s) genesInTerm(GOdata, whichGO=sigGOs[s]))
+	if("package:GO.db"%in%search())
+		detach(package:GO.db)
 	goids<-as.list(GOTERM)	
 	goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]
 	list(GOTerms=goids[names(sigterms)], p.values = sigterms, genes = genes)

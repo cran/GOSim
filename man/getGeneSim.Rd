@@ -22,7 +22,6 @@ getGeneSim(genelist, similarity = "funSimMax", similarityTerm = "Lin", normaliza
 \details{
    The method to calculate the pairwise functional similarity between
    gene products can either be: 
-\begin{ldescription}
 \item{"max"}{the maximum similarity between any two GO terms}
 \item{"mean"}{the average similarity between any two GO terms}
 \item{funSimMax}{ the average of best matching GO term similarities. Take the maximum of the scores achieved by assignments of GO terms from gene 1 to gene 2 and vice versa.}
@@ -30,7 +29,6 @@ getGeneSim(genelist, similarity = "funSimMax", similarityTerm = "Lin", normaliza
 \item{"OA"}{the optimal assignment (maximally weighted bipartite
   matching) of GO terms associated to the gene having fewer annotation
   to the GO terms of the other gene.}
-\end{ldescription}
 }
 \value{
   n x n similarity matrix (n = number of genes)

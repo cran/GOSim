@@ -17,7 +17,6 @@ getTermSim(termlist, method = "JiangConrath", verbose = TRUE)
 }
 \details{
   Currently the following methods for computing GO term similarities are implemented: 
-\begin{ldescription}
 \item{"Resnik"}{information content of minimum subsumer (ICms) [1]}
 \item{"JiangConrath"}{\eqn{1 - \min(1, IC(term1) - 2ICms + IC(term2))} [2]}
 \item{"Lin"}{\eqn{\frac{2ICms}{(IC(term1) + IC(term2))}} [3]}
@@ -25,7 +24,6 @@ getTermSim(termlist, method = "JiangConrath", verbose = TRUE)
 \item{"CoutoResnik"}{average information content of common disjunctive ancestors of \code{term1} and \code{term2} (ICshare) [5]}
 \item{"CoutoJiangConrath"}{\eqn{1 - \min(1, IC(term1) -2ICshare + IC(term2))} [5]}
 \item{"CoutoLin"}{\eqn{\frac{2ICshare}{(IC(term1) + IC(term2))}} [5]}
-\end{ldescription}
 }
 \value{
 n x n matrix (n = number of GO terms) with similarities between GO terms scaled to [0,1]. If a GO term does not exist for the currently set ontology, the similarity is set to "NA".

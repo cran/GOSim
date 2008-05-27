@@ -19,11 +19,9 @@ setOntology(ont = "BP")
 }
 \details{
   The following ontologies can be used:
-\begin{ldescription}
 \item{"BP"}{ biological process}
 \item{"MF"}{ molecular function}
 \item{"CC"}{ cellular component}
-\end{ldescription}
 }
 \value{
  none.

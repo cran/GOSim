@@ -3,10 +3,8 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Heuristic selection of prototypes and dimensionality reduction of feature vectors. }
 \description{
-\begin{enumerate}
 \item Heuristic selection of prototypes 
 \item Dimensionality reduction of feature vectors
-\end{enumerate}
 }
 \usage{
 selectPrototypes(n = 250, method = "frequency", data = NULL, verbose = TRUE)

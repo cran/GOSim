@@ -4,6 +4,8 @@ getGOInfo<-function(geneIDs){
 	if(!require(annotate))
 		stop("Package annotate is required for function getGOInfo")
 	if(!exists("GOSimEnv")) initialize()	
+	if("package:GO.db"%in%search())
+		detach(package:GO.db)
 	ontology<-get("ontology",env=GOSimEnv)
 	gomap<-get("gomap",env=GOSimEnv)
 	goids<-as.list(GOTERM)	
@@ -30,7 +32,7 @@ filterGO<-function(genelist){
 	k<-1
 	allgenes<-list()
 	for(i in 1:length(genelist)){		
-		annoi<-gomap[[as.character(genelist[i])]]						
+		annoi<-gomap[[match(as.character(genelist[i]), names(gomap))]]
 		annoi<-intersect(names(annoi), as.character(ids))				
 		if(length(annoi) > 0){
 			allgenes[[k]]<-list(annotation=annoi,genename=as.character(genelist[i]))
@@ -254,7 +256,9 @@ getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", simi
 # method to a) select prototype genes b) to perform subselection of prototypes via i) PCA ii) clustering
 selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=TRUE){
 	if(!exists("GOSimEnv")) initialize()	
-	ontology<-get("ontology",env=GOSimEnv)  
+	ontology<-get("ontology",env=GOSimEnv) 
+	if("package:GO.db"%in%search())
+		detach(package:GO.db) 
 	if(method == "frequency"){
 		if(verbose)
 			print("Automatic determination of prototypes using most frequent genes ...")

@@ -30,12 +30,10 @@ The PCA postprocessing determines the principal components that can
 explain at least 95\% of the total variance in the feature space. 
 
 The method to calculate the functional similarity of a gene to a certain prototype can either be
-\begin{ldescription}
 \item{"max"}{the maximum similarity between any two GO terms}
 \item{"OA"}{the optimal assignment (maximally weighted bipartite
   matching) of GO terms associated to the gene having fewer annotation
   to the GO terms of the other gene.}
-\end{ldescription}
 }
 \value{
 List with items

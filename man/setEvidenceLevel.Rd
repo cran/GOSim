@@ -14,7 +14,6 @@ setEvidenceLevel(evidences = "all")
 }
 \details{
    Each evidence code can be one of:
-\begin{ldescription}
 \item{"IMP"}{inferred from mutant phenotype}
 \item{"IGI"}{inferred from genetic interaction}
 \item{"IPI"}{inferred from physical interaction}
@@ -26,7 +25,6 @@ setEvidenceLevel(evidences = "all")
 \item{"NAS"}{non-traceable author statement}
 \item{"ND"}{no biological data available}
 \item{"IC"}{inferred by curator}
-\end{ldescription} 
 Entrez Gene ids for which no GO associations exist are left out of the environment.
 
 Mappings were based on data provided by:

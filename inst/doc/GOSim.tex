@@ -20,7 +20,7 @@
 \newcommand{\Rfunction}[1]{{\texttt{#1}}}
 \newcommand{\Rpackage}[1]{{\textit{#1}}}
 
-\usepackage{/usr/local/R/R-2-6-0/share/texmf/Sweave}
+\usepackage{/usr/share/R/share/texmf/Sweave}
 \begin{document}
 \author{Holger Fr\"ohlich}
 
@@ -64,11 +64,11 @@ Let us examine the similarity of the GO terms for genes "8614" and "2852" in gre
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.3007260  0.3007260  0.3097532  0.3596323
-GO:0007267  0.3007260  1.0000000  0.3007260  0.3007260  0.3007260
-GO:0007584  0.3007260  0.3007260  1.0000000  0.3007260  0.3007260
-GO:0007165  0.3097532  0.3007260  0.3007260  1.0000000  0.3097532
-GO:0007186  0.3596323  0.3007260  0.3007260  0.3097532  1.0000000
+GO:0007166  1.0000000  0.3044938  0.1635417  0.3130060  0.3616870
+GO:0007267  0.3044938  1.0000000  0.1635417  0.3044938  0.3044938
+GO:0007584  0.1635417  0.1635417  1.0000000  0.1635417  0.1635417
+GO:0007165  0.3130060  0.3044938  0.1635417  1.0000000  0.3130060
+GO:0007186  0.3616870  0.3044938  0.1635417  0.3130060  1.0000000
 \end{Soutput}
 \end{Schunk}
 This calculates Resnik's pairwise similarity between GO terms \cite{Resnik95,Resnik99}:
@@ -89,7 +89,7 @@ i.e. as the negative logarithm of the probability of observing $\hat{t}$. The in
 \end{Sinput}
 \begin{Soutput}
 GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186 
-  5.262643   6.689617   9.698926   4.532743   5.614946 
+  5.327705   6.774727   9.416946   4.610626   5.684569 
 \end{Soutput}
 \end{Schunk}
 This loads the information contents of all GO terms within "biological process". Likewise, the data files {\tt ICsMFall} and {\tt ICsCCall} contain the information contents of all GO terms within "molecular function" and "cellular component". If only GO terms having evidence codes "IMP" (inferred from mutant phenotype), "IGI", (inferred from genetic interaction), "IDA" (inferred from direct assay), "IEP" (inferred from expression pattern) or "IPI" (inferred from physical interaction) are wanted, one can use the data files {\tt ICsBPIMP\_IGI\_IDA\_IEP\_IPI}, {\tt ICsMFIMP\_IGI\_IDA\_IEP\_IPI} and {\tt ICsCCIMP\_IGI\_IDA\_IEP\_IPI}, respectively. The information contents for GO terms filtered with respect to different evidence codes must be calculated explicitely using the function {\tt calcICs}. Please refer to the manual pages for details.
@@ -102,7 +102,7 @@ For the similarity computation in (Eq.: \ref{eq:Resnik}) normalized information 
 \end{Sinput}
 \begin{Soutput}
 GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186 
- 0.3596323  0.4571471  0.6627937  0.3097532  0.3837076 
+ 0.3616870  0.4599224  0.6392973  0.3130060  0.3859138 
 \end{Soutput}
 \end{Schunk}
 
@@ -114,11 +114,11 @@ To continue our example from above, let us also calculate Jiang and Conrath's pa
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.7846727  0.5790261  0.9501210  0.9759247
-GO:0007267  0.7846727  1.0000000  0.4815112  0.8345517  0.7605973
-GO:0007584  0.5790261  0.4815112  1.0000000  0.6289051  0.5549508
-GO:0007165  0.9501210  0.8345517  0.6289051  1.0000000  0.9260457
-GO:0007186  0.9759247  0.7605973  0.5549508  0.9260457  1.0000000
+GO:0007166  1.0000000  0.7873782  0.3260990  0.9513190  0.9757733
+GO:0007267  0.7873782  1.0000000  0.2278636  0.8360592  0.7631515
+GO:0007584  0.3260990  0.2278636  1.0000000  0.3747800  0.3018723
+GO:0007165  0.9513190  0.8360592  0.3747800  1.0000000  0.9270922
+GO:0007186  0.9757733  0.7631515  0.3018723  0.9270922  1.0000000
 \end{Soutput}
 \end{Schunk}
 Jiang and Conrath's similarity measure is defined as
@@ -135,11 +135,11 @@ Likewise, we can also compute Lin's pairwise similarity between GO terms \cite{L
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.7363703  0.5882598  0.9254854  0.9676120
-GO:0007267  0.7363703  1.0000000  0.5370391  0.7842636  0.7152865
-GO:0007584  0.5882598  0.5370391  1.0000000  0.6184298  0.5747265
-GO:0007165  0.9254854  0.7842636  0.6184298  1.0000000  0.8933547
-GO:0007186  0.9676120  0.7152865  0.5747265  0.8933547  1.0000000
+GO:0007166  1.0000000  0.7412131  0.3267617  0.9278472  0.9675940
+GO:0007267  0.7412131  1.0000000  0.2975596  0.7878966  0.7199830
+GO:0007584  0.3267617  0.2975596  1.0000000  0.3434655  0.3190400
+GO:0007165  0.9278472  0.7878966  0.3434655  1.0000000  0.8956851
+GO:0007186  0.9675940  0.7199830  0.3190400  0.8956851  1.0000000
 \end{Soutput}
 \end{Schunk}
 It is defined as:
@@ -194,11 +194,11 @@ Likewise, Jiang-Conraths's and Lin's measures can be extended as well by replaci
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.3007260  0.2307924  0.3007260  0.3097532
-GO:0007267  0.3007260  1.0000000  0.2307924  0.3007260  0.3007260
-GO:0007584  0.2307924  0.2307924  1.0000000  0.2307924  0.2307924
-GO:0007165  0.3007260  0.3007260  0.2307924  1.0000000  0.3007260
-GO:0007186  0.3097532  0.3007260  0.2307924  0.3007260  1.0000000
+GO:0007166  1.0000000  0.3044938  0.1635417  0.3044938  0.3130060
+GO:0007267  0.3044938  1.0000000  0.1635417  0.3044938  0.3044938
+GO:0007584  0.1635417  0.1635417  1.0000000  0.1635417  0.1635417
+GO:0007165  0.3044938  0.3044938  0.1635417  1.0000000  0.3044938
+GO:0007186  0.3130060  0.3044938  0.1635417  0.3044938  1.0000000
 \end{Soutput}
 \end{Schunk}
 
@@ -211,11 +211,11 @@ Finally, it should be mentioned that also the depth and density enriched term si
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.1432361  0.1760624  0.1080692  0.1361099
-GO:0007267  0.1432361  1.0000000  0.2061625  0.1276006  0.1504305
-GO:0007584  0.1760624  0.2061625  1.0000000  0.1577771  0.1843771
-GO:0007165  0.1080692  0.1276006  0.1577771  1.0000000  0.1136813
-GO:0007186  0.1361099  0.1504305  0.1843771  0.1136813  1.0000000
+GO:0007166  1.0000000  0.1450357  0.1478647  0.1098829  0.1377067
+GO:0007267  0.1450357  1.0000000  0.1706526  0.1297457  0.1523684
+GO:0007584  0.1478647  0.1706526  1.0000000  0.1338441  0.1544579
+GO:0007165  0.1098829  0.1297457  0.1338441  1.0000000  0.1156220
+GO:0007186  0.1377067  0.1523684  0.1544579  0.1156220  1.0000000
 \end{Soutput}
 \end{Schunk}
 
@@ -348,8 +348,8 @@ The resulting similarity matrix is:
 \end{Sinput}
 \begin{Soutput}
           8614      2852
-8614 1.0000000 0.5839585
-2852 0.5839585 1.0000000
+8614 1.0000000 0.5851635
+2852 0.5851635 1.0000000
 \end{Soutput}
 \end{Schunk}
 
@@ -361,8 +361,8 @@ Note the difference to a gene similarity that is just based on the maximum GO te
 \end{Sinput}
 \begin{Soutput}
          8614     2852
-8614 1.000000 0.967612
-2852 0.967612 1.000000
+8614 1.000000 0.967594
+2852 0.967594 1.000000
 \end{Soutput}
 \begin{Sinput}
 > getGeneSim(c("8614", "2852"), similarity = "funSimMax", similarityTerm = "Lin", 
@@ -370,8 +370,8 @@ Note the difference to a gene similarity that is just based on the maximum GO te
 \end{Sinput}
 \begin{Soutput}
           8614      2852
-8614 1.0000000 0.9465487
-2852 0.9465487 1.0000000
+8614 1.0000000 0.9477206
+2852 0.9477206 1.0000000
 \end{Soutput}
 \end{Schunk}
 
@@ -471,11 +471,11 @@ Since version 1.1 \emph{GOSim} also offers the possibility of a GO enrichemnt an
 > analyzeCluster(c("8614", "9518", "780", "2852"), allgenes)
 \end{Sinput}
 \begin{Soutput}
-Building most specific GOs .....	( 793 GO terms found. )
+Building most specific GOs .....	( 877 GO terms found. )
 
-Build GO DAG topology ..........	( 1766 GO terms and 2938 relations. )
+Build GO DAG topology ..........	( 2016 GO terms and 3474 relations. )
 
-Annotating nodes ...............	( 861 genes annotated to the GO terms. )
+Annotating nodes ...............	( 802 genes annotated to the GO terms. )
 
 			 -- Elim Algorithm -- 
 
@@ -486,20 +486,33 @@ Annotating nodes ...............	( 861 genes annotated to the GO terms. )
 
 	 Level 8:	2 nodes to be scored	(0 eliminated genes)
 
-	 Level 7:	3 nodes to be scored	(0 eliminated genes)
+	 Level 7:	3 nodes to be scored	(2 eliminated genes)
 
-	 Level 6:	5 nodes to be scored	(0 eliminated genes)
+	 Level 6:	5 nodes to be scored	(2 eliminated genes)
 
-	 Level 5:	5 nodes to be scored	(18 eliminated genes)
+	 Level 5:	5 nodes to be scored	(2 eliminated genes)
 
-	 Level 4:	7 nodes to be scored	(18 eliminated genes)
+	 Level 4:	7 nodes to be scored	(90 eliminated genes)
 
-	 Level 3:	7 nodes to be scored	(35 eliminated genes)
+	 Level 3:	7 nodes to be scored	(102 eliminated genes)
 
-	 Level 2:	4 nodes to be scored	(35 eliminated genes)
+	 Level 2:	4 nodes to be scored	(102 eliminated genes)
 
-	 Level 1:	1 nodes to be scored	(35 eliminated genes)
+	 Level 1:	1 nodes to be scored	(102 eliminated genes)
 $GOTerms
+$GOTerms$`GO:0007179`
+GOID: GO:0007179
+Term: transforming growth factor beta receptor signaling pathway
+Ontology: BP
+Definition: The series of molecular signals generated as a consequence
+    of a transforming growth factor beta receptor binding to one of its
+    physiological ligands.
+Synonym: TGF-beta receptor signaling pathway
+Synonym: TGF-beta receptor signalling pathway
+Synonym: TGFbeta receptor signaling pathway
+Synonym: TGFbeta receptor signalling pathway
+Synonym: transforming growth factor beta receptor signalling pathway
+
 $GOTerms$`GO:0007267`
 GOID: GO:0007267
 Term: cell-cell signaling
@@ -508,43 +521,44 @@ Definition: Any process that mediates the transfer of information from
     one cell to another.
 Synonym: cell-cell signalling
 
-$GOTerms$`GO:0007584`
-GOID: GO:0007584
-Term: response to nutrient
-Ontology: BP
-Definition: A change in state or activity of a cell or an organism (in
-    terms of movement, secretion, enzyme production, gene expression,
-    etc.) as a result of a nutrient stimulus.
-Synonym: response to nutrients
-Synonym: nutritional response pathway
-
-$GOTerms$`GO:0007167`
-GOID: GO:0007167
-Term: enzyme linked receptor protein signaling pathway
+$GOTerms$`GO:0007166`
+GOID: GO:0007166
+Term: cell surface receptor linked signal transduction
 Ontology: BP
 Definition: Any series of molecular signals initiated by the binding of
     an extracellular ligand to a receptor on the surface of the target
-    cell, where the receptor possesses catalytic activity or is closely
-    associated with an enzyme such as a protein kinase.
-Synonym: enzyme linked receptor protein signalling pathway
+    cell.
 
 
 $p.values
- GO:0007267  GO:0007584  GO:0007167 
-0.002698636 0.009275315 0.001902717 
+ GO:0007179  GO:0007267  GO:0007166 
+0.009956382 0.002782346 0.001290805 
 
 $genes
+$genes$`GO:0007179`
+[1] "114249" "9518"  
+
 $genes$`GO:0007267`
- [1] "116837" "14806"  "1812"   "21405"  "24949"  "31523"  "316527" "3251"  
- [9] "33788"  "35066"  "36905"  "40754"  "42476"  "43484"  "5467"   "6348"  
-[17] "6860"   "8614"   "9518"  
+ [1] "14602"  "18015"  "18417"  "21410"  "24947"  "25360"  "2645"   "294292"
+ [9] "29483"  "30819"  "41491"  "42499"  "4340"   "51552"  "57463"  "6647"  
+[17] "8614"   "9518"  
 
-$genes$`GO:0007584`
-[1] "856021" "8614"  
-
-$genes$`GO:0007167`
- [1] "14268"  "175753" "1956"   "207"    "29530"  "29633"  "298545" "31221" 
- [9] "3481"   "4233"   "544667" "65960"  "780"    "79216"  "9518"   "9702"  
+$genes$`GO:0007166`
+ [1] "100137117" "114249"    "12267"     "14063"     "14602"     "16160"    
+ [7] "16169"     "170457"    "171334"    "172689"    "18015"     "18101"    
+[13] "182197"    "18330"     "18358"     "187358"    "188146"    "189895"   
+[19] "191562"    "19214"     "19664"     "20218"     "207"       "20849"    
+[25] "21415"     "24947"     "25360"     "257938"    "258019"    "258020"   
+[31] "258065"    "258160"    "258218"    "258309"    "258328"    "258487"   
+[37] "258488"    "258504"    "258801"    "258972"    "258980"    "258984"   
+[43] "259953"    "26108"     "2784"      "282821"    "2852"      "288850"   
+[49] "289175"    "292609"    "293075"    "293327"    "294197"    "29555"    
+[55] "300639"    "309574"    "315571"    "343171"    "353181"    "364054"   
+[61] "366802"    "3680"      "4015"      "404310"    "405075"    "405098"   
+[67] "405123"    "405281"    "405352"    "405362"    "40975"     "43803"    
+[73] "501735"    "50964"     "53836"     "54140"     "563556"    "57250"    
+[79] "64106"     "64270"     "666118"    "682325"    "691791"    "7041"     
+[85] "780"       "84050"     "8483"      "8614"      "8915"      "9518"     
 \end{Soutput}
 \end{Schunk}
 The result shows that the four genes are mainly involved in cell-cell signaling, in an enzyme linked receptor protein signaling pathway and in the response to nutrient.

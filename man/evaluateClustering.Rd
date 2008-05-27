@@ -14,7 +14,7 @@ analyzeCluster(genesInCluster, allgenes, cutoff=0.01)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{clust}{ grouping = vector of integer or character }
+  \item{clust}{ vector of cluster labels (integer or character) for each gene }
   \item{Sim}{ similarity matrix }
 
   \item{genesInCluster}{Entrez gene IDs of genes in the cluster to investigate}
