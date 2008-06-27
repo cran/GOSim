@@ -16,7 +16,7 @@ calcICs()
    This functions should only be invoked, if one wants to calculate the
    information content for GO terms with respect to combinations of
    evidence codes other than the precomputed ones or, if a 
-   new version of the "GO" library has been installed.
+   new version of the organism annotation packages has been installed.
    By default the information contents are precomputed using all
    evidence codes and evidence codes "IMP, IGI, IDA, IEP, IPI" together.   
 }

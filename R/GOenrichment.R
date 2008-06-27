@@ -5,7 +5,9 @@ GOenrichment = function(allpvalues, fdr=0.05, cutoff=0.01){
 	ontology = get("ontology", envir=GOSimEnv)
 	gomap <- get("gomap",env=GOSimEnv)	
 	anno <- gomap[names(allpvalues)]
-	goterms <- sapply(anno,function(x) names(x))
+	goterms = sapply(anno, function(x) sapply(x, function(y) y$Ontology == ontology))
+	goterms <-sapply(goterms, function(x) names(x[which(x)]))
+	goterms <- goterms[sapply(goterms,length) > 0]
 	topdiffgenes <- function(allScore) {
        		return(allScore < fdr)
      	}
@@ -15,7 +17,7 @@ GOenrichment = function(allpvalues, fdr=0.05, cutoff=0.01){
 	sigterms = score(res)[score(res) < cutoff]
 	sigGOs = names(sigterms)
 	genes = sapply(1:length(sigGOs), function(s) genesInTerm(GOdata, whichGO=sigGOs[s]))
-	goids<-as.list(GOTERM)	
-	goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]
-	list(GOTerms=goids[names(sigterms)], p.values = sigterms, genes = genes)
+	goids<- toTable(GOTERM)	
+	anno = unique(goids[goids[,"go_id"] %in% names(sigterms), c("go_id","Term","Ontology","Definition")])
+	list(GOTerms=anno, p.values = sigterms, genes = genes)
 }

@@ -1,25 +1,17 @@
 # get GO information for a list of genes
 getGOInfo<-function(geneIDs){	
-	require(GO)
+	require(GO.db)
 	if(!require(annotate))
 		stop("Package annotate is required for function getGOInfo")
-	if(!exists("GOSimEnv")) initialize()	
-	if("package:GO.db"%in%search())
-		detach(package:GO.db)
+	if(!exists("GOSimEnv")) initialize()		
 	ontology<-get("ontology",env=GOSimEnv)
-	gomap<-get("gomap",env=GOSimEnv)
-	goids<-as.list(GOTERM)	
-	goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]	
-	anno<-gomap[as.character(geneIDs)]
-	goterms<-sapply(anno,function(x) names(x))		
-	if(class(goterms)=="list"){		
-		goterms<- sapply(goterms,function(x) intersect(names(goids),x))
-		info<-sapply(goterms, function(x) goids[x])
-	}
-	else{		
-		goterms<-intersect(goterms, names(goids))
-		info<-goids[goterms]
-	}	
+	gomap<-get("gomap",env=GOSimEnv)	
+	gomap = gomap[geneIDs]		
+	goterms = sapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
+	goterms <-sapply(goterms, function(x) names(x[which(x)]))
+	goterms <- goterms[sapply(goterms,length) > 0]
+	goids<- toTable(GOTERM)				
+	info = sapply(goterms, function(g) unique(goids[goids[,"go_id"] %in% g,c("go_id", "Term", "Definition")]))
 	info
 }
 
@@ -230,11 +222,11 @@ getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max",
 	}			
 	rownames(PHI)<-sapply(allgenes,function(x) x$genename)
 	colnames(PHI)<-sapply(proto,function(x) x$genename)	
-	if(pca){    
+	if(pca & (length(proto) > 2)){    
 		pcares<-selectPrototypes(method="pca",data=PHI,verbose=verbose)		
 		PHI<-pcares$features
 		proto<-pcares$pcs    
-	}
+	}	
 	if(normalization)
 		PHI<-t(apply(PHI,1,function(x) return(x/(norm(x)+1e-10))))		  
 	list(features=PHI,prototypes=proto)
@@ -244,7 +236,7 @@ getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max",
 getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", similarityTerm="JiangConrath", pca=TRUE, normalization=TRUE, verbose=TRUE){
 	genelist<-unique(genelist)	
 	if(length(genelist) < 2)
-		stop("Gene list should contain more than 2 elements!")
+		stop("Gene list should contain at least 2 elements!")
 	res<-getGeneFeaturesPrototypes(genelist, prototypes, similarity, similarityTerm, pca, normalization, verbose)
 	PHI<-res$features		
 	Ker<-PHI%*%t(PHI)
@@ -256,34 +248,42 @@ getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", simi
 # method to a) select prototype genes b) to perform subselection of prototypes via i) PCA ii) clustering
 selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=TRUE){
 	if(!exists("GOSimEnv")) initialize()	
-	ontology<-get("ontology",env=GOSimEnv) 
-	if("package:GO.db"%in%search())
-		detach(package:GO.db) 
+	ontology<-get("ontology",env=GOSimEnv) 	
 	if(method == "frequency"){
 		if(verbose)
-			print("Automatic determination of prototypes using most frequent genes ...")
-		locus<-as.list(GOENTREZID)
-		goids<-as.list(GOTERM)
-		goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]		
-		locusnames<-intersect(names(locus),names(goids))
-		locus<-locus[locusnames]
-		lt<-table(unlist(locus))
-		res<-sort(lt,decreasing=TRUE)
+			print("Automatic determination of prototypes using genes with most frequent annotation ...")	
+		gomap<-get("gomap",env=GOSimEnv)
+		goterms = sapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
+		goterms <-sapply(goterms, function(x) names(x[which(x)]))
+		freq <- sapply(goterms,length)
+		res = sort(freq, decreasing=TRUE)		
+# 		locus<-as.list(GOENTREZID)
+# 		goids<-as.list(GOTERM)
+# 		goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]		
+# 		locusnames<-intersect(names(locus),names(goids))
+# 		locus<-locus[locusnames]
+# 		lt<-table(unlist(locus))
+# 		res<-sort(lt,decreasing=TRUE)
 		prototypes<-names(res)[1:n]
 		return(prototypes)
 	}
 	else if(method == "random"){
 		if(verbose)		
-			print("Automatic determination of prototypes using random genes ...")
-		locus<-as.list(GOENTREZID)
-		goids<-as.list(GOTERM)
-		goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]		
-		locusnames<-intersect(names(locus),names(goids))
-		locus<-locus[locusnames]
-		lt<-names(table(unlist(locus)))
-		set.seed(0)
-		ridx<-round(runif(n,min=1,max=length(lt)))
-		prototypes<-lt[ridx]		
+			print("Automatic determination of prototypes using random genes from the current ontology...")
+		gomap<-get("gomap",env=GOSimEnv)
+		goterms = sapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
+		goterms <-sapply(goterms, function(x) names(x[which(x)]))
+		goterms <- goterms[sapply(goterms,length) > 0]
+		prototypes = sample(names(goterms), n)
+# 		locus<-as.list(GOENTREZID)
+# 		goids<-as.list(GOTERM)
+# 		goids<-goids[sapply(goids, function(x) Ontology(x) == ontology)]		
+# 		locusnames<-intersect(names(locus),names(goids))
+# 		locus<-locus[locusnames]
+# 		lt<-names(table(unlist(locus)))
+# 		set.seed(0)
+# 		ridx<-round(runif(n,min=1,max=length(lt)))
+# 		prototypes<-lt[ridx]		
 		return(prototypes)
 	}
 	else if(method == "pca"){

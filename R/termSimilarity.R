@@ -16,7 +16,7 @@ GOGraph = function(term, env){
         else {
             oldNodes <- c(oldNodes, newN)
             numE <- length(newN)
-            nedges <- mget(newN, env = env, ifnotfound = NA)
+            nedges <- AnnotationDbi::mget(newN, env = env, ifnotfound = NA)
             nedges <- nedges[!is.na(nedges)]
             oldEdges <- c(oldEdges, nedges)
             if (length(nedges) > 0)
@@ -37,9 +37,7 @@ getGOGraph<-function(term, prune=Inf){
 	if(!require(graph))
 		stop("Package graph is required for function getGOGraph")
 	if(!exists("GOSimEnv")) initialize()	
-	ontology<-get("ontology",env=GOSimEnv)	
-	if("package:GO.db"%in%search())
-		detach(package:GO.db)
+	ontology<-get("ontology",env=GOSimEnv)		
 	if(ontology == "BP")
 		G<-GOGraph(term,GOBPPARENTS)
 	else if(ontology == "MF")
@@ -57,18 +55,19 @@ getGOGraph<-function(term, prune=Inf){
 }
 
 calcICs<-function(){	
-	require(GO)
+	require(GO.db)
 	if(!require(annotate))
 		stop("Package annotate is required for function calcICs")
 	if(!exists("GOSimEnv")) initialize()
 	evidences<-get("evidences", envir=GOSimEnv)
 	ontology<-get("ontology",envir=GOSimEnv)
-	print(paste("calculating information contents for ontology", ontology, "using evidence codes", paste(evidences,collapse=", "), "..."))	
-	ids<-as.list(GOTERM)	
-	ids<-names(ids[sapply(ids, function(x) Ontology(x) == ontology)])	
-	offspring<-getOffsprings()	
-	gomap<-get("gomap",env=GOSimEnv)	
-	goterms<-unlist(sapply(gomap, function(x) names(x))) # all GO terms appearing in an annotation
+	organism = get("organism", envir=GOSimEnv)
+	print(paste("calculating information contents for ontology ", ontology, " using evidence codes '", paste(evidences,collapse=", "), "' (", organism,") ...",sep=""))	
+	ids<- toTable(GOTERM)	 
+	ids = ids[ids[,"Ontology"] == ontology,"go_id"] # these are all GO terms, which belong to the corrseponding category
+	offspring <- getOffsprings()	
+	gomap <- get("gomap",env=GOSimEnv)		
+	goterms<-unlist(sapply(gomap, function(x) names(x)), use.names=FALSE) # all GO terms appearing in an annotation
 	goterms<-goterms[goterms %in% ids] # this is to ensure that we only get GO terms mapping to the given ontology
 	tab<-table(goterms)
 	na<-names(tab)			
@@ -81,7 +80,8 @@ calcICs<-function(){
 	ta<-sapply(ids,function(x){ t=tab[unlist(offspring[x])]; tab[x]+sum(t[!is.na(t)])})		
 	names(ta)<-ids
 	IC<- -log(ta/sum(ta))	
-	save(IC,file=paste("ICs",ontology,paste(evidences,collapse="_"),".rda",sep=""))
+	IC[IC == Inf] = 0 # GO terms which are not annotated have 0 information content
+	save(IC,file=paste("ICs",ontology,organism,paste(evidences,collapse="_"),".rda",sep=""))
 	print("done")			
 }
 
@@ -103,7 +103,7 @@ getMinimumSubsumer<-function(term1, term2){
 	} else {
 		# find common ancestor with maximal information content
 		anall<-intersect(an1, an2) 
-		IC<-get("IC", envir=GOSimEnv)			
+		IC<-get("IC", envir=GOSimEnv)		
 		ms<-anall[which.max(IC[anall])]
 	}	
 	if(is.null(ms))
@@ -138,7 +138,7 @@ getEnrichedSim<-function(term1, term2){
 		stop("Package RBGL is required for function getDepthFactor")
 	if(!exists("GOSimEnv")) initialize() 
 	ms<-getMinimumSubsumer(term1,term2)
-	IC<-get("IC", envir=GOSimEnv)
+	IC<-get("IC", envir=GOSimEnv)	
 	if(term1 != term2){    	    	
 		G<-getGOGraph(c(term1,term2))
 		if(term1 != ms){

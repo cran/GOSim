@@ -22,7 +22,7 @@ Character vector of GO terms
 \references{ Couto, F.; Silva, M. & Coutinho, P., Semantic Similarity over the Gene Ontology: Family Correlation and Selecting Disjunctive Ancestors, Conference in Information and Knowledge Management, 2005 }
 \author{ Holger Froehlich }
 
-\seealso{ \code{\link{getTermSim}},\code{\link{getGOGraph}}, \code{link{setOntology}}  }
+\seealso{ \code{\link{getTermSim}},\code{\link{getGOGraph}}, \code{\link{setOntology}}  }
 \examples{
 	if(require(graph))	
 		getDisjCommAnc("GO:0006955","GO:0007584")

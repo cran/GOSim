@@ -38,7 +38,7 @@ Since version 1.1 \emph{GOSim} additionally offers the possibility of a GO enric
 
 \section{Usage of \emph{GOSim}}
 
-To elucidate the usage of \emph{GOSim} we show an example workflow and explain the employed similarity concepts. We create  a character vector of Entrez gene IDs:
+To elucidate the usage of \emph{GOSim} we show an example workflow and explain the employed similarity concepts. We create  a character vector of Entrez gene IDs, which we assume to be from human:
 <<results=hide>>=
 library(GOSim)
 genes=c("207","208","596","901","780","3169","9518","2852","26353","8614","7494")
@@ -62,17 +62,17 @@ Here $Pa(t,t')$ denotes the set of all common ancestors of GO terms $t$ and $t'$
 \begin{equation}
 IC(\hat{t}) = -\log P(\hat{t})
 \end{equation}
-i.e. as the negative logarithm of the probability of observing $\hat{t}$. The information content of each GO term is already precomputed for each ontology based on the empirical observation, how many times a specific GO term or any of its direct or indirect offsprings appear in the annotation of the GO with gene products. The association between gene products and GO identifiers is reported regularily by the NCBI and is incorporated into \emph{GOSim} via the GO package.
+i.e. as the negative logarithm of the probability of observing $\hat{t}$. The information content of each GO term is already precomputed for each ontology based on the empirical observation, how many times a specific GO term or any of its direct or indirect offsprings appear in the annotation of the GO with gene products. 
 
 <<results=verbatim>>=
-data("ICsBPall")
+data("ICsBPhumanall")
 IC[c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186")]
 @
-This loads the information contents of all GO terms within "biological process". Likewise, the data files {\tt ICsMFall} and {\tt ICsCCall} contain the information contents of all GO terms within "molecular function" and "cellular component". If only GO terms having evidence codes "IMP" (inferred from mutant phenotype), "IGI", (inferred from genetic interaction), "IDA" (inferred from direct assay), "IEP" (inferred from expression pattern) or "IPI" (inferred from physical interaction) are wanted, one can use the data files {\tt ICsBPIMP\_IGI\_IDA\_IEP\_IPI}, {\tt ICsMFIMP\_IGI\_IDA\_IEP\_IPI} and {\tt ICsCCIMP\_IGI\_IDA\_IEP\_IPI}, respectively. The information contents for GO terms filtered with respect to different evidence codes must be calculated explicitely using the function {\tt calcICs}. Please refer to the manual pages for details.
+This loads the information contents of all GO terms within "biological process". Likewise, the data files {\tt ICsMFhumanall} and {\tt ICsCChumanall} contain the information contents of all GO terms within "molecular function" and "cellular component" for human. Since GOSim version 1.1.4.0 the information content of GO terms relies on the mapping of Entrez gene IDs to GO terms provided by the libraries org.Dm.eg.db (fly), org.Hs.eg.db (human), org.Mm.eg.db (mouse), org.Pf.plasmo.db (malaria), org.Rn.eg.db (rat) and org.Sc.sgd.db (yeast). Additionally, it is possible to pass a user provided mapping via the function {\tt setEvidenceLevel}. Please refer to the manual pages for details. If only GO terms having certain evidence codes should be considered, one must explicitely calculate the corresponding information contents in the function {\tt calcICs}. Again, more information on this function can be found in the manual pages.
 
 For the similarity computation in (Eq.: \ref{eq:Resnik}) normalized information contents are used, which are obtained by dividing the raw information contents by its maximal value:
-<<results=verbatim>>=
-IC[c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186")]/max(IC[IC!=Inf]) # only consider terms with available annotation!
+<<results=verbatim,eval=FALSE>>=
+IC[c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186")]/max(IC) 
 @
 
 To continue our example from above, let us also calculate Jiang and Conrath's pairwise similarity between GO terms, which is the default, for compairson reasons \cite{Jiang98}:

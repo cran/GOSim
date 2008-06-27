@@ -23,7 +23,7 @@ filterGO(genelist)
 \author{ Holger Froehlich }
 \note{  The result depends on the currently set ontology. IMPORTANT: The result refers to the GO library that was used to precompute the information contence of GO terms.
 }
-\seealso{ \code{\link{setOntology}}, \code{\link{setEvidenceLevel}}, \code{getGOInfo}, \code{calcICs}}
+\seealso{ \code{\link{setOntology}}, \code{\link{setEvidenceLevel}}, \code{\link{getGOInfo}}, \code{\link{calcICs}}}
 \examples{
 	filterGO(c("12345","4559"))
 	# --> 4559 is removed

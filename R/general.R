@@ -1,101 +1,120 @@
 initialize<-function(){
-	print("initializing GOSim package ...")	
-	if("package:GO.db"%in%search())
-		detach(package:GO.db)
+	print("initializing GOSim package ...")		
 	assign("GOSimEnv",new.env(parent=globalenv()),envir=.GlobalEnv)  	
-  	setEvidenceLevel("all")
+  	setEvidenceLevel("all", organism="human")
   	setOntology("BP")
   	print("finished.")
 }
 
 getOffsprings<-function(){
-  require(GO)
+  require(GO.db)
   if(!exists("GOSimEnv")) initialize()
   ontology<-get("ontology",envir=GOSimEnv)
   if(ontology == "BP")
-    res<-as.list(GOBPOFFSPRING)
+    res<-AnnotationDbi::as.list(GOBPOFFSPRING)
   else if(ontology == "MF")
-    res<-as.list(GOMFOFFSPRING)
+    res<-AnnotationDbi::as.list(GOMFOFFSPRING)
   else if(ontology == "CC")
-    res<-as.list(GOCCOFFSPRING)
+    res<-AnnotationDbi::as.list(GOCCOFFSPRING)
   else
     stop(paste("ontology", ontology, "not known!"))
   return(res)
 }
 
 getAncestors<-function(){
-  require(GO)
+  require(GO.db)
   if(!exists("GOSimEnv")) initialize()
   ontology<-get("ontology",envir=GOSimEnv)
   if(ontology == "BP")
-    res<-as.list(GOBPANCESTOR)
+    res<-AnnotationDbi::as.list(GOBPANCESTOR)
   else if(ontology == "MF")
-    res<-as.list(GOMFANCESTOR)
+    res<-AnnotationDbi::as.list(GOMFANCESTOR)
   else if(ontology == "CC")
-    res<-as.list(GOCCANCESTOR)
+    res<-AnnotationDbi::as.list(GOCCANCESTOR)
   else
     stop(paste("ontology", ontology, "not known!"))
   return(res)
 }
 
 getParents<-function(){
-  require(GO)
+  require(GO.db)
   if(!exists("GOSimEnv")) initialize()
   ontology<-get("ontology",envir=GOSimEnv)
   if(ontology == "BP")
-    res<-as.list(GOBPPARENTS)
+    res<-AnnotationDbi::as.list(GOBPPARENTS)
   else if(ontology == "MF")
-    res<-as.list(GOMFPARENTS)
+    res<-AnnotationDbi::as.list(GOMFPARENTS)
   else if(ontology == "CC")
-    res<-as.list(GOCCPARENTS)
+    res<-AnnotationDbi::as.list(GOCCPARENTS)
   else
     stop(paste("ontology", ontology, "not known!"))
   return(res)
 }
 
 getChildren<-function(){
-  require(GO)
+  require(GO.db)
   if(!exists("GOSimEnv")) initialize()
   ontology<-get("ontology",envir=GOSimEnv)
   if(ontology == "BP")
-    res<-as.list(GOBPCHILDREN)
+    res<-AnnotationDbi::as.list(GOBPCHILDREN)
   else if(ontology == "MF")
-    res<-as.list(GOMFCHILDREN)
+    res<-AnnotationDbi::as.list(GOMFCHILDREN)
   else if(ontology == "CC")
-    res<-as.list(GOCCCHILDREN)
+    res<-AnnotationDbi::as.list(GOCCCHILDREN)
   else
     stop(paste("ontology", ontology, "not known!"))
   return(res)
 }
 
 # filter GO mapping for given evidence levels
-setEvidenceLevel<-function(evidences="all"){		
-	require(GO)
+setEvidenceLevel<-function(evidences="all", organism="human", gomap=NULL){			
         if(!exists("GOSimEnv")) initialize()	
-	print("-> retrieving GO information for all available genes in GO database")
+	print(paste("-> retrieving GO information for all available genes for organism '", organism, "' in GO database", sep=""))
 	assign("evidences", evidences, envir=GOSimEnv)	
-	gomap<-as.list(GOENTREZID2GO)	
-	print("-> filtering GO terms according to evidence level")
-	if((length(evidences) > 1) || (evidences!="all")){
-		gomap<-sapply(gomap,function(x) sapply(x,function(y) y$Evidence %in% evidences))
-		gomap<-sapply(gomap, function(x) x[which(x)])
-		gomap<-gomap[sapply(gomap,function(x) length(x) > 0)]
+# 	gomap<-as.list(GOENTREZID2GO)		
+	if(is.null(gomap)){
+		if(organism == "human")
+			gomap = org.Hs.egGO
+		else if(organism == "fly")
+			gomap = org.Dm.egGO
+		else if(organism == "mouse")
+			gomap = org.Mm.egGO
+		else if(organism == "malaria")
+			gomap = org.Pf.plasmoGO
+		else if(organism == "rat")
+			gomap = org.Rn.egGO
+		else if(organism == "yeast")
+			gomap = org.Sc.sgdGO
+		else
+			stop(paste("No mapping for organism", organism, "available!"))	
+		mapped_genes <- mappedkeys(gomap)	
+		gomap = AnnotationDbi::as.list(gomap[mapped_genes])
+	}	
+	print(paste("-> filtering GO terms according to evidence levels '", evidences, "'",sep=""))
+	if((length(evidences) > 1) || (evidences!="all")){		
+		gomap<-sapply(gomap,function(x) sapply(x,function(y) c(y$Evidence %in% evidences, y$Ontology)))
+		gomap<-sapply(gomap, function(x) x[2,x[1,]=="TRUE"])
+		gomap<-gomap[sapply(gomap,length) >0]
 	}
 	assign("gomap", gomap, envir=GOSimEnv)
+	assign("organism", organism, envir=GOSimEnv)
 }
 
-setOntology<-function(ont="BP"){
-	if(!exists("GOSimEnv")) initialize()
-	print("-> loading files with information content for corresponding GO category")
+setOntology<-function(ont="BP", loadIC=TRUE){
+	if(!exists("GOSimEnv")) initialize()	
 	assign("ontology", ont, envir=GOSimEnv)		
-	ontology<-get("ontology",envir=GOSimEnv)
-	evidences<-get("evidences",envir=GOSimEnv)		
-	fname = paste("ICs",ontology,paste(evidences,collapse="_"),sep="")
-	data(list=fname,package="GOSim",envir=GOSimEnv)	
-	IC<-get("IC",envir=GOSimEnv)
-	IC<-IC/max(IC[IC!=Inf])
-	IC["all"]=0
-	assign("IC", IC, envir=GOSimEnv)
+	if(loadIC){
+		organism = get("organism", envir=GOSimEnv)
+		print(paste("-> loading files with information content for corresponding GO category (",organism,")",sep=""))
+		ontology<-get("ontology",envir=GOSimEnv)
+		evidences<-get("evidences",envir=GOSimEnv)			
+		fname = paste("ICs",ontology,organism, paste(evidences,collapse="_"),sep="")
+		utils::data(list=fname,package="GOSim",envir=GOSimEnv)	
+		IC<-get("IC",envir=GOSimEnv)
+		IC<-IC/max(IC[IC!=Inf])
+		IC["all"]=0
+		assign("IC", IC, envir=GOSimEnv)
+	}
  	assign("ancestor", getAncestors(), envir=GOSimEnv) 	
  	assign("children", getChildren(), envir=GOSimEnv)
  	assign("parents", getParents(), envir=GOSimEnv) 

@@ -11,11 +11,12 @@
    library are reset to their default values. 
 }
 \usage{
-setOntology(ont = "BP")
+setOntology(ont = "BP", loadIC=TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{ont}{ the ontology to use ("BP","MF","CC") }
+  \item{loadIC}{Should the corresponding file with precomputed IC-values be loaded? Default: TRUE. WARNING: If the file is not loaded, no calculations can be performed! This might only be useful, if you want to recalculate IC values.}
 }
 \details{
   The following ontologies can be used:

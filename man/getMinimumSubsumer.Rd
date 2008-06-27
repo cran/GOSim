@@ -22,7 +22,7 @@ getMinimumSubsumer(term1, term2)
 }
 \references{P. Resnik, Using Information Content to evaluate semantic similarity in a taxonomy, Proc. 14th Int. Conf. Artificial Intel., 1995 }
 \author{ Holger Froehlich}
-\seealso{ \code{\link{getTermSim}}, \code{\link{getGOGraph}}, \code{link{setOntology}} }
+\seealso{ \code{\link{getTermSim}}, \code{\link{getGOGraph}}, \code{\link{setOntology}} }
 \examples{
  # setOntology("BP")
  getMinimumSubsumer("GO:0006955","GO:0007584")
