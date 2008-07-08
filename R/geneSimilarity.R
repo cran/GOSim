@@ -7,7 +7,10 @@ getGOInfo<-function(geneIDs){
 	ontology<-get("ontology",env=GOSimEnv)
 	gomap<-get("gomap",env=GOSimEnv)	
 	gomap = gomap[geneIDs]		
-	goterms = sapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
+	goterms = lapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
+	goterms = goterms[!is.na(names(goterms))]
+	if(length(goterms) == 0)
+		stop("No GO information available for these genes!")
 	goterms <-sapply(goterms, function(x) names(x[which(x)]))
 	goterms <- goterms[sapply(goterms,length) > 0]
 	goids<- toTable(GOTERM)				
@@ -253,7 +256,10 @@ selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=TRUE){
 		if(verbose)
 			print("Automatic determination of prototypes using genes with most frequent annotation ...")	
 		gomap<-get("gomap",env=GOSimEnv)
-		goterms = sapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
+		goterms = lapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
+		goterms = goterms[!is.na(names(goterms))]
+		if(length(goterms) == 0)
+			stop("No GO information available for these genes!")
 		goterms <-sapply(goterms, function(x) names(x[which(x)]))
 		freq <- sapply(goterms,length)
 		res = sort(freq, decreasing=TRUE)		
@@ -271,7 +277,10 @@ selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=TRUE){
 		if(verbose)		
 			print("Automatic determination of prototypes using random genes from the current ontology...")
 		gomap<-get("gomap",env=GOSimEnv)
-		goterms = sapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
+		goterms = lapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
+		goterms = goterms[!is.na(names(goterms))]
+		if(length(goterms) == 0)
+			stop("No GO information available for these genes!")
 		goterms <-sapply(goterms, function(x) names(x[which(x)]))
 		goterms <- goterms[sapply(goterms,length) > 0]
 		prototypes = sample(names(goterms), n)

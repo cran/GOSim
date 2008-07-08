@@ -5,7 +5,10 @@ GOenrichment = function(allpvalues, fdr=0.05, cutoff=0.01){
 	ontology = get("ontology", envir=GOSimEnv)
 	gomap <- get("gomap",env=GOSimEnv)	
 	anno <- gomap[names(allpvalues)]
-	goterms = sapply(anno, function(x) sapply(x, function(y) y$Ontology == ontology))
+	goterms = lapply(anno, function(x) sapply(x, function(y) y$Ontology == ontology))
+	goterms = goterms[!is.na(names(goterms))]
+	if(length(goterms) == 0)
+		stop("No GO information available for these genes!")
 	goterms <-sapply(goterms, function(x) names(x[which(x)]))
 	goterms <- goterms[sapply(goterms,length) > 0]
 	topdiffgenes <- function(allScore) {

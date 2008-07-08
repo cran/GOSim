@@ -437,11 +437,11 @@ Since version 1.1 \emph{GOSim} also offers the possibility of a GO enrichemnt an
 > analyzeCluster(c("8614", "9518", "780", "2852"), allgenes)
 \end{Sinput}
 \begin{Soutput}
-Building most specific GOs .....	( 824 GO terms found. )
+Building most specific GOs .....	( 805 GO terms found. )
 
-Build GO DAG topology ..........	( 2000 GO terms and 3449 relations. )
+Build GO DAG topology ..........	( 1900 GO terms and 3256 relations. )
 
-Annotating nodes ...............	( 793 genes annotated to the GO terms. )
+Annotating nodes ...............	( 799 genes annotated to the GO terms. )
 
 			 -- Elim Algorithm -- 
 
@@ -456,44 +456,30 @@ Annotating nodes ...............	( 793 genes annotated to the GO terms. )
 
 	 Level 6:	5 nodes to be scored	(0 eliminated genes)
 
-	 Level 5:	5 nodes to be scored	(15 eliminated genes)
+	 Level 5:	5 nodes to be scored	(23 eliminated genes)
 
-	 Level 4:	7 nodes to be scored	(84 eliminated genes)
+	 Level 4:	7 nodes to be scored	(23 eliminated genes)
 
-	 Level 3:	7 nodes to be scored	(84 eliminated genes)
+	 Level 3:	7 nodes to be scored	(23 eliminated genes)
 
-	 Level 2:	4 nodes to be scored	(84 eliminated genes)
+	 Level 2:	4 nodes to be scored	(23 eliminated genes)
 
-	 Level 1:	1 nodes to be scored	(84 eliminated genes)
+	 Level 1:	1 nodes to be scored	(23 eliminated genes)
 $GOTerms
            go_id                                             Term
-15516 GO:0007166 cell surface receptor linked signal transduction
 15517 GO:0007167 enzyme linked receptor protein signaling pathway
                                                                                                                                                                                                                                                   Definition
-15516                                                                                                                   Any series of molecular signals initiated by the binding of an extracellular ligand to a receptor on the surface of the target cell.
 15517 Any series of molecular signals initiated by the binding of an extracellular ligand to a receptor on the surface of the target cell, where the receptor possesses catalytic activity or is closely associated with an enzyme such as a protein kinase.
 
 $p.values
- GO:0007166  GO:0007167 
-0.007761710 0.001962479 
+ GO:0007167 
+0.004595884 
 
 $genes
-$genes$`GO:0007166`
- [1] "10140"  "10256"  "10580"  "10607"  "10803"  "11213"  "11245"  "112744"
- [9] "117194" "117286" "120065" "127059" "127068" "127623" "139378" "155"   
-[17] "196403" "1997"   "203102" "2045"   "2069"   "207"    "219952" "219968"
-[25] "23770"  "2532"   "255324" "2564"   "25776"  "259295" "2596"   "26246" 
-[33] "27065"  "27130"  "2741"   "2769"   "2770"   "284521" "2847"   "2848"  
-[41] "2852"   "2904"   "2911"   "338557" "338675" "3460"   "389090" "390271"
-[49] "390437" "390885" "401666" "403253" "4058"   "442197" "4739"   "478"   
-[57] "4889"   "4985"   "50856"  "51266"  "5196"   "5291"   "5295"   "5542"  
-[65] "55759"  "55851"  "5618"   "5626"   "59350"  "611"    "6755"   "7078"  
-[73] "780"    "80319"  "83605"  "83873"  "8532"   "8614"   "9170"   "9209"  
-[81] "9248"   "9252"   "9398"   "9518"  
-
 $genes$`GO:0007167`
- [1] "10140"  "10256"  "10580"  "112744" "2045"   "2069"   "207"    "255324"
- [9] "4058"   "5295"   "5618"   "7078"   "780"    "9252"   "9518"  
+ [1] "10256"  "10817"  "163126" "1907"   "2048"   "207"    "2264"   "2662"  
+ [9] "2788"   "2984"   "3937"   "4915"   "5295"   "55715"  "5795"   "5894"  
+[17] "780"    "819"    "8527"   "8660"   "8822"   "9451"   "9518"  
 \end{Soutput}
 \end{Schunk}
 The result shows that the four genes are mainly involved in cell-cell signaling, in an enzyme linked receptor protein signaling pathway and in the response to nutrient.
