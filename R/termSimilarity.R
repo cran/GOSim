@@ -80,7 +80,7 @@ calcICs<-function(){
 	ta<-sapply(ids,function(x){ t=tab[unlist(offspring[x])]; tab[x]+sum(t[!is.na(t)])})		
 	names(ta)<-ids
 	IC<- -log(ta/sum(ta))	
-	IC[IC == Inf] = 0 # GO terms which are not annotated have 0 information content
+# 	IC[IC == Inf] = 0 # GO terms which are not annotated have Inf information content (NOT 0: They cannot be treated like root!!!)
 	save(IC,file=paste("ICs",ontology,organism,paste(evidences,collapse="_"),".rda",sep=""))
 	print("done")			
 }
@@ -106,8 +106,8 @@ getMinimumSubsumer<-function(term1, term2){
 		IC<-get("IC", envir=GOSimEnv)		
 		ms<-anall[which.max(IC[anall])]
 	}	
-	if(is.null(ms))
-		ms <- "NA"
+	if(is.null(ms) | length(ms) == 0)
+		ms <- "NA"	
 	ms
 }
 
@@ -277,7 +277,7 @@ getTermSim<-function(termlist, method="JiangConrath", verbose=TRUE){
 	colnames(S)<-termlist
 	rownames(S)<-termlist
 	for(i in 1:length(termlist)){
-		S[i,i]<-1
+		S[i,i] <- calcTermSim(termlist[i],termlist[i], method, verbose)				
 		if(i > 1){
 			for(j in 1:(i-1)){				
 				S[i,j]<- calcTermSim(termlist[i],termlist[j], method, verbose)				

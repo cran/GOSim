@@ -64,11 +64,11 @@ Let us examine the similarity of the GO terms for genes "8614" and "2852" in gre
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.3693741   0.233135  0.3792863  0.4508958
-GO:0007267  0.3693741  1.0000000   0.233135  0.3693741  0.3693741
-GO:0007584  0.2331350  0.2331350   1.000000  0.2331350  0.2331350
-GO:0007165  0.3792863  0.3693741   0.233135  1.0000000  0.3792863
-GO:0007186  0.4508958  0.3693741   0.233135  0.3792863  1.0000000
+GO:0007166  0.4508958  0.3693741   0.233135  0.3792863  0.4508958
+GO:0007267  0.3693741  0.5255185   0.233135  0.3693741  0.3693741
+GO:0007584  0.2331350  0.2331350   0.731234  0.2331350  0.2331350
+GO:0007165  0.3792863  0.3693741   0.233135  0.3792863  0.3792863
+GO:0007186  0.4508958  0.3693741   0.233135  0.3792863  0.4869486
 \end{Soutput}
 \end{Schunk}
 This calculates Resnik's pairwise similarity between GO terms \cite{Resnik95,Resnik99}:
@@ -190,11 +190,11 @@ Likewise, Jiang-Conraths's and Lin's measures can be extended as well by replaci
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.3693741   0.233135  0.3693741  0.3792863
-GO:0007267  0.3693741  1.0000000   0.233135  0.3693741  0.3693741
-GO:0007584  0.2331350  0.2331350   1.000000  0.2331350  0.2331350
-GO:0007165  0.3693741  0.3693741   0.233135  1.0000000  0.3693741
-GO:0007186  0.3792863  0.3693741   0.233135  0.3693741  1.0000000
+GO:0007166  0.4508958  0.3693741   0.233135  0.3693741  0.3792863
+GO:0007267  0.3693741  0.5255185   0.233135  0.3693741  0.3693741
+GO:0007584  0.2331350  0.2331350   0.731234  0.2331350  0.2331350
+GO:0007165  0.3693741  0.3693741   0.233135  0.3792863  0.3693741
+GO:0007186  0.3792863  0.3693741   0.233135  0.3693741  0.4869486
 \end{Soutput}
 \end{Schunk}
 
@@ -207,11 +207,11 @@ Finally, it should be mentioned that also the depth and density enriched term si
 \end{Sinput}
 \begin{Soutput}
            GO:0007166 GO:0007267 GO:0007584 GO:0007165 GO:0007186
-GO:0007166  1.0000000  0.2030138  0.2021858  0.1636249  0.2151779
-GO:0007267  0.2030138  1.0000000  0.2184200  0.1793893  0.2141354
-GO:0007584  0.2021858  0.2184200  1.0000000  0.1820661  0.2112405
-GO:0007165  0.1636249  0.1793893  0.1820661  1.0000000  0.1730192
-GO:0007186  0.2151779  0.2141354  0.2112405  0.1730192  1.0000000
+GO:0007166  0.2033070  0.2030138  0.2021858  0.1636249  0.2151779
+GO:0007267  0.2030138  0.2761697  0.2184200  0.1793893  0.2141354
+GO:0007584  0.2021858  0.2184200  0.5347031  0.1820661  0.2112405
+GO:0007165  0.1636249  0.1793893  0.1820661  0.1438581  0.1730192
+GO:0007186  0.2151779  0.2141354  0.2112405  0.1730192  0.2371190
 \end{Soutput}
 \end{Schunk}
 
@@ -437,11 +437,11 @@ Since version 1.1 \emph{GOSim} also offers the possibility of a GO enrichemnt an
 > analyzeCluster(c("8614", "9518", "780", "2852"), allgenes)
 \end{Sinput}
 \begin{Soutput}
-Building most specific GOs .....	( 805 GO terms found. )
+Building most specific GOs .....	( 868 GO terms found. )
 
-Build GO DAG topology ..........	( 1900 GO terms and 3256 relations. )
+Build GO DAG topology ..........	( 1982 GO terms and 3397 relations. )
 
-Annotating nodes ...............	( 799 genes annotated to the GO terms. )
+Annotating nodes ...............	( 806 genes annotated to the GO terms. )
 
 			 -- Elim Algorithm -- 
 
@@ -456,30 +456,45 @@ Annotating nodes ...............	( 799 genes annotated to the GO terms. )
 
 	 Level 6:	5 nodes to be scored	(0 eliminated genes)
 
-	 Level 5:	5 nodes to be scored	(23 eliminated genes)
+	 Level 5:	5 nodes to be scored	(19 eliminated genes)
 
-	 Level 4:	7 nodes to be scored	(23 eliminated genes)
+	 Level 4:	7 nodes to be scored	(82 eliminated genes)
 
-	 Level 3:	7 nodes to be scored	(23 eliminated genes)
+	 Level 3:	7 nodes to be scored	(82 eliminated genes)
 
-	 Level 2:	4 nodes to be scored	(23 eliminated genes)
+	 Level 2:	4 nodes to be scored	(82 eliminated genes)
 
-	 Level 1:	1 nodes to be scored	(23 eliminated genes)
+	 Level 1:	1 nodes to be scored	(82 eliminated genes)
 $GOTerms
            go_id                                             Term
+15516 GO:0007166 cell surface receptor linked signal transduction
 15517 GO:0007167 enzyme linked receptor protein signaling pathway
                                                                                                                                                                                                                                                   Definition
+15516                                                                                                                   Any series of molecular signals initiated by the binding of an extracellular ligand to a receptor on the surface of the target cell.
 15517 Any series of molecular signals initiated by the binding of an extracellular ligand to a receptor on the surface of the target cell, where the receptor possesses catalytic activity or is closely associated with an enzyme such as a protein kinase.
 
 $p.values
- GO:0007167 
-0.004595884 
+ GO:0007166  GO:0007167 
+0.006314442 0.003074120 
 
 $genes
+$genes$`GO:0007166`
+ [1] "10006"  "10076"  "10273"  "10343"  "10607"  "11061"  "11250"  "122740"
+ [9] "1307"   "134864" "1437"   "144125" "1499"   "151"    "1608"   "162998"
+[17] "166647" "207"    "22801"  "2564"   "26219"  "26533"  "27344"  "2784"  
+[25] "283160" "2841"   "2852"   "2886"   "2897"   "2913"   "2917"   "29969" 
+[33] "29990"  "3351"   "346517" "3645"   "3687"   "3694"   "387509" "3902"  
+[41] "4053"   "441670" "442179" "4692"   "4792"   "4985"   "51098"  "54584" 
+[49] "5542"   "56033"  "5664"   "56998"  "5727"   "5747"   "6348"   "6608"  
+[57] "6753"   "7484"   "780"    "784"    "79315"  "79473"  "79490"  "79902" 
+[65] "81285"  "81300"  "81341"  "81794"  "8325"   "8391"   "84109"  "8614"  
+[73] "90"     "9019"   "91662"  "9185"   "920"    "924"    "9252"   "9353"  
+[81] "9518"   "9628"  
+
 $genes$`GO:0007167`
- [1] "10256"  "10817"  "163126" "1907"   "2048"   "207"    "2264"   "2662"  
- [9] "2788"   "2984"   "3937"   "4915"   "5295"   "55715"  "5795"   "5894"  
-[17] "780"    "819"    "8527"   "8660"   "8822"   "9451"   "9518"  
+ [1] "10006" "10076" "10273" "11061" "207"   "2886"  "29990" "3645"  "4053" 
+[10] "4692"  "5747"  "780"   "90"    "9019"  "9185"  "920"   "924"   "9252" 
+[19] "9518" 
 \end{Soutput}
 \end{Schunk}
 The result shows that the four genes are mainly involved in cell-cell signaling, in an enzyme linked receptor protein signaling pathway and in the response to nutrient.
