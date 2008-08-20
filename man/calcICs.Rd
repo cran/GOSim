@@ -21,20 +21,17 @@ calcICs()
    evidence codes and evidence codes "IMP, IGI, IDA, IEP, IPI" together.   
 }
 \value{
-  Puts a file named "ICs<ontology><evidence levels>.rda" in the current
+  Puts a file named "ICs<ontology><organism><evidence levels>.rda" in the current
   directoy. This file has then to be moved into the data directory of
   GOSim. It can be used afterwards by calling \code{\link{setOntology}}. 
   Sometimes it is necessary to switch to the GOSim directory for this purpose.
 }
 \seealso{\code{\link{setEvidenceLevel}}}
 \examples{		
-\dontrun{
-  if(require("annotate")){	
-	setEvidenceLevel("all")
-	setOntology("CC") # important: setOntology assumes that the IC file already exists. To prevent an error message we need this workaround
+\dontrun{  	
 	setEvidenceLevel("IMP")
-	calcICs()
-  }
+	setOntology("CC", loadIC=FALSE) # important: setOntology assumes that the IC file already exists. To prevent an error message we need the second argument
+	calcICs()  
 } # --> this may take some time ...
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

@@ -109,7 +109,7 @@ setOntology<-function(ont="BP", loadIC=TRUE){
 		ontology<-get("ontology",envir=GOSimEnv)
 		evidences<-get("evidences",envir=GOSimEnv)			
 		fname = paste("ICs",ontology,organism, paste(evidences,collapse="_"),sep="")
-		utils::data(list=fname,package="GOSim",envir=GOSimEnv)	
+		tryCatch(utils::data(list=fname,package="GOSim",envir=GOSimEnv), warning=function(w) stop(paste("File", fname, "with IC values for organism '", organism, "', ontology '", ontology, "', evidence codes '", evidences, "' not found!\nPlease invoke calcICs() to calculate IC values!")))
 		IC<-get("IC",envir=GOSimEnv)
 		IC<-IC/max(IC[IC!=Inf])
 		IC["all"]=0

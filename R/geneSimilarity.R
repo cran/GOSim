@@ -55,9 +55,14 @@ getGOGraphsGenes <- function(genelist, prune=Inf){
 precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=TRUE){ 	
 	if(verbose)
 		print("precomputing term similarities ...")	
-	gotermsx<-unique(unlist(sapply(x, function(xx) xx$annotation)))
-	if(!is.null(y)){      
-		gotermsy<-unique(unlist(sapply(y, function(xx) xx$annotation)))		
+	gotermsx<-as.vector(unique(unlist(sapply(x, function(xx) xx$annotation))))
+	if(!is.null(y)){  		 
+		gotermsy<-as.vector(unique(unlist(sapply(y, function(xx) xx$annotation))))
+		if(similarityTerm %in% c("diffKernelgraphLapl", "diffKernelLLE", "diffKernelpower", "diffKernelexpm")){
+			STerm = getTermSim(c(gotermsx, gotermsy), method=similarityTerm)
+			STerm = STerm[gotermsx, gotermsy]
+			return(STerm)
+		}
 		STerm<-matrix(0, nrow=length(gotermsx), ncol=length(gotermsy))
 		rownames(STerm)=gotermsx
 		colnames(STerm)=gotermsy
@@ -67,6 +72,10 @@ precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=T
 			}			
 		}		
 	} else{
+		if(similarityTerm %in% c("diffKernelgraphLapl", "diffKernelLLE", "diffKernelpower", "diffKernelexpm")){
+			STerm = getTermSim(gotermsx, method=similarityTerm)			
+			return(STerm)
+		}
 		STerm<-matrix(0, nrow=length(gotermsx), ncol=length(gotermsx))
 		rownames(STerm)<-gotermsx
 		colnames(STerm)<-gotermsx
@@ -81,6 +90,12 @@ precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=T
 		}
 	}	
 	STerm
+}
+
+getWeightedDotSim <- function(anno1, anno2){
+	v1 = getGeneFeatures.internal(anno1)
+	v2 = getGeneFeatures.internal(anno2)
+	dot = crossprod(v1,v2)	
 }
 
 # compute gene similarity for a pair of genes having GO terms anno1 and anno2
@@ -110,11 +125,15 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
 		ker<-t(ker)
   }
   else{ 
-	# calculate term similarity
-	ker<-matrix(0,nrow=length(a1),ncol=length(a2))	
-	for(i in 1:length(a1)){
-		for(j in 1:length(a2))
-			ker[i,j]<-calcTermSim(a1[i],a2[j], similarityTerm, verbose)		
+	if(similarity %in% c("dot"))
+		return(getWeightedDotSim(a1, a2))			
+	else{
+		# calculate term similarity
+		ker<-matrix(0,nrow=length(a1),ncol=length(a2))	
+		for(i in 1:length(a1)){
+			for(j in 1:length(a2))
+				ker[i,j]<-calcTermSim(a1[i],a2[j], similarityTerm, verbose)		
+		}
 	}
   }  
   if(length(a1)*length(a2) > 0){
@@ -140,6 +159,11 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
 		colMax = mean(apply(ker,2,max))
 		return(max(rowMax, colMax))
 	}
+	else if(similarity == "hausdorff"){
+		rowMax = min(apply(ker,1,max))
+		colMax = min(apply(ker,2,max))
+		return(min(rowMax, colMax))	
+	}	
 	else
 		stop(paste("getGSim: Unknown gene similarity",similarity,"!"))
   }
@@ -150,13 +174,17 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
 }
 
 # compute GO gene similarity for a list of genes
+# getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="Lin", normalization=!(similarity %in% c("funSimAvg","funSimMax")), method="sqrt", avg=(similarity=="OA"), verbose=TRUE){
 getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="Lin", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=TRUE){
 	genelist <- unique(genelist)
 	if(length(genelist) < 2)
 		stop("Gene list should contain more than 2 elements!")
 	allgenes<-filterGO(genelist)	
 	if(length(allgenes) > 1){	
-		STerm<-precomputeTermSims(x=allgenes, similarityTerm=similarityTerm, verbose=verbose) # precompute term similarities => speed up!		
+		if(!(similarity %in% c("dot")))
+			STerm<-precomputeTermSims(x=allgenes, similarityTerm=similarityTerm, verbose=verbose) # precompute term similarities => speed up!		
+		else
+			STerm = NULL
 		if(verbose)
 			print(paste("Calculating similarity matrix with similarity measure",similarity))
 		Ker<-matrix(0,nrow=length(allgenes),ncol=length(allgenes))
@@ -175,23 +203,7 @@ getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="Lin", nor
 			}
 		}			
 		if(normalization){			
-			if(method == "sqrt"){
-				Kd<-sqrt(diag(Ker))
-				Ker<-Ker/(Kd%*%t(Kd))			
-			}
-			else if(method == "Lin"){				
-				for(i in 1:ncol(Ker)){					
-					if(i > 1){
-						for(j in 1:(i-1)){
-							Ker[i,j] = 2*Ker[i,j] / (Ker[i,i] + Ker[j,j])
-							Ker[j,i] = Ker[i,j]
-						}
-					}
-				}			
-				diag(Ker) = 1	
-			}
-			else
-				stop(paste("Unknown normalization method", method))
+			Ker = normalize.kernel(Ker, method)
 		}			
 	}
 	else{
@@ -203,12 +215,53 @@ getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="Lin", nor
 	Ker
 }
 
-# compute GO gene feature representation
+getGeneFeatures.internal = function(anno){
+	ancestor<-get("ancestor",envir=GOSimEnv)	
+	an<-unlist(ancestor[names(ancestor) %in% anno])	
+	IC<-get("IC", envir=GOSimEnv)
+	v = double(length(IC))	
+	names(v) = names(IC)	
+	v[c(anno, an)] = IC[c(anno, an)]
+	v
+}
+
+# compute feature representation for genes
+getGeneFeatures = function(genelist, pca=FALSE, normalization=FALSE, verbose=TRUE){
+	if(!exists("GOSimEnv")) initialize()	
+	genelist <- unique(genelist)
+	if(length(genelist) < 1)
+		stop("Gene list should contain at least 1 element!")
+	allgenes<-filterGO(genelist)	
+	IC<-get("IC", envir=GOSimEnv)
+	if(length(allgenes) > 0){			
+		PHI<-matrix(0,nrow=length(allgenes),ncol=length(IC))
+		rownames(PHI) <- sapply(allgenes,function(x) x$genename)
+		colnames(PHI) <- names(IC)
+		for(i in 1:length(allgenes)){
+			annoi <- (allgenes[[i]]$annotation)		
+			PHI[i,] <- getGeneFeatures.internal(annoi)							
+		}	
+		if(pca){
+			pcares<-selectPrototypes(method="pca",data=PHI,verbose=verbose)		
+			PHI<-pcares$features
+		}				
+		if(normalization)
+			PHI<-t(apply(PHI,1,function(x) return(x/(norm(x)+1e-10))))					
+	}
+	else{		
+		stop("No gene has GO information!")							
+	}
+	PHI
+}
+
+# compute prototype feature representation for genes
 getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max", similarityTerm="JiangConrath", pca=TRUE, normalization=TRUE, verbose=TRUE){
 	genelist<-unique(genelist)
 	if(is.null(prototypes))
 		prototypes<-selectPrototypes(verbose=verbose)
-	allgenes<-filterGO(genelist)	
+	allgenes<-filterGO(genelist)
+	if(length(allgenes) == 0)
+		stop("No gene has GO information!")
 	proto<-filterGO(prototypes)
 	if(length(proto) == 0)
 		stop("getGeneFeaturesPrototypes: Number of prototypes equals zero after filtering!")	
@@ -235,7 +288,7 @@ getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max",
 	list(features=PHI,prototypes=proto)
 }
 
-# compute GO gene similarity using the feature representation
+# compute GO gene similarity using the prototype feature representation
 getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", similarityTerm="JiangConrath", pca=TRUE, normalization=TRUE, verbose=TRUE){
 	genelist<-unique(genelist)	
 	if(length(genelist) < 2)

@@ -12,7 +12,7 @@ getTermSim(termlist, method = "JiangConrath", verbose = TRUE)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{termlist}{ character vector of GO terms }  
-  \item{method}{ one of ("JiangConrath","Resnik","Lin","CoutoEnriched","CoutoJiangConrath","CoutoResnik","CoutoLin") }
+  \item{method}{ one of ("JiangConrath","Resnik","Lin","CoutoEnriched","CoutoJiangConrath","CoutoResnik","CoutoLin", "diffKernelgraphLapl", "diffKernelLLE", "diffKernelpower", "diffKernelexpm"") }
   \item{verbose}{ print out various information or not }
 }
 \details{
@@ -24,16 +24,24 @@ getTermSim(termlist, method = "JiangConrath", verbose = TRUE)
 \item{"CoutoResnik"}{average information content of common disjunctive ancestors of \code{term1} and \code{term2} (ICshare) [5]}
 \item{"CoutoJiangConrath"}{\eqn{1 - \min(1, IC(term1) -2ICshare + IC(term2))} [5]}
 \item{"CoutoLin"}{\eqn{\frac{2ICshare}{(IC(term1) + IC(term2))}} [5]}
+\item{"diffKernel"}{diffusion kernel similarity from a pre-loaded kernel matrix (see \code{\link{load.diffusion.kernel}}). The diffusion kernel is calculated using one of the methods described in [6].}
 }
 \value{
 n x n matrix (n = number of GO terms) with similarities between GO terms scaled to [0,1]. If a GO term does not exist for the currently set ontology, the similarity is set to "NA".
 }
 \references{
-[1] P. Resnik, Using Information Content to evaluate semantic similarity in a taxonomy, Proc. 14th Int. Conf. Artificial Intel., 1995 \newline
-[2] J. Jiang, D. Conrath, Semantic Similarity based on Corpus Statistics and Lexical Taxonomy, Proc. Int. Conf. Research in Comp. Ling., 1998 \newline
-[3] D. Lin, An Information-Theoretic Definition of Similarity, Proc. 15th Int. Conf. Machine Learning, 1998 \newline
-[4] F. Couto, M. Silva, P. Coutinho, Implementation of a Functional Semantic Similarity Measure between Gene-Products, DI/FCUL TR 03-29, Department of Informatics, University of Lisbon, 2003 \newline
-[5] Couto, F.; Silva, M. & Coutinho, P., Semantic Similarity over the Gene Ontology: Family Correlation and Selecting Disjunctive Ancestors, Conference in Information and Knowledge Management, 2005  }
+[1] P. Resnik, Using Information Content to evaluate semantic similarity in a taxonomy, Proc. 14th Int. Conf. Artificial Intel., 1995 
+
+[2] J. Jiang, D. Conrath, Semantic Similarity based on Corpus Statistics and Lexical Taxonomy, Proc. Int. Conf. Research in Comp. Ling., 1998 
+
+[3] D. Lin, An Information-Theoretic Definition of Similarity, Proc. 15th Int. Conf. Machine Learning, 1998 
+
+[4] F. Couto, M. Silva, P. Coutinho, Implementation of a Functional Semantic Similarity Measure between Gene-Products, DI/FCUL TR 03-29, Department of Informatics, University of Lisbon, 2003 
+
+[5] Couto, F.; Silva, M. & Coutinho, P., Semantic Similarity over the Gene Ontology: Family Correlation and Selecting Disjunctive Ancestors, Conference in Information and Knowledge Management, 2005  
+
+[6] Lerman G. & Shaknovich B., Defining Functional Distance using Manifold Embeddings of Gene Ontology Annotations, PNAS, 104(27): 11334 - 11339, 2007
+}
 \author{ Holger Froehlich }
 \note{ All calculations use normalized information contents for each GO
   term. Normalization is achieved by dividing each information content
@@ -42,7 +50,7 @@ n x n matrix (n = number of GO terms) with similarities between GO terms scaled 
 }
 \seealso{ \code{\link{getMinimumSubsumer}},
   \code{\link{getDisjCommAnc}}, \code{\link{setEnrichmentFactors}},
-  \code{\link{setOntology}} } 
+  \code{\link{setOntology}},  \code{\link{load.diffusion.kernel}} } 
 \examples{
  # setOntology("BP")
 

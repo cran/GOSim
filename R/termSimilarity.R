@@ -64,7 +64,7 @@ calcICs<-function(){
 	organism = get("organism", envir=GOSimEnv)
 	print(paste("calculating information contents for ontology ", ontology, " using evidence codes '", paste(evidences,collapse=", "), "' (", organism,") ...",sep=""))	
 	ids<- toTable(GOTERM)	 
-	ids = ids[ids[,"Ontology"] == ontology,"go_id"] # these are all GO terms, which belong to the corrseponding category
+	ids = unique(ids[ids[,"Ontology"] == ontology,"go_id"]) # these are all GO terms, which belong to the corrseponding category
 	offspring <- getOffsprings()	
 	gomap <- get("gomap",env=GOSimEnv)		
 	goterms<-unlist(sapply(gomap, function(x) names(x)), use.names=FALSE) # all GO terms appearing in an annotation
@@ -78,9 +78,9 @@ calcICs<-function(){
 	names(tab)<-na
 	tab<-c(tab,m)	
 	ta<-sapply(ids,function(x){ t=tab[unlist(offspring[x])]; tab[x]+sum(t[!is.na(t)])})		
-	names(ta)<-ids
-	IC<- -log(ta/sum(ta))	
-# 	IC[IC == Inf] = 0 # GO terms which are not annotated have Inf information content (NOT 0: They cannot be treated like root!!!)
+	names(ta)<-ids	
+	IC<- -log(ta/sum(tab))	# ACHTUNG: hier muß tab und nicht ta stehen: Die Vorkommenshäufigkeit des Wurzelknotens ist die Summe der Vorkommenshäufigkeiten aller Knoten OHNE Aufsummieren der Kinder!
+# # 	IC[IC == Inf] = 0 # WRONG: GO terms which are not annotated have Inf information content (NOT 0: They cannot be treated like root!!!)
 	save(IC,file=paste("ICs",ontology,organism,paste(evidences,collapse="_"),".rda",sep=""))
 	print("done")			
 }
@@ -267,6 +267,10 @@ calcTermSim<-function(term1, term2, method="JiangConrath", verbose=TRUE){
 		return(getDisjCommAncSim(term1,term2, "JiangConrath"))
 	else if(method == "CoutoLin")  
 		return(getDisjCommAncSim(term1,term2, "Lin"))
+	else if(method == "diffKernel"){
+		K = mget("K", envir=GOSimEnv, ifnotfound=list(function(x) stop(paste("Diffusion kernel not loaded!\nPlease invoke load.diffusion.kernel().", sep = ""), call. = FALSE)))$K
+		return(K[term1, term2])
+	}
 	else
 		stop(paste("calcTermSim: Unknown term similarity",method))
 }
@@ -276,6 +280,14 @@ getTermSim<-function(termlist, method="JiangConrath", verbose=TRUE){
 	S<-matrix(0,nrow=length(termlist),ncol=length(termlist))
 	colnames(S)<-termlist
 	rownames(S)<-termlist
+	if(method %in% c("diffKernel")){		
+		K = mget("K", envir=GOSimEnv, ifnotfound=list(function(x) stop(paste("Diffusion kernel not loaded!\nPlease invoke load.diffusion.kernel().", sep = ""), call. = FALSE)))$K
+		Ktmp = matrix(NA, ncol=length(termlist), nrow=length(termlist))
+		diag(Ktmp) = 1
+		termlist = intersect(termlist, colnames(K))
+		K = K[termlist, termlist]		
+		return(K)
+	}
 	for(i in 1:length(termlist)){
 		S[i,i] <- calcTermSim(termlist[i],termlist[i], method, verbose)				
 		if(i > 1){

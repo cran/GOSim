@@ -1,10 +1,10 @@
 Package: GOSim
-Version: 1.1.4.2
-Date: 2008-08-13
+Version: 1.1.5.0
+Date: 2008-08-20
 Title: Computation of functional similarities between GO terms and gene products; GO enrichement analysis
-Author: Holger Froehlich <h.froehlich@dkfz.de> contributions by Tim Beissbarth <t.beissbarth@dkfz.de>
+Author: Holger Froehlich <h.froehlich@dkfz.de>, contributions by Tim Beissbarth <t.beissbarth@dkfz.de>
 Maintainer: Holger Froehlich <h.froehlich@dkfz.de>
-Depends: R (>= 2.6.0), GO.db (>= 2.2.0), AnnotationDbi, annotate, org.Dm.eg.db, org.Hs.eg.db, org.Mm.eg.db, org.Pf.plasmo.db, org.Rn.eg.db, org.Sc.sgd.db, topGO, cluster (>= 1.11.7), mclust (>= 3.1), RBGL, graph
+Depends: R (>= 2.6.0), GO.db (>= 2.2.0), AnnotationDbi, annotate, org.Dm.eg.db, org.Hs.eg.db, org.Mm.eg.db, org.Pf.plasmo.db, org.Rn.eg.db, org.Sc.sgd.db, topGO, cluster (>= 1.11.7), mclust (>= 3.1), RBGL, graph, Matrix, corpcor
 Suggests: Rgraphviz
 LazyLoad: Yes
 Description: This package implements several functions useful for
@@ -12,4 +12,4 @@ Description: This package implements several functions useful for
 License: GPL (>= 2)
 URL: http://www.dkfz.de/mga2/gosim
 biocViews: Statistics, Annotation, GO
-Packaged: Wed Aug 13 18:00:25 2008; froehlih
+Packaged: Tue Aug 26 19:23:13 2008; froehlih

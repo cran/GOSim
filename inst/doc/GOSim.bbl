@@ -24,6 +24,11 @@ F.~Couto, M.~Silva, and P.~Coutinho.
   Selecting Disjunctive Ancestors}.
 \newblock In {\em Conference in Information and Knowledge Management}, 2005.
 
+\bibitem{Pozo2008GOFuncSim}
+Angela del Pozo, Florencio Pazos, and Alfonso Valencia.
+\newblock Defining functional distances over gene ontology.
+\newblock {\em BMC Bioinformatics}, 9:50, 2008.
+
 \bibitem{Froehlich2007GOSim}
 H.~Fr\"ohlich, N.~Speer, A.~Poustka, and T.~Beissbarth.
 \newblock {GOSim - An R-Package for Computation of Information Theoretic GO
@@ -41,6 +46,12 @@ J.~Jiang and D.~Conrath.
 \newblock Semantic similarity based on corpus statistics and lexical taxonomy.
 \newblock In {\em Proceedings of the International Conference on Research in
   Computational Linguistics}, Taiwan, 1998.
+
+\bibitem{Lerman2007ManifoldEmbedding}
+Gilad Lerman and Boris~E Shakhnovich.
+\newblock Defining functional distance using manifold embeddings of gene
+  ontology annotations.
+\newblock {\em Proc Natl Acad Sci U S A}, 104(27):11334--11339, Jul 2007.
 
 \bibitem{Lin98}
 D.~Lin.
@@ -60,6 +71,12 @@ P.W. Lord, R.D. Stevens, A.~Brass, and C.A. Goble.
 K.~Mehlhorn and S.~N\"aher.
 \newblock {\em {The LEDA Platform of Combinatorial and Geometric Computing}}.
 \newblock Cambridge University Press, 1999.
+
+\bibitem{Mistry2008GOFuncSim}
+Meeta Mistry and Paul Pavlidis.
+\newblock Gene ontology term overlap as a measure of gene functional
+  similarity.
+\newblock {\em BMC Bioinformatics}, 9:327, 2008.
 
 \bibitem{Resnik95}
 P.~Resnik.
