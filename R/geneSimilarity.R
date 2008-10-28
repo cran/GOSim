@@ -14,12 +14,14 @@ getGOInfo<-function(geneIDs){
 	goterms <-sapply(goterms, function(x) names(x[which(x)]))
 	goterms <- goterms[sapply(goterms,length) > 0]
 	goids<- toTable(GOTERM)				
-	info = sapply(goterms, function(g) unique(goids[goids[,"go_id"] %in% g,c("go_id", "Term", "Definition")]))
+	IC<-get("IC", envir=GOSimEnv)	
+	info = sapply(goterms, function(g) cbind(unique(goids[goids[,"go_id"] %in% g,c("go_id", "Term", "Definition")]), IC=IC[g]))
 	info
 }
 
 # filter out genes not mapping to the category in question	
 filterGO<-function(genelist){	
+	cat("filtering out genes not mapping to the currently set GO category ...")
 	if(!exists("GOSimEnv")) initialize()	
 	IC<-get("IC", envir=GOSimEnv)
 	ids<-names(IC[IC != Inf]) # only consider GO terms with some known annotation   
@@ -34,6 +36,7 @@ filterGO<-function(genelist){
 			k<-k + 1
 		}
 	}	
+	cat(" ===> list of ", length(genelist), "genes reduced to ", length(allgenes), "\n")
 	allgenes
 }
 

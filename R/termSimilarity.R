@@ -257,16 +257,20 @@ calcTermSim<-function(term1, term2, method="JiangConrath", verbose=TRUE){
 		return(IC[getMinimumSubsumer(term1,term2)])   
 	else if(method == "JiangConrath")
 		return(1 - min(1, -2*IC[getMinimumSubsumer(term1,term2)] + IC[term1] + IC[term2]) )	
-	else if(method == "Lin")
-		return(2*IC[getMinimumSubsumer(term1,term2)]/(IC[term1]+IC[term2]))	
+	else if(method == "Lin"){
+		res = 2*IC[getMinimumSubsumer(term1,term2)]/(IC[term1]+IC[term2])
+		return(ifelse(is.na(res), 1, res))
+	}
 	else if(method== "CoutoEnriched")
 		return(getEnrichedSim(term1, term2))
 	else if(method == "CoutoResnik")  
 		return(getDisjCommAncSim(term1,term2, "Resnik"))
 	else if(method == "CoutoJiangConrath")  
 		return(getDisjCommAncSim(term1,term2, "JiangConrath"))
-	else if(method == "CoutoLin")  
-		return(getDisjCommAncSim(term1,term2, "Lin"))
+	else if(method == "CoutoLin"){
+		res = getDisjCommAncSim(term1,term2, "Lin")
+		return(ifelse(is.na(res), 1, res))
+	}
 	else if(method == "diffKernel"){
 		K = mget("K", envir=GOSimEnv, ifnotfound=list(function(x) stop(paste("Diffusion kernel not loaded!\nPlease invoke load.diffusion.kernel().", sep = ""), call. = FALSE)))$K
 		return(K[term1, term2])
