@@ -31,7 +31,7 @@ Entrez Gene ids for which no GO associations exist are left out of the environme
 
 The method retrieves a mapping of Entrez gene IDs to GO terms, restricted by the given evidence codes. This mapping is now based on the respective organism annotation packages (org.Dm.eg.db for "fly", org.Hs.eg.db for "human", org.Mm.eg.db for "mouse", org.Pf.plasmo.db for "malaria", org.Rn.eg.db for "rat", org.Sc.sgd.db for "yeast"). Please refer to these packages for further information.
 
-The user can optionally provide its own mapping of Entrez gene IDs to GO terms instead of using one of the packages mentioned before. The mapping should come in form of a list have a format as in the following example (no NAs are allowed):
+The user can optionally provide its own mapping of Entrez gene IDs to GO terms instead of using one of the packages mentioned before. The mapping should come in form of a list having a format as in the following example (no NAs are allowed):
 
 \$`11305`
 

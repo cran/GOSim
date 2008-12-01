@@ -1,25 +1,17 @@
 \name{clusterEvaluation}
 \alias{evaluateClustering}
-\alias{analyzeCluster}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Evaluate a given grouping of genes or GO terms.  }
 \description{
-  \item{1.}{ Evaluate a given grouping of genes or terms with respect to their GO similarity.}
-  \item{2.}{ Perform a GO enrichment analysis of a specific cluster using topGO }
+   Evaluate a given grouping of genes or terms with respect to their GO similarity.
 }
 \usage{
 evaluateClustering(clust, Sim)
-
-analyzeCluster(genesInCluster, allgenes, cutoff=0.01)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{clust}{ vector of cluster labels (integer or character) for each gene }
   \item{Sim}{ similarity matrix }
-
-  \item{genesInCluster}{Entrez gene IDs of genes in the cluster to investigate}
-  \item{allgenes}{Entrez gene IDs of all genes (on the chip)}
-  \item{cutoff}{significance cutoff for GO enrichment analysis}
 }
 \details{
    If necessary, more details than the description above 
@@ -27,18 +19,12 @@ analyzeCluster(genesInCluster, allgenes, cutoff=0.01)
 \value{
   evaluateClustering returns a list with two items:
   \item{clusterstats }{matrix (ncluster x 2) of median within cluster similarities and median absolute deviations}
-  \item{clustersil}{cluster silhouette values}
-
-  analyzeCluster returns a list with two items:  
-  \item{GOTerms}{list of significant GO terms and their description}
-  \item{p.values}{vector of p-values for significant GO terms}
-  \item{genes}{list of genes associated to each GO term}
+  \item{clustersil}{cluster silhouette values}  
 }
 \references{Rousseeuw, P., Silhouettes: a graphical aid to the interpretation and validation of cluster analysis, J. Comp. and Applied Mathematics, 1987, 20, 53-6
-
-Adrian Alexa, J\"org Rahnenf\"uhrer, Thomas Lengauer: Improved scoring of functional groups from gene expression data by decorrelating GO graph structure, Bioinformatics, 2006, 22(13):1600-1607}
+}
 \author{Holger Froehlich}
-\seealso{ \code{\link{getGeneSimPrototypes}}, \code{\link{getGeneSim}}, \code{\link{getTermSim}} }
+\seealso{ \code{\link{getGeneSimPrototypes}}, \code{\link{getGeneSim}}, \code{\link{getTermSim}}, \code{\link{GOenrichment}} }
 \examples{
 	\dontrun{	
 	setOntology("BP")
@@ -59,7 +45,7 @@ Adrian Alexa, J\"org Rahnenf\"uhrer, Thomas Lengauer: Improved scoring of functi
 	
 	# investigate cluster 1 further	
 	if(require(topGO))
-		analyzeCluster(genesOfInterest[cl == 1], allgenes, cutoff=0.05) # print out what cluster 1 is about
+		GOenrichment(genesOfInterest[cl == 1], allgenes, cutoff=0.05) # print out what cluster 1 is about
 	}
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

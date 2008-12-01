@@ -1,5 +1,6 @@
 # get GO information for a list of genes
 getGOInfo<-function(geneIDs){	
+	geneIDs = as.character(geneIDs)
 	require(GO.db)
 	if(!require(annotate))
 		stop("Package annotate is required for function getGOInfo")
@@ -11,7 +12,7 @@ getGOInfo<-function(geneIDs){
 	goterms = goterms[!is.na(names(goterms))]
 	if(length(goterms) == 0)
 		stop("No GO information available for these genes!")
-	goterms <-sapply(goterms, function(x) names(x[which(x)]))
+	goterms <-sapply(goterms, function(x) unique(names(x[which(x)])))
 	goterms <- goterms[sapply(goterms,length) > 0]
 	goids<- toTable(GOTERM)				
 	IC<-get("IC", envir=GOSimEnv)	

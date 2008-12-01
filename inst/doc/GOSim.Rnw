@@ -341,9 +341,8 @@ Since version 1.1 \emph{GOSim} also offers the possibility of a GO enrichemnt an
 <<results=verbatim>>=
 gomap <- get("gomap",env=GOSimEnv)
 allgenes = unique(c(sample(names(gomap), 1000), genes)) # suppose these are all genes
-analyzeCluster(c("8614", "9518", "780", "2852"), allgenes) # print out what cluster 1 is about
+GOenrichment(c("8614", "9518", "780", "2852"), allgenes) # print out what cluster 1 is about
 @
-The result shows that the four genes are mainly involved in cell-cell signaling, in an enzyme linked receptor protein signaling pathway and in the response to nutrient.
 
 \bibliographystyle{plain}
 \bibliography{references}

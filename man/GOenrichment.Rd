@@ -1,18 +1,20 @@
 \name{GOenrichment}
 \alias{GOenrichment}
+\alias{analyzeCluster}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ GO enrichment analysis }
 \description{
-  This function performs a GO enrichment analysis using topGO. The analysis relies on the ranking of the genes according to some test statistic (p-values, t-statistic, z-statistic, ...).
+  This function performs a GO enrichment analysis using topGO. It combines the two former functions "GOenrichment" and "analyzeCluster".
 }
 \usage{
-GOenrichment (allpvalues, fdr=0.05, cutoff=0.01)
+GOenrichment(genesOfInterest, allgenes, cutoff=0.01, method=c("weightCount","elimCount"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{  
-  \item{allpvalues}{vector of (multiple testing corrected) p-values with names as Entrez gene IDs.}
-  \item{fdr}{FDR significance cutoff}
+  \item{genesOfInterest}{character vector of Entrez gene IDs}
+  \item{allgenes}{character vector of Entrez gene IDs}
   \item{cutoff}{significance cutoff for GO enrichment analysis}
+  \item{method}{topGO method: either weight or elim}
 }
 \value{  
   \item{GOTerms}{list of significant GO terms and their description}
@@ -22,7 +24,7 @@ GOenrichment (allpvalues, fdr=0.05, cutoff=0.01)
 \references{
 Adrian Alexa, J\"org Rahnenf\"uhrer, Thomas Lengauer: Improved scoring of functional groups from gene expression data by decorrelating GO graph structure, Bioinformatics, 2006, 22(13):1600-1607}
 \author{Holger Froehlich}
-\seealso{ \code{\link{analyzeCluster}}, \code{\link{evaluateClustering}} }
+\seealso{\code{\link{evaluateClustering}} }
 \examples{
 	\dontrun{	
 	setOntology("BP")
@@ -31,7 +33,7 @@ Adrian Alexa, J\"org Rahnenf\"uhrer, Thomas Lengauer: Improved scoring of functi
 	allpvalues = runif(1000) # an these are their pvalues
 	names(allpvalues) = allgenes
 	if(require(topGO) & require(annotate))
-		GOenrichment(allpvalues) # GO enrichment analysis
+		GOenrichment(allpvalues[allpvalues<0.05], allpvalues) # GO enrichment analysis
 	}
 }
 \keyword{ file }% at least one, from doc/KEYWORDS
