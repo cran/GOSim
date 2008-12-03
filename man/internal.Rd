@@ -24,8 +24,6 @@
 \arguments{
 	various
 }
-\details{
-}
 \value{
  	various
 }
