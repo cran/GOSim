@@ -67,29 +67,17 @@ getChildren<-function(){
 }
 
 # filter GO mapping for given evidence levels
-setEvidenceLevel<-function(evidences="all", organism="human", gomap=NULL){			
+setEvidenceLevel<-function(evidences="all", organism=org.Hs.egORGANISM, gomap=org.Hs.egGO){			
         if(!exists("GOSimEnv")) initialize()	
 	print(paste("-> retrieving GO information for all available genes for organism '", organism, "' in GO database", sep=""))
 	assign("evidences", evidences, envir=GOSimEnv)	
 # 	gomap<-as.list(GOENTREZID2GO)		
-	if(is.null(gomap)){
-		if(organism == "human")
-			gomap = org.Hs.egGO
-		else if(organism == "fly")
-			gomap = org.Dm.egGO
-		else if(organism == "mouse")
-			gomap = org.Mm.egGO
-		else if(organism == "malaria")
-			gomap = org.Pf.plasmoGO
-		else if(organism == "rat")
-			gomap = org.Rn.egGO
-		else if(organism == "yeast")
-			gomap = org.Sc.sgdGO
-		else
-			stop(paste("No mapping for organism", organism, "available!"))	
+	if(is(gomap, "Bimap")){
 		mapped_genes <- mappedkeys(gomap)	
 		gomap = AnnotationDbi::as.list(gomap[mapped_genes])
-	}	
+	}
+	else if(!is(gomap, "list"))
+		stop("gomap argument should be a nested list (see manual pages)!")
 	print(paste("-> filtering GO terms according to evidence levels '", evidences, "'",sep=""))
 	if((length(evidences) > 1) || (evidences!="all")){		
 		gomap<-sapply(gomap,function(x) sapply(x,function(y) c(y$Evidence %in% evidences, y$Ontology)))

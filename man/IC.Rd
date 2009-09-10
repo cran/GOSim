@@ -22,6 +22,7 @@
 
 \title{Information content of GO terms}
 \description{  
+  \describe{
   \item{"ICshumanBPall"}{Information content of GO terms in "biological process" using all evidence codes for human}
   \item{"ICshumanCCall"}{Information content of GO terms in "cellular component" using all evidence codes for human}  
   \item{"ICshumanMFall"}{Information content of GO terms in "molecular function" using all evidence codes for human}
@@ -44,7 +45,8 @@
 
   \item{"ICsmouseBPall"}{Information content of GO terms in "biological process" using all evidence codes for mouse}
   \item{"ICsmouseCCall"}{Information content of GO terms in "cellular component" using all evidence codes for mouse}  
-  \item{"ICsmouseMFall"}{Information content of GO terms in "molecular function" using all evidence codes for mouse}  
+  \item{"ICsmouseMFall"}{Information content of GO terms in "molecular function" using all evidence codes for mouse}
+  }  
 }	
 \format{A vector of double values}	
 \note{

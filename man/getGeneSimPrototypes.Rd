@@ -33,7 +33,9 @@ List with items
   \item{"prototypes"}{prototypes (= prinicipal components, if PCA has been performed)}
   \item{"features"}{feature vectors for each gene: n x d data matrix}
 }
-\references{ [1] H. Froehlich, N. Speer, C. Spieth, and A. Zell, Kernel Based Functional Gene Grouping, Proc. Int. Joint Conf. on Neural Networks (IJCNN), 6886 - 6891, 2006 \newline
+\references{ 
+[1] H. Froehlich, N. Speer, C. Spieth, and A. Zell, Kernel Based Functional Gene Grouping, Proc. Int. Joint Conf. on Neural Networks (IJCNN), 6886 - 6891, 2006
+
 [2] N. Speer, H. Froehlich, A. Zell, Functional Grouping of Genes Using Spectral Clustering and Gene Ontology, Proc. Int. Joint Conf. on Neural Networks (IJCNN), pp. 298 - 303, 2005 }
 \author{ Holger Froehlich }
 \note{ The result depends on the currently set ontology ("BP","MF","CC").

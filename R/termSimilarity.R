@@ -242,6 +242,21 @@ getDisjCommAncSim<-function(term1, term2, method="JiangConrath"){
 		stop(paste("getDisjCommAnc: Unknown term similarity",method))
 }
 
+# graph information content similarity related to Tanimoto-Jacard index
+getGIC = function(term1, term2){
+	if(!exists("GOSimEnv")) initialize()	
+	if(term1 == term2){
+		return(1)
+	}
+	IC<-get("IC", envir=GOSimEnv)
+	ancestor<-get("ancestor",envir=GOSimEnv)
+	an1<-unlist(ancestor[names(ancestor) == term1])
+	an2<-unlist(ancestor[names(ancestor) == term2])
+	ancommon = intersect(an1, an2)
+	anunion = union(an1, an2)
+	return(sum(IC[ancommon]) / sum(IC[anunion]))
+}
+
 # basic term similarity for index i and j in GOIDs ids
 calcTermSim<-function(ids, i, j, method="JiangConrath"){	
   	calcTermSim(ids[i],ids[j], method)
@@ -271,6 +286,18 @@ calcTermSim<-function(term1, term2, method="JiangConrath", verbose=TRUE){
 		res = getDisjCommAncSim(term1,term2, "Lin")
 		return(ifelse(is.na(res), 1, res))
 	}
+	else if(method == "simIC"){ # Li et al.
+		MICA = getMinimumSubsumer(term1,term2)
+		res = 2*IC[MICA]/(IC[term1]+IC[term2]) * (1 - 1/(1 + IC[MICA]))
+		return(ifelse(is.na(res), 1, res))
+	}
+	else if(method == "GIC") # graph information content
+		return(getGIC(term1, term2))
+	else if(method == "relevance"){ # Schlicker et al.
+		MICA = getMinimumSubsumer(term1,term2)
+		res = (2*IC[MICA]/(IC[term1]+IC[term2]))*(1 - exp(-IC[MICA]))
+		return(ifelse(is.na(res), 1, res))
+	}
 	else if(method == "diffKernel"){
 		K = mget("K", envir=GOSimEnv, ifnotfound=list(function(x) stop(paste("Diffusion kernel not loaded!\nPlease invoke load.diffusion.kernel().", sep = ""), call. = FALSE)))$K
 		return(K[term1, term2])
@@ -280,7 +307,7 @@ calcTermSim<-function(term1, term2, method="JiangConrath", verbose=TRUE){
 }
 
 # calculate term similarities for a list of GO terms
-getTermSim<-function(termlist, method="JiangConrath", verbose=TRUE){
+getTermSim<-function(termlist, method="relevance", verbose=TRUE){
 	S<-matrix(0,nrow=length(termlist),ncol=length(termlist))
 	colnames(S)<-termlist
 	rownames(S)<-termlist

@@ -20,9 +20,11 @@ setOntology(ont = "BP", loadIC=TRUE)
 }
 \details{
   The following ontologies can be used:
+  \describe{
 \item{"BP"}{ biological process}
 \item{"MF"}{ molecular function}
 \item{"CC"}{ cellular component}
+}
 }
 \value{
  none.

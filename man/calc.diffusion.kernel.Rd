@@ -17,10 +17,12 @@ load.diffusion.kernel(method="diffKernelLapl")
   \item{m}{(1) Half the power of the transition probability matrix (an integer > 0). (2) an arbitrary positive time constant for the exponential diffusion kernel}
 }
 \details{
+  \describe{
 \item{"diffKernelLapl"}{pseudo inverse of the (unnormalized) graph Laplacian: Takes into account all powers of diffusion and incorporates all paths from one node to another one.}
 \item{"diffKernelpower"}{even power of the transition probability matrix: Takes into account local transitions of path length m}
 \item{"diffKernelLLE"}{local linear embedding into an Euclidean space: The focus is to preserve local distances to nearest neighbors. The LLE kernel emphasizes short-range interactions between GO terms.}
 \item{diffKernelexpm"}{expm(-mL), where t is a positive constant, L is the (unnormalized) graph Laplacian and expm denotes the matrix exponential. This kernel takes into account all positive integer powers of diffusion, but with an exponential decay of the influence of long-range interactions.}
+}
 }
 \value{
   \code{calc.diffusion.kernel} puts a kernel matrix / similarity matrix named "<method><ontology><organism><evidence levels>.rda" in the current directoy. This file has then to be moved into the data directory of

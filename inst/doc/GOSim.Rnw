@@ -1,7 +1,7 @@
 %\VignetteIndexEntry{GOsim}
 %\VignetteKeyword{GOsim}
 %\VignettePackage{GOsim}
-%\VignetteDepends{Rgraphviz, topGO, annotate, cluster}
+%\VignetteDepends{igraph, topGO, annotate, cluster}
 \documentclass[12pt,a4paper]{article}
 \usepackage[round]{natbib}
 \usepackage{amsmath}
@@ -96,9 +96,9 @@ sim(t,t') = \frac{2IC_{ms}(t,t')}{IC(t) + IC(t')}\label{eq:Lin}
 
 Resnik's, Jiang-Conraths's and Lin's term similarities all refer to $IC_{ms}(t,t')$, the information content of the minimum subsumer of $t$ and $t'$, i.e. of the lowest common ancestor in the hierarchy. For illustration let us plot the GO graph with leaves GO:0007166 and GO:0007267 and let us compute their minimum subsumer (see Fig. \ref{Fig:GOPlot}):
 <<GOExample,eval=FALSE,results=hide,fig=TRUE,eps=FALSE,include=FALSE>>=
-library(Rgraphviz)
+library(igraph)
 G = getGOGraph(c("GO:0007166","GO:0007267"))
-plot(G)
+plot(igraph.from.graphNEL(G))
 @
 <<results=verbatim>>=
 getMinimumSubsumer("GO:0007166","GO:0007267")
@@ -142,6 +142,12 @@ The resulting kernel/similarity matrix is stored in a file called e.g. 'diffKern
 load.diffusion.kernel(method="diffKernelLapl")
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="diffKernel",verbose=FALSE)
 @
+
+Since version 1.2 \emph{GOSim} also contain Schlicker et al.'s  and Li et al.'s GO term similarity measures \cite{Schlicker2006GOFuncSim, Li2009GOSimLinAdaption}, which are both an adaption of Lin's similarity measure. Moreover, the graph information content similarity by Pesquita et al. has been implemented \cite{Pesquita2007GOSim}.
+<<results=verbatim>>=
+getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="relevance",verbose=FALSE)
+@
+ 
 
 \subsection{Functional Gene Similarities}
 

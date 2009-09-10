@@ -179,7 +179,7 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
 
 # compute GO gene similarity for a list of genes
 # getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="Lin", normalization=!(similarity %in% c("funSimAvg","funSimMax")), method="sqrt", avg=(similarity=="OA"), verbose=TRUE){
-getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="Lin", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=TRUE){
+getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="relevance", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=TRUE){
 	genelist <- unique(genelist)
 	if(length(genelist) < 2)
 		stop("Gene list should contain more than 2 elements!")

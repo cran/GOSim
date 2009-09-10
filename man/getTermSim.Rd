@@ -7,16 +7,17 @@
    calculation method are implemented.
 }
 \usage{
-getTermSim(termlist, method = "JiangConrath", verbose = TRUE)
+getTermSim(termlist, method = "relevance", verbose = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{termlist}{ character vector of GO terms }  
-  \item{method}{ one of ("JiangConrath","Resnik","Lin","CoutoEnriched","CoutoJiangConrath","CoutoResnik","CoutoLin", "diffKernelgraphLapl", "diffKernelLLE", "diffKernelpower", "diffKernelexpm"") }
+  \item{method}{ one of the supported methods for GO term similarity (see below) }
   \item{verbose}{ print out various information or not }
 }
 \details{
   Currently the following methods for computing GO term similarities are implemented: 
+  \describe{
 \item{"Resnik"}{information content of minimum subsumer (ICms) [1]}
 \item{"JiangConrath"}{\eqn{1 - \min(1, IC(term1) - 2ICms + IC(term2))} [2]}
 \item{"Lin"}{\eqn{\frac{2ICms}{(IC(term1) + IC(term2))}} [3]}
@@ -25,6 +26,10 @@ getTermSim(termlist, method = "JiangConrath", verbose = TRUE)
 \item{"CoutoJiangConrath"}{\eqn{1 - \min(1, IC(term1) -2ICshare + IC(term2))} [5]}
 \item{"CoutoLin"}{\eqn{\frac{2ICshare}{(IC(term1) + IC(term2))}} [5]}
 \item{"diffKernel"}{diffusion kernel similarity from a pre-loaded kernel matrix (see \code{\link{load.diffusion.kernel}}). The diffusion kernel is calculated using one of the methods described in [6].}
+\item{"relevance"}{sim_Lin * (1 - exp(-ICms)) [7]}
+\item{"GIC"}{summed information content of common ancestors divided by summed information content of all ancestors of term1 and term2 [8]}
+%%\item{simIC}{sim_Lin * (1 - 1/(1 + ICms)) [9]}
+}
 }
 \value{
 n x n matrix (n = number of GO terms) with similarities between GO terms scaled to [0,1]. If a GO term does not exist for the currently set ontology, the similarity is set to "NA".
@@ -41,6 +46,12 @@ n x n matrix (n = number of GO terms) with similarities between GO terms scaled 
 [5] Couto, F.; Silva, M. & Coutinho, P., Semantic Similarity over the Gene Ontology: Family Correlation and Selecting Disjunctive Ancestors, Conference in Information and Knowledge Management, 2005  
 
 [6] Lerman G. & Shaknovich B., Defining Functional Distance using Manifold Embeddings of Gene Ontology Annotations, PNAS, 104(27): 11334 - 11339, 2007
+
+[7] A. Schlicker, F. Domingues, J. Rahnenfuehrer, T. Lengauer, A new measure for functional similarity of gene products based on Gene Ontology, BMC Bioinformatics, 7, 302, 2006.
+
+[8] C. Pesquita, D. Faria, H. Bastos, A. Falcao, F. Couto, Evaluating GO-based Semantic Similarity Measures, In: Proc. 10th Annual Bio-Ontologies Meeting 2007, 37 - 40, 2007
+
+%%[9] B. Li, J. Wang, A. Feltus, J. Zhou, F. Luo, Effectively Integrating Information Content and Structural Relationship to Improve the GO-based Similarity Measure Between Proteins, BMC Bioinformatics, 2009, in press. 
 }
 \author{ Holger Froehlich }
 \note{ All calculations use normalized information contents for each GO

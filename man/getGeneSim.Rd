@@ -7,7 +7,7 @@
    using different strategies. 
 }
 \usage{
-getGeneSim(genelist, similarity="funSimMax", similarityTerm="Lin", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=TRUE)
+getGeneSim(genelist, similarity="funSimMax", similarityTerm="relevance", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,6 +22,7 @@ getGeneSim(genelist, similarity="funSimMax", similarityTerm="Lin", normalization
 \details{
    The method to calculate the pairwise functional similarity between
    gene products can either be: 
+   \describe{
 \item{"max"}{the maximum similarity between any two GO terms}
 \item{"mean"}{the average similarity between any two GO terms}
 \item{funSimMax}{ the average of best matching GO term similarities. Take the maximum of the scores achieved by assignments of GO terms from gene 1 to gene 2 and vice versa. [2]}
@@ -32,6 +33,7 @@ getGeneSim(genelist, similarity="funSimMax", similarityTerm="Lin", normalization
 \item{"hausdorff"}{the translation of the Hausdorff distance between two sets: Let A and B be the two sets of GO terms associated to two genes. Then \eqn{sim(A,B) = min(min(max_{x \in A}(x,y)), min(max_{y\in B}(x,y)))}. [3]}
 \item{"dot"}{the dot product between feature vectors describing the absence/presence of each GO term. The absence of each GO
  term is weighted by its information content. Depending on the type of later normalization one can arrive at the cosine similarity (method="sqrt") or at the Tanimoto coefficient (method="Tanimoto").[4]}
+ }
 }
 \value{
   n x n similarity matrix (n = number of genes)

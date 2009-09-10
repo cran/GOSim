@@ -6,16 +6,17 @@
    Specifies to use only GO terms with given evidence codes. This, in combination with the specified GO ontology ("BP", "MF", "CC"), influences, how the information content for individual GO terms is calculated. 
 }
 \usage{
-setEvidenceLevel(evidences = "all", organism="human", gomap=NULL)
+setEvidenceLevel(evidences = "all", organism=org.Hs.egORGANISM, gomap=org.Hs.egGO)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{evidences}{ character vector of evidence codes }
   \item{organism}{organism, for which to load a mapping of Entrez gene IDs to GO terms (see details)}
-  \item{gomap}{an optional user provided mapping of Entrez gene IDs to GO terms to be used (see details)}
+  \item{gomap}{mapping of Entrez gene IDs to GO terms to be used (see details)}
 }
 \details{
    Each evidence code can be one of:
+   \describe{
 \item{"IMP"}{inferred from mutant phenotype}
 \item{"IGI"}{inferred from genetic interaction}
 \item{"IPI"}{inferred from physical interaction}
@@ -27,11 +28,13 @@ setEvidenceLevel(evidences = "all", organism="human", gomap=NULL)
 \item{"NAS"}{non-traceable author statement}
 \item{"ND"}{no biological data available}
 \item{"IC"}{inferred by curator}
+}
 Entrez Gene ids for which no GO associations exist are left out of the environment.
 
-The method retrieves a mapping of Entrez gene IDs to GO terms, restricted by the given evidence codes. This mapping is now based on the respective organism annotation packages (org.Dm.eg.db for "fly", org.Hs.eg.db for "human", org.Mm.eg.db for "mouse", org.Pf.plasmo.db for "malaria", org.Rn.eg.db for "rat", org.Sc.sgd.db for "yeast"). Please refer to these packages for further information.
+The method retrieves a mapping of Entrez gene IDs to GO terms, restricted by the given evidence codes.
+This mapping is based on the respective organism annotation packages (e.g. org.Dm.eg.db for fly, org.Hs.eg.db for human, etc.). The user passes the GO mapping and the organism name to the function.  Please refer to the annotation packages for further information.
 
-The user can optionally provide its own mapping of Entrez gene IDs to GO terms instead of using one of the packages mentioned before. The mapping should come in form of a list having a format as in the following example (no NAs are allowed):
+In case there does not exist an annotation package so far, the user can optionally provide its own mapping of Entrez gene IDs to GO terms instead of using one of the packages mentioned before. The mapping should come in form of a nested list having a format as in the following example (no NAs are allowed):
 
 \$`11305`
 
