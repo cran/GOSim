@@ -360,15 +360,18 @@ selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=TRUE){
 			print(paste("PCA: dimension reduced to",ncol(pcares$features),"principal components (95% total variance explained)"))
 		return(pcares)
 	}
-	else if(method == "clustering"){    
-		if(!require(mclust))
-			stop("Package mclust required with method 'clustering' for function selectPrototypes")
+	else if(method == "clustering"){    		
 		if(is.null(data))
 			stop("You need to specify a data matrix with feature vectors")
 		if(verbose)
 			print("Clustering feature vectors ...")
-		res<-Mclust(t(data),2,n)
-		return(res$mu)
+		#res<-Mclust(t(data),2:n)
+		#return(res$mu)
+		res = sapply(2:n, function(k) flexmix(t(data)~1, cluster=cutree(hclust(dist(t(data))),k=k), k=k, model= FLXMCmvnorm()))
+		bics = sapply(res, BIC)
+		res = res[[which.min(bics)]]
+		p = parameters(res)
+		return(p[setdiff(1:NROW(p), grep("cov", rownames(p))),])
 	}
 	else
 	stop(paste("selectPrototypes: Unknown method",method,"!"))

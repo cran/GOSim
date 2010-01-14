@@ -43,7 +43,7 @@ If the function is called to perform dimensionality via PCA, the result is a lis
 
 If the function is called to perform clustering in feature space, the
 cluster centers are returned in a l x k matrix (each column is one
-cluster center). The "Mclust" function in the package "mclust" is called
+cluster center). The "flexmix" function in the package "flexmix" is called
 to perform the clustering. The BIC is used to calculate the optimal
 number of clusters in the range 2,...,n. 
 }
