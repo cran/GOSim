@@ -81,8 +81,7 @@ calcICs<-function(){
 	names(ta)<-ids	
 	IC<- -log(ta/sum(tab))	# ACHTUNG: hier muß tab und nicht ta stehen: Die Vorkommenshäufigkeit des Wurzelknotens ist die Summe der Vorkommenshäufigkeiten aller Knoten OHNE Aufsummieren der Kinder!
 # # 	IC[IC == Inf] = 0 # WRONG: GO terms which are not annotated have Inf information content (NOT 0: They cannot be treated like root!!!)
-	save(IC,file=paste("ICs",ontology,organism,paste(evidences,collapse="_"),".rda",sep=""))
-	assign("IC", IC, envir=GOSimEnv)
+	save(IC,file=paste("ICs",ontology,organism,paste(evidences,collapse="_"),".rda",sep=""))	
 	print("done")			
 }
 
