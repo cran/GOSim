@@ -63,8 +63,8 @@ n x n matrix (n = number of GO terms) with similarities between GO terms scaled 
   \code{\link{getDisjCommAnc}}, \code{\link{setEnrichmentFactors}},
   \code{\link{setOntology}},  \code{\link{load.diffusion.kernel}} } 
 \examples{
- # setOntology("BP")
-
+\dontrun{
+ setOntology("BP")
  # Lin's method
  getTermSim(c("GO:0006955","GO:0007584"),method="Lin")
  if(require(graph)){
@@ -74,6 +74,7 @@ n x n matrix (n = number of GO terms) with similarities between GO terms scaled 
  	# set enrichment factors
  	setEnrichmentFactors(alpha=0.1,beta=0.5) 
  	getTermSim(c("GO:0006955","GO:0007584"),method="CoutoEnriched")
+ }
  }
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

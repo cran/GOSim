@@ -3,7 +3,7 @@
 %\VignettePackage{GOsim}
 %\VignetteDepends{igraph, topGO, annotate, cluster}
 \documentclass[12pt,a4paper]{article}
-\usepackage[round]{natbib}
+\usepackage{natbib}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{hyperref}
@@ -344,13 +344,13 @@ A good indiciation of the clustering qualitiy can be obtained by looking at the 
 \subsection{GO Enrichment Analysis}
 
 Since version 1.1 \emph{GOSim} also offers the possibility of a GO enrichemnt analysis. Suppose, we may now want to get a clearer picture of the genes involved in cluster 1. For this purpose we use the topGO tool \cite{Alexa2006topGO}.
-<<results=verbatim>>=
+<<results=verbatim, eval=FALSE>>=
 gomap <- get("gomap",env=GOSimEnv)
 allgenes = unique(c(sample(names(gomap), 1000), genes)) # suppose these are all genes
 GOenrichment(c("8614", "9518", "780", "2852"), allgenes) # print out what cluster 1 is about
 @
 
-\bibliographystyle{plain}
+\bibliographystyle{apalike}
 \bibliography{references}
 
 \end{document}

@@ -28,9 +28,11 @@ setEnrichmentFactors(alpha = 0.5, beta = 0.5)
 }
 \seealso{ \code{\link{getTermSim}} }
 \examples{
+\dontrun{
  if(require(graph)){
  	setEnrichmentFactors(alpha=0.1,beta=0.5)
  	getTermSim(c("GO:0006955","GO:0007584"),method="CoutoEnriched")
+ }
  }
 }
 \keyword{ file }% at least one, from doc/KEYWORDS
