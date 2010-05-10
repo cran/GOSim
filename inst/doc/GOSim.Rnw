@@ -29,12 +29,12 @@
 
 \section{Introduction}
 
-The Gene Ontology (GO) has become one of the most widespread systems for systematically annotating gene products within the bioinformatics community and is developed by the Gene Ontology Consortium \cite{GOConsortium04}. It is specifically intended for describing gene products with a controlled and structured vocabulary. GO terms are part of a Directed Acyclic Graph (DAG), covering three orthogonal taxonomies or "aspects": \emph{molecular function, biological process} and \emph{cellular component}. Two different kinds of relationship between GO terms exist: the "is-a" relationship and the "part-of" relationship.
+The Gene Ontology (GO) has become one of the most widespread systems for systematically annotating gene products within the bioinformatics community and is developed by the Gene Ontology Consortium \citep{GOConsortium04}. It is specifically intended for describing gene products with a controlled and structured vocabulary. GO terms are part of a Directed Acyclic Graph (DAG), covering three orthogonal taxonomies or "aspects": \emph{molecular function, biological process} and \emph{cellular component}. Two different kinds of relationship between GO terms exist: the "is-a" relationship and the "part-of" relationship.
 Providing a standard vocabulary across any biological resources, the GO enables researchers to use this information for automated data analysis.
 
-The \emph{GOSim} package \cite{Froehlich2007GOSim} provides the researcher with various information theoretic similarity concepts for GO terms \cite{Resnik95, Resnik99, Lin98, Jiang98, Lord03, Couto2003FuSSiMeg, Couto2005GraSM}. Moreover, since version 1.1.5 \emph{GOSim} contains several new similarity concepts, which are based on so-called diffusion kernel techniques \cite{Lerman2007ManifoldEmbedding}.  Additionally \emph{GOSim} implements different methods for computing functional similarities between gene products based on the similarties between the associated GO terms \cite{FroeGO05, FroeSpeerGOKer06, Schlicker2006GOFuncSim, Lerman2007ManifoldEmbedding, Pozo2008GOFuncSim}. This can, for instances, be used for clustering genes according to their biological function \cite{FroeGO05, FroeSpeerGOKer06} and thus may help to get a better understanding of the biological aspects covered by a set of genes. 
+The \emph{GOSim} package \citep{Froehlich2007GOSim} provides the researcher with various information theoretic similarity concepts for GO terms \citep{Resnik95, Resnik99, Lin98, Jiang98, Lord03, Couto2003FuSSiMeg, Couto2005GraSM}. Moreover, since version 1.1.5 \emph{GOSim} contains several new similarity concepts, which are based on so-called diffusion kernel techniques \citep{Lerman2007ManifoldEmbedding}.  Additionally \emph{GOSim} implements different methods for computing functional similarities between gene products based on the similarties between the associated GO terms \citep{FroeGO05, FroeSpeerGOKer06, Schlicker2006GOFuncSim, Lerman2007ManifoldEmbedding, Pozo2008GOFuncSim}. This can, for instances, be used for clustering genes according to their biological function \citep{FroeGO05, FroeSpeerGOKer06} and thus may help to get a better understanding of the biological aspects covered by a set of genes. 
 
-Since version 1.1 \emph{GOSim} additionally offers the possibility of a GO enrichment analysis using the topGO package \cite{Alexa2006topGO}. Hence, \emph{GOSim} acts now as an umbrella for different analysis methods employing the GO structure.
+Since version 1.1 \emph{GOSim} additionally offers the possibility of a GO enrichment analysis using the topGO package \citep{Alexa2006topGO}. Hence, \emph{GOSim} acts now as an umbrella for different analysis methods employing the GO structure.
 
 \section{Usage of \emph{GOSim}}
 
@@ -54,7 +54,7 @@ Let us examine the similarity of the GO terms for genes "8614" and "2852" in gre
 <<results=verbatim>>=
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="Resnik",verbose=FALSE)
 @
-This calculates Resnik's pairwise similarity between GO terms \cite{Resnik95,Resnik99}:
+This calculates Resnik's pairwise similarity between GO terms \citep{Resnik95,Resnik99}:
 \begin{equation}
 sim(t,t') = IC_{ms}(t,t') := \max_{\hat{t}\in Pa(t,t')} IC(\hat{t})\label{eq:Resnik}
 \end{equation}
@@ -75,7 +75,7 @@ For the similarity computation in (Eq.: \ref{eq:Resnik}) normalized information 
 IC[c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186")]/max(IC) 
 @
 
-To continue our example from above, let us also calculate Jiang and Conrath's pairwise similarity between GO terms, which is the default, for compairson reasons \cite{Jiang98}:
+To continue our example from above, let us also calculate Jiang and Conrath's pairwise similarity between GO terms, which is the default, for compairson reasons \citep{Jiang98}:
 <<results=verbatim>>=
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),verbose=FALSE)
 @
@@ -85,7 +85,7 @@ sim(t,t') = 1 - \min(1, IC(t) - 2IC_{ms}(t,t') + IC(t'))
 \end{equation}
 i.e. the similarity between $t$ and $t'$ is 0, if their normalized distance is at least 1.
 
-Likewise, we can also compute Lin's pairwise similarity between GO terms \cite{Lin98}:
+Likewise, we can also compute Lin's pairwise similarity between GO terms \citep{Lin98}:
 <<results=verbatim>>=
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="Lin",verbose=FALSE)
 @
@@ -98,41 +98,42 @@ Resnik's, Jiang-Conraths's and Lin's term similarities all refer to $IC_{ms}(t,t
 <<GOExample,eval=FALSE,results=hide,fig=TRUE,eps=FALSE,include=FALSE>>=
 library(igraph)
 G = getGOGraph(c("GO:0007166","GO:0007267"))
-plot(igraph.from.graphNEL(G))
+G2 = igraph.from.graphNEL(G)
+plot(G2, vertex.label=V(G2)$name)
 @
-<<results=verbatim>>=
+<<results=verbatim, eval=FALSE>>=
 getMinimumSubsumer("GO:0007166","GO:0007267")
 @
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.6\textwidth]{GOExample.pdf}
+\includegraphics[width=0.7\textwidth]{GOExample.pdf}
 \caption{\label{Fig:GOPlot}Example of a GO graph starting with leaves GO:0007166 and GO:0007267.}
 \end{center}
 \end{figure}
 
-In contrast to the above defined similarity measures Couto et al. \cite{Couto2005GraSM} introduced a concept, which is not based on the minimum subsumer, but on the set of all disjunctive common ancestors. Roughly speaking, the idea is not to consider the common ancestor having the highest information content only, but also others, if they are somehow "separate" from each other, i.e. there is a path to $t$ and $t'$ not passing any other of the disjunctive common ancestors.
-<<results=verbatim>>=
+In contrast to the above defined similarity measures Couto et al. \citep{Couto2005GraSM} introduced a concept, which is not based on the minimum subsumer, but on the set of all disjunctive common ancestors. Roughly speaking, the idea is not to consider the common ancestor having the highest information content only, but also others, if they are somehow "separate" from each other, i.e. there exists a path to $t$ or to $t'$ not passing any other of the disjunctive common ancestors.
+<<results=verbatim, eval=FALSE>>=
 getDisjCommAnc("GO:0007166","GO:0007267")
 @
-In this case the set of disjunctive common ancestors only consists of the minimum subsumer, because any path from the other ancestors to GO:0007166 and GO:0007267 would have to pass the minimum subsumer (see Fig. \ref{Fig:GOPlot}).
+In this case the set of disjunctive common ancestors consists of the minimum subsumer, GO:0007154, and its parent, GO:0009987, because from both there exists a path to GO:0007166 not passing any other disjunctive common ancestor(see Fig. \ref{Fig:GOPlot}).
 
 Based on the notion of disjunctive common ancestors Resnik's similarity concept can be extended by defining:
 \begin{equation}
 sim(t,t') = IC_{share}(t,t') = \frac{1}{|DisjCommAnc|}\sum_{t\in DisjCommAnc} IC(t)
 \end{equation}
 Likewise, Jiang-Conraths's and Lin's measures can be extended as well by replacing $IC_{ms}(t,t')$ by $IC_{share}(t,t')$.
-<<results=verbatim>>=
+<<results=verbatim, eval=FALSE>>=
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="CoutoResnik",verbose=FALSE)
 @
 
-Finally, it should be mentioned that also the depth and density enriched term similarity by Couto et al. \cite{Couto2003FuSSiMeg} has been integrated into \emph{GOSim}:
-<<results=verbatim>>=
+Finally, it should be mentioned that also the depth and density enriched term similarity by Couto et al. \citep{Couto2003FuSSiMeg} has been integrated into \emph{GOSim}:
+<<results=verbatim, eval=FALSE>>=
 setEnrichmentFactors(alpha=0.5,beta=0.3)
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="CoutoEnriched",verbose=FALSE)
 @
 
-Since version 1.1.5 \emph{GOSim} contains several new similarity concepts, which are based on so-called diffusion kernel techniques \cite{Lerman2007ManifoldEmbedding} rather than on the information theoretic ideas presented before. For using these similarity measures it is necessary to pre-compute a diffusion kernel on the Gene Ontology graph, e.g. via
+Since version 1.1.5 \emph{GOSim} contains several new similarity concepts, which are based on so-called diffusion kernel techniques \citep{Lerman2007ManifoldEmbedding} rather than on the information theoretic ideas presented before. For using these similarity measures it is necessary to pre-compute a diffusion kernel on the Gene Ontology graph, e.g. via
 <<eval=FALSE>>=
 calc.diffusion.kernel(method="diffKernelLLE")
 @
@@ -143,7 +144,7 @@ load.diffusion.kernel(method="diffKernelLapl")
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="diffKernel",verbose=FALSE)
 @
 
-Since version 1.2 \emph{GOSim} also contain Schlicker et al.'s  and Li et al.'s GO term similarity measures \cite{Schlicker2006GOFuncSim, Li2009GOSimLinAdaption}, which are both an adaption of Lin's similarity measure. Moreover, the graph information content similarity by Pesquita et al. has been implemented \cite{Pesquita2007GOSim}.
+Since version 1.2 \emph{GOSim} also contain Schlicker et al.'s  and Li et al.'s GO term similarity measures \citep{Schlicker2006GOFuncSim, Li2009GOSimLinAdaption}, which are both an adaption of Lin's similarity measure. Moreover, the graph information content similarity by Pesquita et al. has been implemented \citep{Pesquita2007GOSim}.
 <<results=verbatim>>=
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="relevance",verbose=FALSE)
 @
@@ -153,11 +154,11 @@ getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),m
 
 The special strength of \emph{GOSim} lies in the possibility not only to calculate similarities for individual GO terms, but also for genes based on their complete GO anntation. Since \emph{GOSim} version 1.1.5 for this purpose the following ideas have been implemented: 
 \begin{enumerate}
-\item Maximum and average pairwise GO term similarity
-\item Average of best matching GO term similarities \cite{Schlicker2006GOFuncSim}.
-\item Computation of a so-called \emph{optimal assignment} of terms from one gene to those of another one \cite{FroeSpeerGOKer06}.
-\item Similarity derived from Hausdorff distances between sets \cite{Pozo2008GOFuncSim}.
-\item Embedding of each gene into a feature space: \cite{FroeGO05,FroeSpeerGOKer06} proposed to define feature vectors by a gene's maximum GO term similarity to certain prototype genes. More simple (but probably also less accurate), \cite{Mistry2008GOFuncSim} recently proposed to represent each gene by a feature vector describing the presence/absence of all GO terms. The absence of each GO term is additionally weighted by its information content. Within a feature space gene functional similarities naturally arise as dot products between feature vectors. These dot products can be understood as so-called \emph{kernel functions} \cite{SchSmo02}, as used in e.g. Support Vector Machines \cite{CorVap95}. Depending on the choice of later normalization (see below) one can arrive at the cosine similarity (Eq.~\ref{eq:normalize}), at the Tanimoto coefficient (Eq.~\ref{eq:normalize2}) or at a measure similiar to Lin's one (Eq.~\ref{eq:normalize3}, Eq.~\ref{eq:Lin}).
+\item Maximum \citep{Couto2003FuSSiMeg} and average pairwise GO term similarity
+\item Average of best matching GO term similarities \citep{Schlicker2006GOFuncSim}.
+\item Computation of a so-called \emph{optimal assignment} of terms from one gene to those of another one \citep{FroeSpeerGOKer06}.
+\item Similarity derived from Hausdorff distances between sets \citep{Pozo2008GOFuncSim}.
+\item Embedding of each gene into a feature space: \citep{FroeGO05,FroeSpeerGOKer06} proposed to define feature vectors by a gene's maximum GO term similarity to certain prototype genes. More simple (but probably also less accurate), \citep{Mistry2008GOFuncSim} recently proposed to represent each gene by a feature vector describing the presence/absence of all GO terms. The absence of each GO term is additionally weighted by its information content. Within a feature space gene functional similarities naturally arise as dot products between feature vectors. These dot products can be understood as so-called \emph{kernel functions} \citep{SchSmo02}, as used in e.g. Support Vector Machines \citep{CorVap95}. Depending on the choice of later normalization (see below) one can arrive at the cosine similarity (Eq.~\ref{eq:normalize}), at the Tanimoto coefficient (Eq.~\ref{eq:normalize2}) or at a measure similiar to Lin's one (Eq.~\ref{eq:normalize3}, Eq.~\ref{eq:Lin}).
 \end{enumerate}
 
 \subsubsection{Normalization of Similarities}
@@ -189,16 +190,16 @@ sim_{gene}(g,g') & = & \max_{\begin{array}{c}
 i=1,,...,n\\
 j=1,...,m\end{array}}sim(t_{i},t'_{j})
 \end{eqnarray}
-where $sim$ is some similarity measure to compare GO terms $t_i$ and $t'_j$.
+where $sim$ is some similarity measure to compare GO terms $t_i$ and $t'_j$. This idea is, for instance, realized in FuSSiMeg \citep{Couto2003FuSSiMeg}.
 Instead of computing the maximum pairwise GO term similarity one may also take the average here.
 
 \subsubsection{Average of Best Matching GO Term Similarities }
 
-The idea of this approach \cite{Schlicker2006GOFuncSim} is to assign each GO term $t_i$ occuring in gene $g$ to its best matching partner $t'_{\pi{i}}$ in gene $g'$. Hence multiple GO terms from gene $g$ can be assigned to one GO term from gene $g'$. A similarity score is computed by taking the average similarity of assigned GO terms. Since, however, genes can have an unequal number of GO terms the result depends on whether GO terms of gene $g$ are assigned to those of gene $g'$ or vice versa. Hence, in \cite{Schlicker2006GOFuncSim} it was proposed to either take the maximum or the average of both similarity scores. Both strategies are implemented in \emph{GOSim}. 
+The idea of this approach \citep{Schlicker2006GOFuncSim} is to assign each GO term $t_i$ occuring in gene $g$ to its best matching partner $t'_{\pi{i}}$ in gene $g'$. Hence multiple GO terms from gene $g$ can be assigned to one GO term from gene $g'$. A similarity score is computed by taking the average similarity of assigned GO terms. Since, however, genes can have an unequal number of GO terms the result depends on whether GO terms of gene $g$ are assigned to those of gene $g'$ or vice versa. Hence, in \cite{Schlicker2006GOFuncSim} it was proposed to either take the maximum or the average of both similarity scores. Both strategies are implemented in \emph{GOSim}. 
 
 \subsubsection{Optimal Assignment Gene Similarities}
 
-To elucidate the idea of the optimal assignment \cite{FroeSpeerGOKer06}, consider the GO terms associated with gene "8614" on one hand and gene "2852" on the other hand:
+To elucidate the idea of the optimal assignment \citep{FroeSpeerGOKer06}, consider the GO terms associated with gene "8614" on one hand and gene "2852" on the other hand:
 <<results=verbatim>>=
 getGOInfo(c("8614","2852"))
 @
@@ -214,7 +215,7 @@ sim_{gene}(g,g')=\left\{ \begin{array}{cc}
 The computation of (\ref{eq:OAKernel}) corresponds to the solution
 of the classical maximum weighted bipartite matching (optimal assignment)
 problem in graph theory and can be carried out in $O(\max(n,m)^{3})$
-time \cite{LEDABook99}. 
+time \citep{LEDABook99}. 
 To prevent that larger lists of terms automatically
 achieve a higher similarity we may further $sim_{gene}$ divide \ref{eq:OAKernel} by $\max(m,n)$.
 
@@ -339,11 +340,11 @@ plot(ev$clustersil,main="")
 \end{center}
 \end{figure}
 
-A good indiciation of the clustering qualitiy can be obtained by looking at the cluster silhouettes \cite{rousseeuw87} (see Fig. \ref{Fig:GOClustersil}). This shows that clusters 1 and 2 are relatively homogenous with respect to the functional similarity of the genes contained in it, while the genes in cluster 3 are more dissimilar.
+A good indiciation of the clustering qualitiy can be obtained by looking at the cluster silhouettes \citep{rousseeuw87} (see Fig. \ref{Fig:GOClustersil}). This shows that clusters 1 and 2 are relatively homogenous with respect to the functional similarity of the genes contained in it, while the genes in cluster 3 are more dissimilar.
 
 \subsection{GO Enrichment Analysis}
 
-Since version 1.1 \emph{GOSim} also offers the possibility of a GO enrichemnt analysis. Suppose, we may now want to get a clearer picture of the genes involved in cluster 1. For this purpose we use the topGO tool \cite{Alexa2006topGO}.
+Since version 1.1 \emph{GOSim} also offers the possibility of a GO enrichemnt analysis. Suppose, we may now want to get a clearer picture of the genes involved in cluster 1. For this purpose we use the topGO tool \citep{Alexa2006topGO}.
 <<results=verbatim, eval=FALSE>>=
 gomap <- get("gomap",env=GOSimEnv)
 allgenes = unique(c(sample(names(gomap), 1000), genes)) # suppose these are all genes

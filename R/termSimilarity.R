@@ -127,9 +127,9 @@ getDepthFactor<-function(term,G){
 	if(!require(RBGL))
 		stop("Package RBGL is required for function getDepthFactor")
 	if(!exists("GOSimEnv")) initialize()	
-	d<-sp.between(G,term,"all")[[1]]$length  	
-    	D<-((d+1)/d)^get("alphaParam",envir=GOSimEnv)
-    	D
+	d<-sp.between(G,term,"all")[[1]]$length + 1  # start with depth = 1!
+    D<-((d+1)/d)^get("alphaParam",envir=GOSimEnv)
+    D
 }
 
 # compute FuSSiMeg enriched term similarity
@@ -161,6 +161,7 @@ getEnrichedSim<-function(term1, term2){
 	else
 		sim<-1 
 	sim<-sim * IC[term1] * IC[term2]  # correction given in equation (11) of the FuSSiMeg paper
+	sim[is.na(sim)] = 0
 	names(sim)<-c()   
 	sim
 }
@@ -205,7 +206,8 @@ getDisjCommAnc<-function(term1, term2){
 		}
 		else{
 			ancommon<-intersect(an1,an2)
-			andisj<-getDisjAnc(c(term1,term2), ancommon) # we only need to calculate the disjunctives among the common ancestors!			
+			andisj<-getDisjAnc(c(term1,term2), ancommon) # we only need to calculate the disjunctives among the common ancestors!
+			#andisj = unique(rbind(getDisjAnc(term1, an1), getDisjAnc(term2, an2)))
 		}		
 		djca<-c()
 		cond1<-sapply(ancommon, function(x) setdiff(ancommon[which(IC[ancommon] >= IC[x])],x)) # which common ancestors are more informative than a_i?
