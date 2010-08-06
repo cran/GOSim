@@ -276,7 +276,7 @@ calcTermSim<-function(term1, term2, method="JiangConrath", verbose=TRUE){
 		return(1 - min(1, -2*IC[getMinimumSubsumer(term1,term2)] + IC[term1] + IC[term2]) )	
 	else if(method == "Lin"){
 		res = 2*IC[getMinimumSubsumer(term1,term2)]/(IC[term1]+IC[term2])
-		return(ifelse(is.na(res), 1, res))
+		return(ifelse(is.na(res), 0, res))
 	}
 	else if(method== "CoutoEnriched")
 		return(getEnrichedSim(term1, term2))
@@ -286,19 +286,19 @@ calcTermSim<-function(term1, term2, method="JiangConrath", verbose=TRUE){
 		return(getDisjCommAncSim(term1,term2, "JiangConrath"))
 	else if(method == "CoutoLin"){
 		res = getDisjCommAncSim(term1,term2, "Lin")
-		return(ifelse(is.na(res), 1, res))
+		return(ifelse(is.na(res), 0, res))
 	}
 	else if(method == "simIC"){ # Li et al.
 		MICA = getMinimumSubsumer(term1,term2)
 		res = 2*IC[MICA]/(IC[term1]+IC[term2]) * (1 - 1/(1 + IC[MICA]))
-		return(ifelse(is.na(res), 1, res))
+		return(ifelse(is.na(res), 0, res))
 	}
 	else if(method == "GIC") # graph information content
 		return(getGIC(term1, term2))
 	else if(method == "relevance"){ # Schlicker et al.
 		MICA = getMinimumSubsumer(term1,term2)
 		res = (2*IC[MICA]/(IC[term1]+IC[term2]))*(1 - exp(-IC[MICA]))
-		return(ifelse(is.na(res), 1, res))
+		return(ifelse(is.na(res), 0, res))
 	}
 	else if(method == "diffKernel"){
 		K = mget("K", envir=GOSimEnv, ifnotfound=list(function(x) stop(paste("Diffusion kernel not loaded!\nPlease invoke load.diffusion.kernel().", sep = ""), call. = FALSE)))$K

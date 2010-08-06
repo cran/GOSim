@@ -72,7 +72,7 @@ setEvidenceLevel<-function(evidences="all", organism=org.Hs.egORGANISM, gomap=or
 	print(paste("-> retrieving GO information for all available genes for organism '", organism, "' in GO database", sep=""))
 	assign("evidences", evidences, envir=GOSimEnv)	
 # 	gomap<-as.list(GOENTREZID2GO)		
-	if(is(gomap, "Bimap")){
+	if(is(gomap, "Bimap")){		
 		mapped_genes <- mappedkeys(gomap)	
 		gomap = AnnotationDbi::as.list(gomap[mapped_genes])
 	}
@@ -85,7 +85,7 @@ setEvidenceLevel<-function(evidences="all", organism=org.Hs.egORGANISM, gomap=or
 		gomap<-gomap[sapply(gomap,length) >0]
 	}
 	assign("gomap", gomap, envir=GOSimEnv)
-	assign("organism", organism, envir=GOSimEnv)
+	assign("organism", organism, envir=GOSimEnv)	
 }
 
 setOntology<-function(ont="BP", loadIC=TRUE){

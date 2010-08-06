@@ -14,6 +14,7 @@ normalize.kernel = function(Ker, method="none"){
 		}								
 		else
 			stop(paste("Unknown normalization method", method))
+		diag(Ker) = 1
 	}
 	Ker
 }

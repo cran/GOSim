@@ -37,11 +37,11 @@ GOenrichment = function(genesOfInterest, allgenes, cutoff=0.01){
 		genelist = factor(as.integer(allgenes %in% genesOfInterest))
 		names(genelist) = as.character(allgenes)
 		geneIDs = names(genelist)		
-		method = "elimCount"
+		method = "elim"
 	}
 	else if(class(allgenes) == "numeric" & class(genesOfInterest) == "numeric"){
 		geneIDs = as.character(names(allgenes))		
-		method = "weightCount"
+		method = "weight"
 	}
 	else
 		stop("Parameters 'allgenes' and 'genesOfInterest' have either to be character vectors of Entrez gene IDs or vectors of p-values named with Entrez gene IDs")
@@ -54,13 +54,16 @@ GOenrichment = function(genesOfInterest, allgenes, cutoff=0.01){
 		stop("No GO information available for these genes!")
 	goterms <-sapply(goterms, function(x) names(x[which(x)]))
 	goterms <- goterms[sapply(goterms,length) > 0]			
-
-	if(method == "elimCount")
-		GOdata = new("topGOdata", ontology = ontology, allGenes = genelist, annot = annFUN.gene2GO, gene2GO = goterms)  
-	else
-		GOdata = new("topGOdata", ontology = ontology, allGenes = allgenes, geneSel=topgenes, annot = annFUN.gene2GO, gene2GO = goterms)  	
-	test.stat <- new(method, testStatistic = GOFisherTest, name = "Fisher test", cutOff = cutoff) 
-	res = getSigGroups(GOdata, test.stat) 
+	
+	if(method == "elim"){
+		GOdata = new("topGOdata", ontology = ontology, allGenes = genelist, annot = annFUN.gene2GO, gene2GO = goterms)
+		stat = "ks"
+	}
+	else{
+		GOdata = new("topGOdata", ontology = ontology, allGenes = allgenes, geneSel=topgenes, annot = annFUN.gene2GO, gene2GO = goterms)
+		stat = "fisher"
+	}
+	res = runTest(GOdata, algorithm=method, statistic=stat) 	
 	sigterms = score(res)[score(res) < cutoff]
 	sigGOs = names(sigterms)
 	genes = sapply(1:length(sigGOs), function(s) genesInTerm(GOdata, whichGO=sigGOs[s]))	

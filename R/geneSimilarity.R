@@ -41,6 +41,22 @@ filterGO<-function(genelist){
 	allgenes
 }
 
+#calc.sim.significance = function(Sim, B=1000, similarity="funSimMax", similarityTerm="relevance", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), adj.method="bonf"){	
+#	n = NCOL(Sim)
+#	pvals = matrix(1, ncol=n, nrow=n)			
+#	gomap <- get("gomap",env=GOSimEnv)
+#	allgenes = filterGO(names(gomap))
+#	allgenes = sapply(allgenes, function(x) x$genename)		
+#	for(b in 1:B){
+#		sam = base:::sample(allgenes, n)
+#		K = getGeneSim(sam, similarity=similarity, similarityTerm=similarityTerm, normalization=normalization, method=method, avg=avg, verbose=FALSE)
+#		pvals = (K >= Sim)*1 + pvals					
+#	}		
+#	pvals = pvals/B
+#	pvals = p.adjust(pvals, method=adj.method)
+#	pvals
+#}
+
 # get GO graphs for GO terms associated to each gene
 getGOGraphsGenes <- function(genelist, prune=Inf){
 	allgenes = filterGO(genelist)
@@ -207,7 +223,7 @@ getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="relevance
 			}
 		}			
 		if(normalization){			
-			Ker = normalize.kernel(Ker, method)
+			Ker = normalize.kernel(Ker, method)			
 		}			
 	}
 	else{

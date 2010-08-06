@@ -21,7 +21,7 @@ GOenrichment(genesOfInterest, allgenes, cutoff=0.01)
   \item{genes}{list of genes associated to each GO term}
 }
 \details{
-If the parameters 'genesOfInterest' and 'allgenes' are both character vectors of Entrez gene IDs, the 'elim' method is used, otherwise the 'weight' method. For more details please refer to the topGO vignette.
+If the parameters 'genesOfInterest' and 'allgenes' are both character vectors of Entrez gene IDs, the 'elim' method is used, otherwise the 'weight' method. For more details please refer to the topGO vignette. The Kolmogorov-Smirnov test is employed to assess statistical significance for the 'elim' method and Fisher's exact test for the 'weight' method.
 }
 \references{
 Adrian Alexa, J\"org Rahnenf\"uhrer, Thomas Lengauer: Improved scoring of functional groups from gene expression data by decorrelating GO graph structure, Bioinformatics, 2006, 22(13):1600-1607}
