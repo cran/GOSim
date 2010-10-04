@@ -9,7 +9,7 @@
 }
 }
 \usage{
-selectPrototypes(n = 250, method = "frequency", data = NULL, verbose = TRUE)
+selectPrototypes(n = 250, method = "frequency", data = NULL, verbose = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -7,7 +7,7 @@
   represented by a vector describing the presence/absence of all GO terms. The absence of each GO term is additionally weighted by its information content. 
 }
 \usage{
-getGeneFeatures(genelist, pca=FALSE, normalization=FALSE, verbose=TRUE)
+getGeneFeatures(genelist, pca=FALSE, normalization=FALSE, verbose=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

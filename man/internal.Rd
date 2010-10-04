@@ -12,10 +12,13 @@
 \alias{pca}
 \alias{norm}
 \alias{GOGraph}
+\alias{classificationModel_dme}
+\alias{classificationModelSignalTrans_dme}
+\alias{classificationModelSignalTrans_hsa}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{  internal functions  }
 \description{
-  internal functions: do not call these functions directly. 
+  internal functions or data: do not call these functions directly. 
 }
 \usage{
 	various

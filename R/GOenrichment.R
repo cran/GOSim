@@ -26,22 +26,26 @@
 # }
 
 # perform a GO gene set enrichment analysis for a specific cluster using topGO
-GOenrichment = function(genesOfInterest, allgenes, cutoff=0.01){
+GOenrichment = function(genesOfInterest, allgenes, cutoff=0.01, method="elim"){
 	if(!require(topGO) | !require(annotate))		
 		stop("Packages topGO and annotate required for function analyzeCluster")	
 	ontology = get("ontology", envir=GOSimEnv)		
 	topgenes = function(allScore){				
 		return(names(allgenes) %in% names(genesOfInterest))		
-	}
+	}	
 	if(class(allgenes) == "character" & class(genesOfInterest) == "character"){
 		genelist = factor(as.integer(allgenes %in% genesOfInterest))
 		names(genelist) = as.character(allgenes)
-		geneIDs = names(genelist)		
-		method = "elim"
+		geneIDs = names(genelist)
+		stat = "fisher"
+		if(!all(genesOfInterest %in% allgenes))
+			stop("genesOfInterest needs to be a subset of allgenes")
 	}
 	else if(class(allgenes) == "numeric" & class(genesOfInterest) == "numeric"){
 		geneIDs = as.character(names(allgenes))		
-		method = "weight"
+		stat = "ks"
+		if(!all(names(genesOfInterest) %in% geneIDs))
+			stop("genesOfInterest needs to be a subset of allgenes")
 	}
 	else
 		stop("Parameters 'allgenes' and 'genesOfInterest' have either to be character vectors of Entrez gene IDs or vectors of p-values named with Entrez gene IDs")
@@ -55,14 +59,15 @@ GOenrichment = function(genesOfInterest, allgenes, cutoff=0.01){
 	goterms <-sapply(goterms, function(x) names(x[which(x)]))
 	goterms <- goterms[sapply(goterms,length) > 0]			
 	
-	if(method == "elim"){
+	if(class(allgenes) == "character" & class(genesOfInterest) == "character"){
 		GOdata = new("topGOdata", ontology = ontology, allGenes = genelist, annot = annFUN.gene2GO, gene2GO = goterms)
-		stat = "ks"
+		stat = "fisher"
 	}
 	else{
 		GOdata = new("topGOdata", ontology = ontology, allGenes = allgenes, geneSel=topgenes, annot = annFUN.gene2GO, gene2GO = goterms)
-		stat = "fisher"
-	}
+		if(method == "weight" | method =="parentchild")
+			stat = "fisher"
+	}	
 	res = runTest(GOdata, algorithm=method, statistic=stat) 	
 	sigterms = score(res)[score(res) < cutoff]
 	sigGOs = names(sigterms)

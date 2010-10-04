@@ -144,7 +144,7 @@ load.diffusion.kernel(method="diffKernelLapl")
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="diffKernel",verbose=FALSE)
 @
 
-Since version 1.2 \emph{GOSim} also contain Schlicker et al.'s  and Li et al.'s GO term similarity measures \citep{Schlicker2006GOFuncSim, Li2009GOSimLinAdaption}, which are both an adaption of Lin's similarity measure. Moreover, the graph information content similarity by Pesquita et al. has been implemented \citep{Pesquita2007GOSim}.
+Since version 1.2 \emph{GOSim} also contains Schlicker et al.'s  GO term similarity measure \citep{Schlicker2006GOFuncSim}, which is an adaption of Lin's similarity measure. Moreover, the graph information content similarity by Pesquita et al. has been implemented \citep{Pesquita2007GOSim}.
 <<results=verbatim>>=
 getTermSim(c("GO:0007166","GO:0007267","GO:0007584","GO:0007165","GO:0007186"),method="relevance",verbose=FALSE)
 @

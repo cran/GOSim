@@ -72,7 +72,7 @@ getGOGraphsGenes <- function(genelist, prune=Inf){
 }
 
 # precompute term similarities for all pairs of GO terms belonging to the annotated genelists x (and y)
-precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=TRUE){ 	
+precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=FALSE){ 	
 	if(verbose)
 		print("precomputing term similarities ...")	
 	gotermsx<-as.vector(unique(unlist(sapply(x, function(xx) xx$annotation))))
@@ -119,8 +119,8 @@ getWeightedDotSim <- function(anno1, anno2){
 }
 
 # compute gene similarity for a pair of genes having GO terms anno1 and anno2
-getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath", STerm=NULL, avg=FALSE, verbose=TRUE){	  
-  if(length(anno1) < length(anno2)){
+getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath", STerm=NULL, avg=FALSE, verbose=FALSE){	  
+  if(length(anno1) <= length(anno2)){
 	a1<-anno1
 	a2<-anno2
 	swap<-FALSE
@@ -194,13 +194,14 @@ getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath",
 }
 
 # compute GO gene similarity for a list of genes
-# getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="Lin", normalization=!(similarity %in% c("funSimAvg","funSimMax")), method="sqrt", avg=(similarity=="OA"), verbose=TRUE){
-getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="relevance", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=TRUE){
-	genelist <- unique(genelist)
-	if(length(genelist) < 2)
+# getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="Lin", normalization=!(similarity %in% c("funSimAvg","funSimMax")), method="sqrt", avg=(similarity=="OA"), verbose=FALSE){
+getGeneSim<-function(genelist1, genelist2=NULL, similarity="funSimMax", similarityTerm="relevance", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=FALSE){	
+	genelist1 <- unique(genelist1)
+	genelist2 = unique(genelist2)
+	if(length(genelist1) < 2 && is.null(genelist2))
 		stop("Gene list should contain more than 2 elements!")
-	allgenes<-filterGO(genelist)	
-	if(length(allgenes) > 1){	
+	allgenes<-filterGO(genelist1)	
+	if(length(allgenes) > 1 && is.null(genelist2)){			
 		if(!(similarity %in% c("dot")))
 			STerm<-precomputeTermSims(x=allgenes, similarityTerm=similarityTerm, verbose=verbose) # precompute term similarities => speed up!		
 		else
@@ -223,8 +224,40 @@ getGeneSim<-function(genelist, similarity="funSimMax", similarityTerm="relevance
 			}
 		}			
 		if(normalization){			
-			Ker = normalize.kernel(Ker, method)			
+			Ker = normalize.kernel(Ker, method=method)
+			if(any(Ker > 1))
+				warning("Similarity matrix contains values > 1! This may happen with simlarity='funSimMax', if one gene's GO annotation is a complete subset of another gene's GO annotation.")
+			Ker[Ker>1] = 1 # can happen with similarity funSimMax in cases where one GO annotation is subset of another one
 		}			
+	}
+	else if(length(allgenes) > 0 && length(genelist2) > 0){
+		allgenes2<-setdiff(filterGO(genelist2), allgenes)
+		if(!(similarity %in% c("dot")))
+			STerm<-precomputeTermSims(x=allgenes, y=allgenes2, similarityTerm=similarityTerm, verbose=verbose) # precompute term similarities => speed up!		
+		else
+			STerm = NULL
+		if(verbose)
+			print(paste("Calculating similarity matrix with similarity measure",similarity))
+		Ker<-matrix(0,nrow=length(allgenes),ncol=length(allgenes2))
+		colnames(Ker)<-sapply(allgenes2,function(x) x$genename)
+		rownames(Ker)<-sapply(allgenes,function(x) x$genename)
+		for(i in 1:length(allgenes)){
+			annoi<-(allgenes[[i]]$annotation)
+			if(normalization)
+				kerselfi = getGSim(annoi, annoi, similarity, similarityTerm, STerm=NULL, avg=avg, verbose)
+			for(j in 1:length(allgenes2)){
+				annoj<-(allgenes2[[j]]$annotation)
+				# 			        print(paste(allgenes[[i]]$genename,allgenes[[j]]$genename))
+				Ker[i,j]<-getGSim(annoi,annoj, similarity, similarityTerm, STerm=STerm, avg=avg, verbose)	
+				if(normalization){
+					kerselfj = getGSim(annoj, annoj, similarity, similarityTerm, STerm=NULL, avg=avg, verbose)
+					Ker[i,j] = normalize.kernel(Ker[i,j], kerselfi, kerselfj, method=method)
+				}
+			}
+		}			
+		if(any(Ker > 1))
+			warning("Similarity matrix contains values > 1! This may happen with simlarity='funSimMax', if one gene's GO annotation is a complete subset of another gene's GO annotation.")
+		Ker[Ker>1] = 1 # can happen with similarity funSimMax in cases where one GO annotation is subset of another one
 	}
 	else{
 		if(length(allgenes) == 0)
@@ -246,7 +279,7 @@ getGeneFeatures.internal = function(anno){
 }
 
 # compute feature representation for genes
-getGeneFeatures = function(genelist, pca=FALSE, normalization=FALSE, verbose=TRUE){
+getGeneFeatures = function(genelist, pca=FALSE, normalization=FALSE, verbose=FALSE){
 	if(!exists("GOSimEnv")) initialize()	
 	genelist <- unique(genelist)
 	if(length(genelist) < 1)
@@ -275,7 +308,7 @@ getGeneFeatures = function(genelist, pca=FALSE, normalization=FALSE, verbose=TRU
 }
 
 # compute prototype feature representation for genes
-getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max", similarityTerm="JiangConrath", pca=TRUE, normalization=TRUE, verbose=TRUE){
+getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max", similarityTerm="JiangConrath", pca=TRUE, normalization=TRUE, verbose=FALSE){
 	genelist<-unique(genelist)
 	if(is.null(prototypes))
 		prototypes<-selectPrototypes(verbose=verbose)
@@ -309,7 +342,7 @@ getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max",
 }
 
 # compute GO gene similarity using the prototype feature representation
-getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", similarityTerm="JiangConrath", pca=TRUE, normalization=TRUE, verbose=TRUE){
+getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", similarityTerm="JiangConrath", pca=TRUE, normalization=TRUE, verbose=FALSE){
 	genelist<-unique(genelist)	
 	if(length(genelist) < 2)
 		stop("Gene list should contain at least 2 elements!")
@@ -322,7 +355,7 @@ getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", simi
 }
 
 # method to a) select prototype genes b) to perform subselection of prototypes via i) PCA ii) clustering
-selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=TRUE){
+selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=FALSE){
 	if(!exists("GOSimEnv")) initialize()	
 	ontology<-get("ontology",env=GOSimEnv) 	
 	if(method == "frequency"){

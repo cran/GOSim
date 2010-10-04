@@ -7,7 +7,7 @@
    calculation method are implemented.
 }
 \usage{
-getTermSim(termlist, method = "relevance", verbose = TRUE)
+getTermSim(termlist, method = "relevance", verbose = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

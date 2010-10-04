@@ -7,11 +7,12 @@
    using different strategies. 
 }
 \usage{
-getGeneSim(genelist, similarity="funSimMax", similarityTerm="relevance", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=TRUE)
+getGeneSim(genelist1, genelist2=NULL, similarity="funSimMax", similarityTerm="relevance", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), verbose=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{genelist}{ character vector of Entrez gene IDs }
+  \item{genelist1}{ character vector of Entrez gene IDs }
+  \item{genelist2}{ optional other character vector of Entrez gene IDs to compare against}
   \item{similarity}{ method to calculate the functional similarity between gene products }
   \item{similarityTerm}{ method to compute the similarity of GO terms }
   \item{normalization}{ normalize similarities yes/no}

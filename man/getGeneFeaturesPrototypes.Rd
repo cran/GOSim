@@ -9,7 +9,7 @@
 \usage{
 getGeneFeaturesPrototypes(genelist, prototypes = NULL,
                           similarity = "max", similarityTerm = "JiangConrath",
-                          pca = TRUE, normalization = TRUE, verbose = TRUE) 
+                          pca = TRUE, normalization = TRUE, verbose = FALSE) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

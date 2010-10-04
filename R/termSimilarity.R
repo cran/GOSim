@@ -265,7 +265,7 @@ calcTermSim<-function(ids, i, j, method="JiangConrath"){
 }
 
 # basic term similarity between term1 and term2
-calcTermSim<-function(term1, term2, method="JiangConrath", verbose=TRUE){
+calcTermSim<-function(term1, term2, method="JiangConrath", verbose=FALSE){
 	if(!exists("GOSimEnv")) initialize()
 	IC<-get("IC", envir=GOSimEnv)
 	if(verbose)
@@ -309,7 +309,7 @@ calcTermSim<-function(term1, term2, method="JiangConrath", verbose=TRUE){
 }
 
 # calculate term similarities for a list of GO terms
-getTermSim<-function(termlist, method="relevance", verbose=TRUE){
+getTermSim<-function(termlist, method="relevance", verbose=FALSE){
 	S<-matrix(0,nrow=length(termlist),ncol=length(termlist))
 	colnames(S)<-termlist
 	rownames(S)<-termlist

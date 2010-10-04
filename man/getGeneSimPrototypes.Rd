@@ -10,7 +10,7 @@
 \usage{
 getGeneSimPrototypes(genelist, prototypes = NULL, similarity = "max",
                      similarityTerm = "JiangConrath", pca = TRUE,
-                     normalization = TRUE, verbose = TRUE) 
+                     normalization = TRUE, verbose = FALSE) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
