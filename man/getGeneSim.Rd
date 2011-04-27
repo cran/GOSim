@@ -16,7 +16,7 @@ getGeneSim(genelist1, genelist2=NULL, similarity="funSimMax", similarityTerm="re
   \item{similarity}{ method to calculate the functional similarity between gene products }
   \item{similarityTerm}{ method to compute the similarity of GO terms }
   \item{normalization}{ normalize similarities yes/no}
-  \item{method}{"sqrt": normalize sim(x,y) <- sim(x,y)/sqrt(sim(x,x)*sim(y,y)); "Lin": normalize sim(x,y) <- 2*sim(x,y)/(sim(x,x) + sim(y,y)); "Tanimoto": normalize sim(x,y) <- sim(x,y)/(sim(x,x) + sim(y,y) - sim(x,y)). NOTE: normalization does not have any effect, if similarity = "funSimMax", "funSimAvg" or similarity = "OA" and avg=TRUE}
+  \item{method}{"sqrt": normalize sim(x,y) <- sim(x,y)/sqrt(sim(x,x)*sim(y,y)); "Lin": normalize sim(x,y) <- 2*sim(x,y)/(sim(x,x) + sim(y,y)); "Tanimoto": normalize sim(x,y) <- sim(x,y)/(sim(x,x) + sim(y,y) - sim(x,y)). NOTE: normalization does not have any effect, if term similarity is NOT "relevance" and similarity = "funSimMax", "funSimAvg" or similarity = "OA" and avg=TRUE}
   \item{avg}{ standardize the OA kernel by the maximum number of GO terms for both genes}
   \item{verbose}{ print out some information }
 }

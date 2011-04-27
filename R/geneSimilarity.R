@@ -225,7 +225,7 @@ getGeneSim<-function(genelist1, genelist2=NULL, similarity="funSimMax", similari
 		}			
 		if(normalization){			
 			Ker = normalize.kernel(Ker, method=method)
-			if(any(Ker > 1))
+			if(any(Ker > 1, na.rm=T)) # this has been updated
 				warning("Similarity matrix contains values > 1! This may happen with simlarity='funSimMax', if one gene's GO annotation is a complete subset of another gene's GO annotation.")
 			Ker[Ker>1] = 1 # can happen with similarity funSimMax in cases where one GO annotation is subset of another one
 		}			
@@ -255,7 +255,7 @@ getGeneSim<-function(genelist1, genelist2=NULL, similarity="funSimMax", similari
 				}
 			}
 		}			
-		if(any(Ker > 1))
+		if(any(Ker > 1, na.rm=T))
 			warning("Similarity matrix contains values > 1! This may happen with simlarity='funSimMax', if one gene's GO annotation is a complete subset of another gene's GO annotation.")
 		Ker[Ker>1] = 1 # can happen with similarity funSimMax in cases where one GO annotation is subset of another one
 	}
