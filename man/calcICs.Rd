@@ -6,11 +6,11 @@
    Recalculates the information content of all GO terms.
 }
 \usage{
-calcICs()
+calcICs(DIR=".")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  none
+   \item{DIR}{ directory where to put the resulting files}
 }
 \details{
    This functions should only be invoked, if one wants to calculate the
@@ -21,10 +21,8 @@ calcICs()
    evidence codes and evidence codes "IMP, IGI, IDA, IEP, IPI" together.   
 }
 \value{
-  Puts a file named "ICs<ontology><organism><evidence levels>.rda" in the current
-  directoy. This file has then to be moved into the data directory of
-  GOSim. It can be used afterwards by calling \code{\link{setOntology}}. 
-  Sometimes it is necessary to switch to the GOSim directory for this purpose.
+  Puts a file named "ICs<ontology><organism><evidence levels>.rda" in 
+  directoy DIR. It can be used afterwards by calling \code{\link{setOntology}}.   
 }
 \seealso{\code{\link{setEvidenceLevel}}}
 \examples{		

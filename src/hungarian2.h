@@ -25,6 +25,7 @@
 
 #ifndef HUNGARIAN_H
 #define HUNGARIAN_H
+#include <R.h>
 
 #ifdef __cplusplus
 extern "C" {

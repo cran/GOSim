@@ -1,10 +1,9 @@
 Package: GOSim
-Version: 1.2.5
-Date: 2011-04-27
+Version: 1.2.6
+Date: 2012-01-12
 Title: Computation of functional similarities between GO terms and gene
         products; GO enrichement analysis
-Author: Holger Froehlich <frohlich@bit.uni-bonn.de>, contributions by
-        Tim Beissbarth <t.beissbarth@dkfz.de>
+Author: Holger Froehlich <frohlich@bit.uni-bonn.de>
 Maintainer: Holger Froehlich <frohlich@bit.uni-bonn.de>
 Depends: R (>= 2.7.0), GO.db (>= 2.2.0), AnnotationDbi, annotate,
         topGO, cluster (>= 1.11.7), flexmix, RBGL, graph, Matrix,
@@ -17,6 +16,6 @@ Description: This package implements several functions useful for
         enrichment analysis
 License: GPL (>= 2)
 URL: www.cran.r-project.org
-Packaged: 2011-04-27 08:26:08 UTC; frohlich
+Packaged: 2012-01-27 09:29:19 UTC; frohlich
 Repository: CRAN
-Date/Publication: 2011-04-27 16:11:35
+Date/Publication: 2012-01-27 13:35:32

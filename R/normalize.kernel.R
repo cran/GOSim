@@ -12,7 +12,9 @@ normalize.kernel = function(Ker, kerself1=NULL, kerself2=NULL, method="none"){
 			else if(method == "Tanimoto"){ 
 				Kd = diag(Ker)
 				Ker = Ker / (outer(Kd, Kd, "+") - Ker)
-			}								
+			}			
+#			else if(method == "variance")
+#				Ker = Ker /(mean(diag(Ker)) - mean(Ker)) 
 			else
 				stop(paste("Unknown normalization method", method))
 			diag(Ker) = 1
@@ -23,7 +25,7 @@ normalize.kernel = function(Ker, kerself1=NULL, kerself2=NULL, method="none"){
 			else if(method == "Lin")
 				return(2*Ker / (kerself1 + kerself2))
 			else if (method == "Tanimoto")
-				return(Ker / (kerself1 + kerself2 - Ker))
+				return(Ker / (kerself1 + kerself2 - Ker))			
 			else
 				stop(paste("Unknown normalization method", method))
 		}

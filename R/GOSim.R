@@ -3,7 +3,7 @@
 #   initialize()   
 # }
 
-.onLoad <- function(lib, pkgname, where){
+.onLoad <- function(lib, pkgname){
   library.dynam(pkgname, pkgname, lib)
   initialize()   
 }

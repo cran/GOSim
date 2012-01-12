@@ -88,7 +88,7 @@ setEvidenceLevel<-function(evidences="all", organism=org.Hs.egORGANISM, gomap=or
 	assign("organism", organism, envir=GOSimEnv)	
 }
 
-setOntology<-function(ont="BP", loadIC=TRUE){
+setOntology<-function(ont="BP", loadIC=TRUE, DIR=NULL){
 	if(!exists("GOSimEnv")) initialize()	
 	assign("ontology", ont, envir=GOSimEnv)		
 	if(loadIC){
@@ -97,7 +97,10 @@ setOntology<-function(ont="BP", loadIC=TRUE){
 		ontology<-get("ontology",envir=GOSimEnv)
 		evidences<-get("evidences",envir=GOSimEnv)			
 		fname = paste("ICs",ontology,organism, paste(evidences,collapse="_"),sep="")
-		tryCatch(utils::data(list=fname,package="GOSim",envir=GOSimEnv), warning=function(w) stop(paste("File", fname, "with IC values for organism '", organism, "', ontology '", ontology, "', evidence codes '", evidences, "' not found!\nPlease invoke calcICs() to calculate IC values!")))
+		if(is.null(DIR))
+			tryCatch(utils::data(list=fname,package="GOSim",envir=GOSimEnv), warning=function(w) stop(paste("File", fname, "with IC values for organism '", organism, "', ontology '", ontology, "', evidence codes '", evidences, "' not found!\nPlease invoke calcICs() to calculate IC values!")))
+		else
+			load(file=file.path(DIR, fname), envir=GOSimEnv)
 		IC<-get("IC",envir=GOSimEnv)
 		IC<-IC/max(IC[IC!=Inf])
 		IC["all"]=0
