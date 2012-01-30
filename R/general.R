@@ -100,7 +100,7 @@ setOntology<-function(ont="BP", loadIC=TRUE, DIR=NULL){
 		if(is.null(DIR))
 			tryCatch(utils::data(list=fname,package="GOSim",envir=GOSimEnv), warning=function(w) stop(paste("File", fname, "with IC values for organism '", organism, "', ontology '", ontology, "', evidence codes '", evidences, "' not found!\nPlease invoke calcICs() to calculate IC values!")))
 		else
-			load(file=file.path(DIR, fname), envir=GOSimEnv)
+			load(file=file.path(DIR, paste(fname, ".rda", sep="")), envir=GOSimEnv)
 		IC<-get("IC",envir=GOSimEnv)
 		IC<-IC/max(IC[IC!=Inf])
 		IC["all"]=0

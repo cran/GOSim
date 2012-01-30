@@ -1,10 +1,10 @@
-ea0c5430cc36df62e9b1d59dcc1f86a3 *DESCRIPTION
+80d24b54a6f2e99d715b3ec5fea01b41 *DESCRIPTION
 557781fd2d2196f64805303cc15f2ea8 *NAMESPACE
 ef6579d2d0433a65adad578275e570ed *R/GOSim.R
 bdbdbebe4fa62d7d5e6118a9719e4ded *R/GOenrichment.R
 e9365c0dd35325dd7572863efa7e68a1 *R/clusterEvaluation.R
 7612d51142197e5f945a478379fc146e *R/geneSimilarity.R
-f99d5e49d8b389e6b4ea8255abe5fb13 *R/general.R
+c46616ab4f96c3a7d34640b4d425d61c *R/general.R
 86078f536f96a61a9f29a6ff1123d336 *R/manifold_embedding.R
 dbe47f94afff790180f9b015a3773052 *R/norm.R
 cad676a14f4d12a0b203ef23ffc37ae1 *R/normalize.kernel.R
@@ -18,7 +18,7 @@ cb160460a83d74ee5eb8f58500f7edc4 *inst/doc/GOClustersil.pdf
 1136273ebcddc82e4264266efb87b07f *inst/doc/GOExample.pdf
 1ea7b83dac49fb31e01281effb46cfd3 *inst/doc/GOPCAExample.pdf
 d19d2c28774124bd4ae466d78680d647 *inst/doc/GOSim.Rnw
-663990ed691b8d6fec51ac4046ba46d3 *inst/doc/GOSim.pdf
+b70722d215a80415148312b438630cb1 *inst/doc/GOSim.pdf
 dad30fa356ceae6e8392afcaf2e8ff5e *inst/doc/references.bib
 b028e713de41a4dbe4361acc69bb735c *man/GOenrichment.Rd
 30765ac0cb7fb2d019882646d4825ad6 *man/IC.Rd
