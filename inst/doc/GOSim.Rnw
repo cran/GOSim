@@ -1,7 +1,6 @@
 %\VignetteIndexEntry{GOsim}
 %\VignetteKeyword{GOsim}
 %\VignettePackage{GOsim}
-%\VignetteDepends{igraph, topGO, annotate, cluster}
 \documentclass[12pt,a4paper]{article}
 \usepackage{natbib}
 \usepackage{amsmath}
@@ -96,7 +95,7 @@ sim(t,t') = \frac{2IC_{ms}(t,t')}{IC(t) + IC(t')}\label{eq:Lin}
 
 Resnik's, Jiang-Conraths's and Lin's term similarities all refer to $IC_{ms}(t,t')$, the information content of the minimum subsumer of $t$ and $t'$, i.e. of the lowest common ancestor in the hierarchy. For illustration let us plot the GO graph with leaves GO:0007166 and GO:0007267 and let us compute their minimum subsumer (see Fig. \ref{Fig:GOPlot}):
 <<GOExample,eval=FALSE,results=hide,fig=TRUE,eps=FALSE,include=FALSE>>=
-library(igraph)
+library(igraph0)
 G = getGOGraph(c("GO:0007166","GO:0007267"))
 G2 = igraph.from.graphNEL(G)
 plot(G2, vertex.label=V(G2)$name)

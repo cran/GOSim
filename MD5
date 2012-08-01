@@ -1,4 +1,4 @@
-80d24b54a6f2e99d715b3ec5fea01b41 *DESCRIPTION
+a2f39b3d30ea78c150417017d39ea9f7 *DESCRIPTION
 557781fd2d2196f64805303cc15f2ea8 *NAMESPACE
 ef6579d2d0433a65adad578275e570ed *R/GOSim.R
 bdbdbebe4fa62d7d5e6118a9719e4ded *R/GOenrichment.R
@@ -17,8 +17,8 @@ d863d8b48a3552561bb28af3f1208626 *inst/doc/GOClusterExample.pdf
 cb160460a83d74ee5eb8f58500f7edc4 *inst/doc/GOClustersil.pdf
 1136273ebcddc82e4264266efb87b07f *inst/doc/GOExample.pdf
 1ea7b83dac49fb31e01281effb46cfd3 *inst/doc/GOPCAExample.pdf
-d19d2c28774124bd4ae466d78680d647 *inst/doc/GOSim.Rnw
-b70722d215a80415148312b438630cb1 *inst/doc/GOSim.pdf
+aae66eb19f8a984b668221f92b5706f2 *inst/doc/GOSim.Rnw
+e76dc195d190512aa9561fb565544a35 *inst/doc/GOSim.pdf
 dad30fa356ceae6e8392afcaf2e8ff5e *inst/doc/references.bib
 b028e713de41a4dbe4361acc69bb735c *man/GOenrichment.Rd
 30765ac0cb7fb2d019882646d4825ad6 *man/IC.Rd
