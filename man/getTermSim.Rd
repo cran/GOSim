@@ -18,7 +18,7 @@ getTermSim(termlist, method = "relevance", verbose = FALSE)
 \details{
   Currently the following methods for computing GO term similarities are implemented: 
   \describe{
-\item{"Resnik"}{information content of minimum subsumer (ICms) [1]}
+\item{"Resnik"}{information content of minimum subsumer (ICms) [1], here additionally divided by the maximum information content of all GO terms}
 \item{"JiangConrath"}{\eqn{1 - \min(1, IC(term1) - 2ICms + IC(term2))} [2]}
 \item{"Lin"}{\eqn{\frac{2ICms}{(IC(term1) + IC(term2))}} [3]}
 \item{"CoutoEnriched"}{FuSSiMeg enriched term similarity by Couto et al. [4]. Requires enrichement factors to be set by \code{\link{setEnrichmentFactors}}}.

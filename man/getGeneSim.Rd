@@ -11,8 +11,8 @@ getGeneSim(genelist1, genelist2=NULL, similarity="funSimMax", similarityTerm="re
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{genelist1}{ character vector of Entrez gene IDs }
-  \item{genelist2}{ optional other character vector of Entrez gene IDs to compare against}
+  \item{genelist1}{ character vector of primary gene IDs according to organism annotation package (see \code{\link{setEvidenceLevel}})}
+  \item{genelist2}{ optional other character vector of primary gene IDs to compare against}
   \item{similarity}{ method to calculate the functional similarity between gene products }
   \item{similarityTerm}{ method to compute the similarity of GO terms }
   \item{normalization}{ normalize similarities yes/no}

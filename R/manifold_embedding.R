@@ -6,12 +6,12 @@ calc.diffusion.kernel = function(method="diffKernelLapl", m=7){
 	evidences<-get("evidences", envir=GOSimEnv)
 	ontology<-get("ontology",envir=GOSimEnv)
 	organism = get("organism", envir=GOSimEnv)
-	print(paste("calculating diffusion kernel '", method, "' for ontology ", ontology, " using evidence codes '", paste(evidences,collapse=", "), "' (", organism,") ...",sep=""))		
+	message(paste("calculating diffusion kernel '", method, "' for ontology ", ontology, " using evidence codes '", paste(evidences,collapse=", "), "' (", organism,") ...",sep=""))		
 	ids<- toTable(GOTERM)	 
 	ids = unique(ids[ids[,"Ontology"] == ontology,"go_id"]) # these are all GO terms, which belong to the corrseponding category	
 	# GO term frequency: freq(subgraph rooted at t): each gene function is viewed as ONE GO graph
 	ancestor = getAncestors()	
-	gomap <- get("gomap",env=GOSimEnv)			
+	gomap <- get("gomap",envir=GOSimEnv)			
 	goterms = sapply(gomap, function(g){
 		myterms = names(g)
 		myterms = intersect(myterms, ids)
@@ -74,7 +74,7 @@ calc.diffusion.kernel = function(method="diffKernelLapl", m=7){
 	K = (K + 1)/2		
 	dimnames(K) = dimnames(W)
 	save(K, file=paste(method, ontology,organism,paste(evidences,collapse="_"),".rda",sep=""))
-	print("done.")	
+	message("done.")	
 }
 
 load.diffusion.kernel = function(method="diffKernelLapl"){

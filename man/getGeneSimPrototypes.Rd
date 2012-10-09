@@ -14,7 +14,7 @@ getGeneSimPrototypes(genelist, prototypes = NULL, similarity = "max",
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{genelist}{ character vector of Entrez gene IDs }
+  \item{genelist}{ character vector of primary gene IDs according to organism annotation package (see \code{\link{setEvidenceLevel}})}
   \item{prototypes}{ character vector of Entrez gene IDs representing the prototypes }
   \item{similarity}{ method to calculate the similarity to prototypes }
   \item{similarityTerm}{ method to compute the GO term similarity }

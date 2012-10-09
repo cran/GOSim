@@ -25,7 +25,8 @@ filterGO(genelist)
 }
 \seealso{ \code{\link{setOntology}}, \code{\link{setEvidenceLevel}}, \code{\link{getGOInfo}}, \code{\link{calcICs}}}
 \examples{
-	filterGO(c("12345","4559"))
-	# --> 4559 is removed
+\dontrun{
+	filterGO(c("12345","4559"))	
+	}
 }
 \keyword{ file }% at least one, from doc/KEYWORDS

@@ -10,7 +10,7 @@ getGOInfo(geneIDs)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{geneIDs}{ character vector of Entrez gene IDs }
+  \item{geneIDs}{ character vector of primary gene IDs according to organism annotation package (see \code{\link{setEvidenceLevel}})}
 }
 \value{
  List with entry names equal to the gene IDs. Each list contains a

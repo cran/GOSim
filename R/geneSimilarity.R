@@ -5,8 +5,8 @@ getGOInfo<-function(geneIDs){
 	if(!require(annotate))
 		stop("Package annotate is required for function getGOInfo")
 	if(!exists("GOSimEnv")) initialize()		
-	ontology<-get("ontology",env=GOSimEnv)
-	gomap<-get("gomap",env=GOSimEnv)	
+	ontology<-get("ontology",envir=GOSimEnv)
+	gomap<-get("gomap",envir=GOSimEnv)	
 	gomap = gomap[geneIDs]		
 	goterms = lapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
 	goterms = goterms[!is.na(names(goterms))]
@@ -26,7 +26,7 @@ filterGO<-function(genelist){
 	if(!exists("GOSimEnv")) initialize()	
 	IC<-get("IC", envir=GOSimEnv)
 	ids<-names(IC[IC != Inf]) # only consider GO terms with some known annotation   
-	gomap<-get("gomap",env=GOSimEnv)
+	gomap<-get("gomap",envir=GOSimEnv)
 	k<-1
 	allgenes<-list()
 	for(i in 1:length(genelist)){		
@@ -44,7 +44,7 @@ filterGO<-function(genelist){
 #calc.sim.significance = function(Sim, B=1000, similarity="funSimMax", similarityTerm="relevance", normalization=TRUE, method="sqrt", avg=(similarity=="OA"), adj.method="bonf"){	
 #	n = NCOL(Sim)
 #	pvals = matrix(1, ncol=n, nrow=n)			
-#	gomap <- get("gomap",env=GOSimEnv)
+#	gomap <- get("gomap",envir=GOSimEnv)
 #	allgenes = filterGO(names(gomap))
 #	allgenes = sapply(allgenes, function(x) x$genename)		
 #	for(b in 1:B){
@@ -74,7 +74,7 @@ getGOGraphsGenes <- function(genelist, prune=Inf){
 # precompute term similarities for all pairs of GO terms belonging to the annotated genelists x (and y)
 precomputeTermSims<-function(x, y=NULL, similarityTerm="JiangConrath", verbose=FALSE){ 	
 	if(verbose)
-		print("precomputing term similarities ...")	
+		message("precomputing term similarities ...")	
 	gotermsx<-as.vector(unique(unlist(sapply(x, function(xx) xx$annotation))))
 	if(!is.null(y)){  		 
 		gotermsy<-as.vector(unique(unlist(sapply(y, function(xx) xx$annotation))))
@@ -119,7 +119,7 @@ getWeightedDotSim <- function(anno1, anno2){
 }
 
 # compute gene similarity for a pair of genes having GO terms anno1 and anno2
-getGSim<-function(anno1, anno2, similarity="max", similarityTerm="JiangConrath", STerm=NULL, avg=FALSE, verbose=FALSE){	  
+getGSim<-function(anno1, anno2, similarity="funSimMax", similarityTerm="JiangConrath", STerm=NULL, avg=FALSE, verbose=FALSE){	  
   if(length(anno1) <= length(anno2)){
 	a1<-anno1
 	a2<-anno2
@@ -207,7 +207,7 @@ getGeneSim<-function(genelist1, genelist2=NULL, similarity="funSimMax", similari
 		else
 			STerm = NULL
 		if(verbose)
-			print(paste("Calculating similarity matrix with similarity measure",similarity))
+			message(paste("Calculating similarity matrix with similarity measure",similarity))
 		Ker<-matrix(0,nrow=length(allgenes),ncol=length(allgenes))
 		colnames(Ker)<-sapply(allgenes,function(x) x$genename)
 		rownames(Ker)<-colnames(Ker)
@@ -217,7 +217,7 @@ getGeneSim<-function(genelist1, genelist2=NULL, similarity="funSimMax", similari
 			if(i > 1){
 				for(j in 1:(i-1)){
 					annoj<-(allgenes[[j]]$annotation)
-	# 			        print(paste(allgenes[[i]]$genename,allgenes[[j]]$genename))
+	# 			        message(paste(allgenes[[i]]$genename,allgenes[[j]]$genename))
 					Ker[i,j]<-getGSim(annoi,annoj, similarity, similarityTerm, STerm=STerm, avg=avg, verbose)
 					Ker[j,i]<-Ker[i,j]
 				}
@@ -237,7 +237,7 @@ getGeneSim<-function(genelist1, genelist2=NULL, similarity="funSimMax", similari
 		else
 			STerm = NULL
 		if(verbose)
-			print(paste("Calculating similarity matrix with similarity measure",similarity))
+			message(paste("Calculating similarity matrix with similarity measure",similarity))
 		Ker<-matrix(0,nrow=length(allgenes),ncol=length(allgenes2))
 		colnames(Ker)<-sapply(allgenes2,function(x) x$genename)
 		rownames(Ker)<-sapply(allgenes,function(x) x$genename)
@@ -247,7 +247,7 @@ getGeneSim<-function(genelist1, genelist2=NULL, similarity="funSimMax", similari
 				kerselfi = getGSim(annoi, annoi, similarity, similarityTerm, STerm=NULL, avg=avg, verbose)
 			for(j in 1:length(allgenes2)){
 				annoj<-(allgenes2[[j]]$annotation)
-				# 			        print(paste(allgenes[[i]]$genename,allgenes[[j]]$genename))
+				# 			        message(paste(allgenes[[i]]$genename,allgenes[[j]]$genename))
 				Ker[i,j]<-getGSim(annoi,annoj, similarity, similarityTerm, STerm=STerm, avg=avg, verbose)	
 				if(normalization){
 					kerselfj = getGSim(annoj, annoj, similarity, similarityTerm, STerm=NULL, avg=avg, verbose)
@@ -275,6 +275,7 @@ getGeneFeatures.internal = function(anno){
 	v = double(length(IC))	
 	names(v) = names(IC)	
 	v[c(anno, an)] = IC[c(anno, an)]
+	v = v[!is.na(v)]
 	v
 }
 
@@ -320,7 +321,7 @@ getGeneFeaturesPrototypes<-function(genelist, prototypes=NULL, similarity="max",
 		stop("getGeneFeaturesPrototypes: Number of prototypes equals zero after filtering!")	
 	STerm<-precomputeTermSims(x=allgenes,y=proto,similarityTerm=similarityTerm,verbose=verbose)  # precompute term similarities => speed up!
 	if(verbose)
-		print(paste("calculating feature vectors with",length(proto),"prototypes"))
+		message(paste("calculating feature vectors with",length(proto),"prototypes"))
 	PHI<-matrix(0,nrow=length(allgenes),ncol=length(proto))
 	for(i in 1:length(allgenes)){		
 		for(j in 1:length(proto)){
@@ -357,11 +358,11 @@ getGeneSimPrototypes<-function(genelist, prototypes=NULL, similarity="max", simi
 # method to a) select prototype genes b) to perform subselection of prototypes via i) PCA ii) clustering
 selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=FALSE){
 	if(!exists("GOSimEnv")) initialize()	
-	ontology<-get("ontology",env=GOSimEnv) 	
+	ontology<-get("ontology",envir=GOSimEnv) 	
 	if(method == "frequency"){
 		if(verbose)
-			print("Automatic determination of prototypes using genes with most frequent annotation ...")	
-		gomap<-get("gomap",env=GOSimEnv)
+			message("Automatic determination of prototypes using genes with most frequent annotation ...")	
+		gomap<-get("gomap",envir=GOSimEnv)
 		goterms = lapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
 		goterms = goterms[!is.na(names(goterms))]
 		if(length(goterms) == 0)
@@ -381,8 +382,8 @@ selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=FALSE){
 	}
 	else if(method == "random"){
 		if(verbose)		
-			print("Automatic determination of prototypes using random genes from the current ontology...")
-		gomap<-get("gomap",env=GOSimEnv)
+			message("Automatic determination of prototypes using random genes from the current ontology...")
+		gomap<-get("gomap",envir=GOSimEnv)
 		goterms = lapply(gomap, function(x) sapply(x, function(y) y$Ontology == ontology))
 		goterms = goterms[!is.na(names(goterms))]
 		if(length(goterms) == 0)
@@ -406,14 +407,14 @@ selectPrototypes<-function(n=250, method="frequency", data=NULL, verbose=FALSE){
 			stop("You need to specify a data matrix with feature vectors")
 		pcares<-pca(data)
 		if(verbose)
-			print(paste("PCA: dimension reduced to",ncol(pcares$features),"principal components (95% total variance explained)"))
+			message(paste("PCA: dimension reduced to",ncol(pcares$features),"principal components (95% total variance explained)"))
 		return(pcares)
 	}
 	else if(method == "clustering"){    		
 		if(is.null(data))
 			stop("You need to specify a data matrix with feature vectors")
 		if(verbose)
-			print("Clustering feature vectors ...")
+			message("Clustering feature vectors ...")
 		#res<-Mclust(t(data),2:n)
 		#return(res$mu)
 		res = sapply(2:n, function(k) flexmix(t(data)~1, cluster=cutree(hclust(dist(t(data))),k=k), k=k, model= FLXMCmvnorm()))

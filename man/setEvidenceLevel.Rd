@@ -11,8 +11,8 @@ setEvidenceLevel(evidences = "all", organism=org.Hs.egORGANISM, gomap=org.Hs.egG
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{evidences}{ character vector of evidence codes }
-  \item{organism}{organism, for which to load a mapping of Entrez gene IDs to GO terms (see details)}
-  \item{gomap}{mapping of Entrez gene IDs to GO terms to be used (see details)}
+  \item{organism}{organism, for which to load a mapping of primary gene IDs to GO terms (see details)}
+  \item{gomap}{mapping of primary gene IDs to GO terms to be used (see details)}
 }
 \details{
    Each evidence code can be one of:
@@ -29,12 +29,12 @@ setEvidenceLevel(evidences = "all", organism=org.Hs.egORGANISM, gomap=org.Hs.egG
 \item{"ND"}{no biological data available}
 \item{"IC"}{inferred by curator}
 }
-Entrez Gene ids for which no GO associations exist are left out of the environment.
+Gene ids for which no GO associations exist are left out of the environment.
 
-The method retrieves a mapping of Entrez gene IDs to GO terms, restricted by the given evidence codes.
+The method retrieves a mapping of primary gene IDs (usually Entrez) to GO terms, restricted by the given evidence codes.
 This mapping is based on the respective organism annotation packages (e.g. org.Dm.eg.db for fly, org.Hs.eg.db for human, etc.). The user passes the GO mapping and the organism name to the function.  Please refer to the annotation packages for further information.
 
-In case there does not exist an annotation package so far, the user can optionally provide its own mapping of Entrez gene IDs to GO terms instead of using one of the packages mentioned before. The mapping should come in form of a nested list having a format as in the following example (no NAs are allowed):
+In case there does not exist an annotation package so far, the user can optionally provide its own mapping of primary gene IDs to GO terms instead of using one of the packages mentioned before. The mapping should come in form of a nested list having a format as in the following example (no NAs are allowed):
 
 \$`11305`
 

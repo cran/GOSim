@@ -37,7 +37,7 @@ getGOGraph<-function(term, prune=Inf){
 	if(!require(graph))
 		stop("Package graph is required for function getGOGraph")
 	if(!exists("GOSimEnv")) initialize()	
-	ontology<-get("ontology",env=GOSimEnv)		
+	ontology<-get("ontology",envir=GOSimEnv)		
 	if(ontology == "BP")
 		G<-GOGraph(term,GOBPPARENTS)
 	else if(ontology == "MF")
@@ -62,11 +62,11 @@ calcICs<-function(DIR="."){
 	evidences<-get("evidences", envir=GOSimEnv)
 	ontology<-get("ontology",envir=GOSimEnv)
 	organism = get("organism", envir=GOSimEnv)
-	print(paste("calculating information contents for ontology ", ontology, " using evidence codes '", paste(evidences,collapse=", "), "' (", organism,") ...",sep=""))	
+	message(paste("calculating information contents for ontology ", ontology, " using evidence codes '", paste(evidences,collapse=", "), "' (", organism,") ...",sep=""))	
 	ids<- toTable(GOTERM)	 
 	ids = unique(ids[ids[,"Ontology"] == ontology,"go_id"]) # these are all GO terms, which belong to the corrseponding category
 	offspring <- getOffsprings()	
-	gomap <- get("gomap",env=GOSimEnv)		
+	gomap <- get("gomap",envir=GOSimEnv)		
 	goterms<-unlist(sapply(gomap, function(x) names(x)), use.names=FALSE) # all GO terms appearing in an annotation
 	goterms<-goterms[goterms %in% ids] # this is to ensure that we only get GO terms mapping to the given ontology
 	tab<-table(goterms)
@@ -82,7 +82,7 @@ calcICs<-function(DIR="."){
 	IC<- -log(ta/sum(tab))	# ACHTUNG: hier muß tab und nicht ta stehen: Die Vorkommenshäufigkeit des Wurzelknotens ist die Summe der Vorkommenshäufigkeiten aller Knoten OHNE Aufsummieren der Kinder!
 # # 	IC[IC == Inf] = 0 # WRONG: GO terms which are not annotated have Inf information content (NOT 0: They cannot be treated like root!!!)
 	save(IC,file=file.path(DIR, paste("ICs",ontology,organism,paste(evidences,collapse="_"),".rda",sep="")))	
-	print("done")			
+	message("done")			
 }
 
 getMinimumSubsumer<-function(term1, term2){	
@@ -114,11 +114,11 @@ getMinimumSubsumer<-function(term1, term2){
 # get FuSSiMeg density factor
 getDensityFactor<-function(term){
 	if(!exists("GOSimEnv")) initialize()
-	nchildren<-get("nchildren",env=GOSimEnv)
-	nparents<-get("nparents",env=GOSimEnv)
+	nchildren<-get("nchildren",envir=GOSimEnv)
+	nparents<-get("nparents",envir=GOSimEnv)
 	e<-nchildren[term] + nparents[term]	  
 	betaParam<-get("betaParam",envir=GOSimEnv)
-	E<-(1-betaParam)*get("Eavg",env=GOSimEnv)/e + betaParam
+	E<-(1-betaParam)*get("Eavg",envir=GOSimEnv)/e + betaParam
 	E
 }
 
@@ -269,9 +269,9 @@ calcTermSim<-function(term1, term2, method="JiangConrath", verbose=FALSE){
 	if(!exists("GOSimEnv")) initialize()
 	IC<-get("IC", envir=GOSimEnv)
 	if(verbose)
-		print(paste("Terms:",term1,",",term2,"( method:",method,")"))	
+		message(paste("Terms:",term1,",",term2,"( method:",method,")"))	
 	if(method== "Resnik")
-		return(IC[getMinimumSubsumer(term1,term2)])   
+		return(IC[getMinimumSubsumer(term1,term2)] / max(IC[IC != Inf]))   
 	else if(method == "JiangConrath")
 		return(1 - min(1, -2*IC[getMinimumSubsumer(term1,term2)] + IC[term1] + IC[term2]) )	
 	else if(method == "Lin"){
